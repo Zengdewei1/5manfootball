@@ -1,0 +1,284 @@
+#include<graphics.h>
+#include<process.h>
+#include<stdlib.h>
+#include<dos.h>
+#include<ctype.h>
+#include<math.h>
+#include"mouse.h"
+#include"hanzi.h"
+#include"multikey.h"
+#include"menu.h"
+#include"tool.h"
+#include"game.h"
+
+void shoot(_team *team,_ball *pball)
+{
+
+    Pos2d gate,shoot_dir;
+    gate.x=600;
+    gate.y=280;
+    shoot_dir=get_dir(pball->now_pos,gate);
+    pball->control=0;
+	team->player[team->controlplayer].control=0;
+    pball->velocity.x=20.0*shoot_dir.x;
+    pball->velocity.y=20.0*shoot_dir.y;
+	// setfillstyle(1,BLACK);
+	// 	circle(30,30,5);
+}
+
+void pass(struct _BALL *pball,struct _TEAM *team)
+{
+    int i,flag;
+    Pos2d pass_dir;
+    flag=0;
+    while(flag==0)
+    {
+        if(KeyPress(KEY_0))
+        {
+			if(team->controlplayer!=0)
+			{
+				pball->control=0;
+				team->player[team->controlplayer].control=0;
+				team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+				team->controlplayer=0;
+				flag=1;
+			}
+            else
+			{
+				flag=-1;
+			}
+        }
+        else if(KeyPress(KEY_1))
+        {
+            if(team->controlplayer!=1)
+			{
+				pball->control=0;
+				team->player[team->controlplayer].control=0;
+				team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+				team->controlplayer=1;
+				flag=1;
+			}
+            else
+			{
+				flag=-1;
+			}
+        }
+        else if(KeyPress(KEY_2))
+        {
+            if(team->controlplayer!=2)
+			{
+				pball->control=0;
+				team->player[team->controlplayer].control=0;
+				team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+				team->controlplayer=2;
+				flag=1;
+			}
+            else
+			{
+				flag=-1;
+			}
+        }
+        else if(KeyPress(KEY_3))
+        {
+            if(team->controlplayer!=3)
+			{
+				pball->control=0;
+				team->player[team->controlplayer].control=0;
+				team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+				team->controlplayer=3;
+				flag=1;
+			}
+            else
+			{
+				flag=-1;
+			}
+        }
+        else if(KeyPress(KEY_4))
+        {
+            if(team->controlplayer!=4)
+			{
+				pball->control=0;
+				team->player[team->controlplayer].control=0;
+				// team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+				team->controlplayer=4;
+				flag=4;
+			}
+            else
+			{
+				flag=-1;
+			}
+        }
+    }
+	if(flag==1)
+	{
+		pass_dir=get_dir(pball->now_pos,team->player[team->controlplayer].now_pos);
+        pball->velocity.x=20*pass_dir.x;
+        pball->velocity.y=20*pass_dir.y;
+		team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].ChasingBall;
+		// setfillstyle(1,BLACK);
+		// circle(10,10,10);
+	}
+	else if(flag==4)
+	{
+		pass_dir=get_dir(pball->now_pos,team->goalkeeper.now_pos);
+        pball->velocity.x=20*pass_dir.x;
+        pball->velocity.y=20*pass_dir.y;
+		team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].ChasingBall;
+	}
+	// setfillstyle(1,BLACK);
+	// 	circle(20,20,10);
+	delay(20);
+
+}
+void action(_team *team,_ball *pball)
+{
+	
+        if(KeyPress(KEY_A))
+		{
+			team->player[team->controlplayer].velocity.x=-20;
+			team->player[team->controlplayer].velocity.y=0;
+			team->player[team->controlplayer].dir=Left;
+		}
+		if(KeyPress(KEY_D))
+		{
+			team->player[team->controlplayer].velocity.x=20;
+			team->player[team->controlplayer].velocity.y=0;	
+			team->player[team->controlplayer].dir=Right;
+		}
+		if(KeyPress(KEY_S))
+		{
+			team->player[team->controlplayer].velocity.x=0;
+			team->player[team->controlplayer].velocity.y=20;
+
+		}
+		if(KeyPress(KEY_W))
+		{
+			team->player[team->controlplayer].velocity.x=0;
+			team->player[team->controlplayer].velocity.y=-20;
+
+		}
+        if(team->player[team->controlplayer].pnowstate==&team->player[team->controlplayer].Dribble)
+        {
+            if(KeyPress(KEY_J))
+		    {
+			    shoot(team,pball);
+		    }
+            else if(KeyPress(KEY_K))
+		    {
+		    	pass(pball,team);
+		    }
+        }
+}
+
+double distance(double x1,double y1,double x2,double y2)
+{
+	double x,y,dist,distance;
+	x=x1-x2;
+	y=y1-y2;
+	dist=x*x+y*y;
+    distance=sqrt(dist);
+	return distance;
+}
+Pos2d get_dir(Pos2d pos_from,Pos2d pos_to)
+{
+    double length,x,y;
+    Pos2d dir;
+    x=pos_to.x-pos_from.x;
+    y=pos_to.y-pos_from.y;
+    length=distance(pos_from.x,pos_from.y,pos_to.x,pos_to.y);
+    dir.x=x/length;
+    dir.y=y/length;
+    return dir;
+}
+
+void draw_judge(int x,int y)
+{
+    setlinestyle(0,0,1);
+    setcolor(BLACK);
+    circle(x+6,y+6,6);
+    line(x+6,y+12,x+6,y+22);
+    line(x+6,y+17,x,y+23);
+    line(x+6,y+17,x+12,y+23);
+    line(x+6,y+22,x,y+28);
+    line(x+6,y+22,x+12,y+28);
+	setfillstyle(1,RED);
+	bar(x-6,y+19,x,y+23);
+	setfillstyle(1,YELLOW);
+	bar(x+12,y+19,x+18,y+23);
+}
+
+void draw_player(int x,int y,int dir,int control,int ID,enum TEAM_NAME team_name)
+{
+    setlinestyle(0,0,1);
+	if (team_name==Red)
+	{
+		setcolor(RED);
+        switch(ID)
+        {
+        case(0):outtextxy(x+1,y+6,"0");
+                break;
+        case(1):outtextxy(x+1,y+6,"1");
+                break;
+        case(2):outtextxy(x+1,y+6,"2");
+                break;
+        case(3):outtextxy(x+1,y+6,"3");
+                break;
+        case(4):outtextxy(x+1,y+6,"4");
+                break;
+        }
+	}
+	else
+	{
+		setcolor(BLUE);
+	}
+
+    circle(x+6,y+6,6);
+    line(x+6,y+12,x+6,y+28);
+	if(dir==Right)
+    {
+		line(x+6,y+20,x+12,y+14);
+    	line(x+6,y+20,x+12,y+26);
+	}
+	else
+	{
+		line(x+6,y+20,x,y+14);
+    	line(x+6,y+20,x,y+26);
+	}
+	if(control)
+	{
+		setfillstyle(1,YELLOW);
+		pieslice(x+6,y+2,0,360,2);
+	}
+	line(x+6,y+28,x,y+34);
+    line(x+6,y+28,x+12,y+34);
+}
+
+void draw_ball(int x,int y)
+{
+	setfillstyle(1,WHITE);
+	pieslice(x+8,y+8,0,360,6);
+	setfillstyle(1,BLACK);
+	pieslice(x+8,y+8,0,360,1);
+	delay(60);
+	pieslice(x+8,y+5,0,360,1);
+	pieslice(x+5,y+8,0,360,1);
+	pieslice(x+11,y+8,0,360,1);
+	pieslice(x+8,y+11,0,360,1);
+}
+void draw_ground()
+{
+	setlinestyle(0,0,3);
+	setcolor(WHITE);
+	rectangle(40,80,600,474);
+	rectangle(0,220,40,340);
+	rectangle(600,220,638,340);
+	line(320,80,320,474);
+	circle(320,280,80);
+	arc(40,280,0,90,120);
+	arc(40,280,270,360,120);
+	arc(600,280,90,270,120);
+	arc(40,80,270,360,20);
+	arc(40,474,0,90,20);
+	arc(600,80,180,270,20);
+	arc(600,474,90,180,20);
+}

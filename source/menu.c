@@ -1,0 +1,309 @@
+#include<graphics.h>
+#include<process.h>
+#include<stdlib.h>
+#include<dos.h>
+#include<ctype.h>
+#include"mouse.h"
+#include"hanzi.h"
+#include"multikey.h"
+#include"menu.h"
+#include"tool.h"
+#include"game.h"
+
+//界面间的调转
+void menu()
+{
+	menu_page();
+	Initmouse(0,639,0,479);
+	InstallKeyboard();
+	while(1)
+	{
+		Newxy();
+		if (Mouse_press(320,170,600,230))
+		{
+			changci();
+		}
+		if(Mouse_press(320,90,600,150))
+		{
+			jiaoxue();
+		}
+		if(Mouse_press(320,250,600,310))
+		{
+			choose_team();
+		}
+		if(KeyPress(KEY_ESC))
+			exit(0);
+	}
+}
+/*
+    主界面
+*/
+void menu_page()
+{
+	
+    //showbmp("c:\\mycode\\picture\\menu.bmp",120,50,0,0,380,100);
+	setcolor(BLACK);
+	setfillstyle(1,GREEN);
+	bar(0,0,639,479);
+	setfillstyle(1,YELLOW);
+	fillellipse(210,40,30,30);
+	fillellipse(270,40,30,30);
+	fillellipse(330,40,30,30);
+	fillellipse(390,40,30,30);
+	settextstyle(1,HORIZ_DIR,2);
+	printHZ16(200,30,"梦",BLACK,2,2);
+	printHZ16(260,30,"想",BLACK,2,2);
+	printHZ16(320,30,"足",BLACK,2,2);
+	printHZ16(380,30,"球",BLACK,2,2);
+	setfillstyle(1,BLUE);
+	bar(320,90,600,150);
+	bar(320,170,600,230);
+	bar(320,250,600,310);
+	settextstyle(1,HORIZ_DIR,5);
+	printHZ16(330,100,"键",BLACK,2,2);
+	printHZ16(370,100,"盘",BLACK,2,2);
+	printHZ16(410,100,"教",BLACK,2,2);
+	printHZ16(450,100,"学",BLACK,2,2);
+	printHZ16(330,180,"快",BLACK,2,2);
+	printHZ16(370,180,"速",BLACK,2,2);
+	printHZ16(410,180,"游",BLACK,2,2);
+	printHZ16(450,180,"戏",BLACK,2,2);
+	printHZ16(330,260,"创",BLACK,2,2);
+	printHZ16(370,260,"建",BLACK,2,2);
+	printHZ16(410,260,"球",BLACK,2,2);
+	printHZ16(450,260,"队",BLACK,2,2);
+}
+/*
+   主场客场界面
+*/
+void changci()
+{
+    cleardevice();
+    setfillstyle(1,GREEN);
+    bar(0,0,639,479);
+    setfillstyle(1,RED);
+    bar(20,160,220,320);
+    printHZ16(30,170,"主",BLACK,4,4);
+    printHZ16(120,170,"场",BLACK,4,4);
+	//PRINT红色球衣，蓝色
+    setcolor(BLACK);
+    line(230,320,410,160);
+    setfillstyle(1,WHITE);
+    bar(420,160,620,320);
+    printHZ16(430,170,"客",BLACK,4,4);
+    printHZ16(520,170,"场",BLACK,4,4);
+	Initmouse(0,639,0,479);
+	InstallKeyboard();
+	while(1)
+	{
+		Newxy();
+		if(Mouse_press(20,160,220,320)||Mouse_press(420,160,620,320))
+			game();
+		if(KeyPress(KEY_ESC))
+			menu();
+	}
+}
+/*
+   键盘教学界面
+*/
+
+void jiaoxue()
+{
+    cleardevice();
+	 setbkcolor(GREEN);
+	 setcolor(WHITE);
+	 rectangle(250,0,378,32);
+	 setfillstyle(1,WHITE);
+	 floodfill(251,1,WHITE);
+	 printHZ16(250,0,"教",BLUE,2,2);
+	 printHZ16(282,0,"学",BLUE,2,2);
+	 printHZ16(314,0,"界",BLUE,2,2);
+	 printHZ16(346,0,"面",BLUE,2,2);
+	 rectangle(20,50,600,460);
+	 setfillstyle(1,YELLOW);
+	 floodfill(21,51,WHITE);
+	 settextstyle(1,0,3);
+	 setcolor(RED);
+	 outtextxy(20,50,"W,S,A,D:");
+	 printHZ16(130,50,"分",BLUE,2,2);
+	 printHZ16(162,50,"别",BLUE,2,2);
+	 printHZ16(194,50,"控",BLUE,2,2);
+	 printHZ16(226,50,"制",BLUE,2,2);
+	 printHZ16(258,50,"上",BLUE,2,2);
+	 printHZ16(290,50,"下",BLUE,2,2);
+	 printHZ16(322,50,"左",BLUE,2,2);
+	 printHZ16(354,50,"右",BLUE,2,2);
+	 outtextxy(25,90,"J:");
+	 printHZ16(40,90,"当",BLUE,2,2);
+	 printHZ16(72,90,"我",BLUE,2,2);
+	 printHZ16(104,90,"方",BLUE,2,2);
+	 printHZ16(136,90,"带",BLUE,2,2);
+	 printHZ16(168,90,"球",BLUE,2,2);
+	 printHZ16(200,90,"时",BLUE,2,2);
+	 setcolor(BLUE);
+	 outtextxy(232,90,":");
+	 printHZ16(236,90,"射",BLUE,2,2);
+	 printHZ16(268,90,"门",BLUE,2,2);
+	 printHZ16(40,125,"当",BLUE,2,2);
+	 printHZ16(72,125,"对",BLUE,2,2);
+	 printHZ16(104,125,"方",BLUE,2,2);
+	 printHZ16(136,125,"带",BLUE,2,2);
+	 printHZ16(168,125,"球",BLUE,2,2);
+	 printHZ16(200,125,"时",BLUE,2,2);
+	 outtextxy(232,125,":");
+	 printHZ16(236,125,"铲",BLUE,2,2);
+	 printHZ16(268,125,"球",BLUE,2,2);
+	 setcolor(RED);
+	 outtextxy(20,160,"K:");
+	 printHZ16(40,160,"当",BLUE,2,2);
+	 printHZ16(72,160,"我",BLUE,2,2);
+	 printHZ16(104,160,"方",BLUE,2,2);
+	 printHZ16(136,160,"带",BLUE,2,2);
+	 printHZ16(168,160,"球",BLUE,2,2);
+	 printHZ16(200,160,"时",BLUE,2,2);
+	 setcolor(BLUE);
+	 outtextxy(232,160,":");
+	 printHZ16(236,160,"传",BLUE,2,2);
+	 printHZ16(268,160,"球",BLUE,2,2);
+	 printHZ16(40,192,"当",BLUE,2,2);
+	 printHZ16(72,192,"对",BLUE,2,2);
+	 printHZ16(104,192,"方",BLUE,2,2);
+	 printHZ16(136,192,"带",BLUE,2,2);
+	 printHZ16(168,192,"球",BLUE,2,2);
+	 printHZ16(200,192,"时",BLUE,2,2);
+	 outtextxy(232,192,":");
+	 printHZ16(236,192,"换",BLUE,2,2);
+	 printHZ16(268,192,"人",BLUE,2,2);
+	 Initmouse(0,639,0,479);
+	 InstallKeyboard();
+	while(1)
+	{
+		Newxy();
+		if(KeyPress(KEY_ESC))
+			menu();
+	}
+}
+/*
+   选择球队界面
+*/
+
+void choose_team()
+{
+    int x=240;
+    int y=100;
+    cleardevice();
+	 setbkcolor(GREEN);
+	 setcolor(WHITE);
+	 rectangle(x,0,400,32);
+	 setfillstyle(1,WHITE);
+	 floodfill(x+1,1,WHITE);
+	 printHZ16(x,0,"选",BLUE,2,2);
+	 printHZ16(x+32,0,"球",BLUE,2,2);
+	 printHZ16(x+32*2,0,"队",BLUE,2,2);
+	 printHZ16(x+32*3,0,"界",BLUE,2,2);
+	 printHZ16(x+32*4,0,"面",BLUE,2,2);
+	 setcolor(MAGENTA);
+	 x=250;
+	 rectangle(x,y,x+128,y+40);
+	 rectangle(x-128,y+100,x,y+100+40);
+     rectangle(x+128,y+100,x+128+128,y+100+40);
+	 rectangle(x-95,y+100*2,x-95+128,y+100*2+40);
+	 rectangle(x+95,y+100*2,x+95+128,y+100*2+40);
+	 setfillstyle(1,LIGHTGREEN);
+	 floodfill(x+1,y+1,MAGENTA);
+	 floodfill(x-128+1,y+100+1,MAGENTA);
+	 floodfill(x+128+1,y+100+1,MAGENTA);
+	 floodfill(x-95+1,y+100*2+1,MAGENTA);
+	 floodfill(x+95+1,y+100*2+1,MAGENTA);
+	 circle(314,230,50);
+     setfillstyle(1,LIGHTCYAN);
+	 floodfill(314,230,MAGENTA);
+	 printHZ16(282,200,"选",BLUE,2,2);
+	 printHZ16(314,200,"择",BLUE,2,2);
+	 printHZ16(282,230,"球",BLUE,2,2);
+	 printHZ16(314,230,"队",BLUE,2,2);
+	 Initmouse(0,639,0,479);
+	 InstallKeyboard();
+	while(1)
+	{
+		Newxy();
+		if(KeyPress(KEY_ESC))
+			menu();
+		if(Mouse_press(x,y,x+128,y+40))
+			choose_player();
+		if(Mouse_press(x-128,y+100,x,y+100+40))
+			choose_player();
+		if(Mouse_press(x+128,y+100,x+128+128,y+100+40))
+			choose_player();
+		if(Mouse_press(x-95,y+100*2,x-95+128,y+100*2+40))
+			choose_player();
+		if(Mouse_press(x+95,y+100*2,x+95+128,y+100*2+40))
+			choose_player();
+	}
+}
+/*
+   选择球员界面
+*/
+
+void choose_player()
+{
+    int i,j,x,y=100;
+     cleardevice();
+	 setbkcolor(GREEN);           
+	 setcolor(WHITE);
+	 rectangle(260,0,388,32);
+	 setfillstyle(1,YELLOW);
+	 floodfill(261,1,WHITE);
+	 printHZ16(260,0,"选",BLUE,2,2);
+	 printHZ16(292,0,"人",BLUE,2,2);
+	 printHZ16(324,0,"界",BLUE,2,2);
+	 printHZ16(356,0,"面",BLUE,2,2);
+	 printHZ16(50,100,"前",BLUE,2,2);
+	 printHZ16(82,100,"锋",BLUE,2,2);
+	 printHZ16(11,200,"后",BLUE,2,2);
+	 printHZ16(82,200,"卫",BLUE,2,2);
+	 printHZ16(50,300,"守",BLUE,2,2);
+	 printHZ16(82,300,"门",BLUE,2,2);
+	 for(j=0;j<3;j++)
+		{
+		 x=130;
+		 for(i=0;i<4;i++)
+			{
+			 rectangle(x,y,x+96,y+30);
+			 x+=108;
+			}
+		 y+=100;
+		}
+	 y=101;
+	 for(j=0;j<3;j++)
+		{x=131;
+		 for(i=0;i<4;i++)
+			{
+			 floodfill(x,y,WHITE);
+			 x+=108;
+			}
+		 y+=100;
+		}
+	 rectangle(250,375,400,425);
+	 setfillstyle(1,CYAN);
+	 floodfill(300,401,WHITE);
+	 x=260;
+	 printHZ16(x,385,"快",RED,2,2);
+	 printHZ16(x+32,385,"速",RED,2,2);
+	 printHZ16(x+32*2,385,"开",RED,2,2);
+	 printHZ16(x+32*3,385,"始",RED,2,2);
+	 setfillstyle(0,1);
+	 floodfill(131,301,WHITE);
+	 floodfill(463,301,WHITE);
+	 setcolor(GREEN);
+	 rectangle(130,300,130+96,300+30);
+	 rectangle(130+108*3,300,130+108*3+96,300+30);
+	 Initmouse(0,640,0,480);
+	 InstallKeyboard();
+	 while(1)
+	 {
+		 Newxy();
+		 if(KeyPress(KEY_ESC))
+		 	choose_team();
+	 }
+}
