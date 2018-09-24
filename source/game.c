@@ -85,26 +85,32 @@ void game()
 // 		pplayer->pnowstate->Enter(pplayer,pmyteam,popteam);
 // 	}
 // }
-void ChasingBallExecute(_team *pteam1,_team *pteam2,_ball *pball)
+void ChasingBallExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)//pteam是相对而言的
 {
 	pteam1->player[pteam1->controlplayer].control=0;
 	pball->control=0;
 	if(distance(pteam1->player[pteam1->controlplayer].now_pos.x+6,pteam1->player[pteam1->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<30.0)
-		{
+	{
 			pteam1->player[pteam1->controlplayer].control=1;
 			pteam1->iscontrol=1;
 			pball->control=1;
 			pball->team_name=pteam1->team_name;
 			pteam1->player[pteam1->controlplayer].pnowstate=&pteam1->player[pteam1->controlplayer].Dribble;
 			// PlayerChangeState();
-		}
+	}
 }
-void DribbleExecute(_team *pteam1,_team *pteam2,_ball *pball)
+void DribbleExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 {
 	int k=0;
 }
-void WaitExecute(_team *pteam1,_team *pteam2,_ball *pball)
+void WaitExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 {
+	int slow_rate=0.5,i=0;
+	pplayer->velocity.x*=slow_rate;
+	pplayer->velocity.y*=slow_rate;
+	if(i%10==0)
+		move_area(pteam1,pteam2,pplayer,pball);
+	i++;
 	// switch(pteam1)
 	// team->player[team->controlplayer].control=0;
 	// pball->control=0;
@@ -126,7 +132,7 @@ void WaitExecute(_team *pteam1,_team *pteam2,_ball *pball)
 // 		}
 // }
 //守门员的状态
-void TendGoalExecute(_team *pteam1,_team *pteam2,_ball *pball)
+void TendGoalExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
 {
 	if(distance(pteam1->goalkeeper.now_pos.x+6,pteam1->goalkeeper.now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<30.0)
 		{
@@ -140,7 +146,7 @@ void TendGoalExecute(_team *pteam1,_team *pteam2,_ball *pball)
 			// PlayerChangeState();
 		}
 }
-void ReturnHomeExecute(_team *pteam1,_team *pteam2,_ball *pball)
+void ReturnHomeExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
 {
 	int i=0;
 }
@@ -220,25 +226,25 @@ void init_player(_player *pplayer,enum TEAM_NAME team_name,int ID)
 		switch(ID)
 		{
 			
-			case 0:	pplayer->now_pos.x=400;
+			case 2:	pplayer->now_pos.x=400;
 				pplayer->now_pos.y=220;
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
 				pplayer->dir=Left;
 				break;
-			case 1:	pplayer->now_pos.x=400;
+			case 3:	pplayer->now_pos.x=400;
 				pplayer->now_pos.y=340;
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
 				pplayer->dir=Left;
 				break;
-			case 2:	pplayer->now_pos.x=480;
+			case 0:	pplayer->now_pos.x=480;
 				pplayer->now_pos.y=220;
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
 				pplayer->dir=Left;
 				break;
-			case 3:	pplayer->now_pos.x=480;
+			case 1:	pplayer->now_pos.x=480;
 				pplayer->now_pos.y=340;
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
@@ -299,7 +305,7 @@ void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 		// 	setfillstyle(1,BLACK);
 		// circle(20,20,5);
 		// }
-		pplayer->pnowstate->Execute(pteam1,pteam2,pball);
+		pplayer->pnowstate->Execute(pteam1,pteam2,pplayer,pball);
 	}
 	pplayer->old_pos.x=pplayer->now_pos.x;
 	pplayer->old_pos.y=pplayer->now_pos.y;
@@ -308,8 +314,14 @@ void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 	setfillstyle(1,GREEN);
 	bar((int)(pplayer->old_pos.x),(int)(pplayer->old_pos.y),(int)(pplayer->old_pos.x)+12,(int)(pplayer->old_pos.y)+34);
 	draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pteam1->team_name);
-    pplayer->velocity.x=0;
-    pplayer->velocity.y=0;
+    if(pteam1->team_name==Red)
+	{
+		if(pplayer->ID==pteam1->controlplayer)
+		{
+			pplayer->velocity.x=0;
+    		pplayer->velocity.y=0;
+		}
+	}
 	delay(5);
 }
 
@@ -317,7 +329,7 @@ void GoalkeeperUpdate(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball
 {
 	if(pgoalkeeper->pnowstate!=NULL)
 	{
-		pgoalkeeper->pnowstate->Execute(pteam1,pteam2,pball);
+		pgoalkeeper->pnowstate->Execute(pteam1,pteam2,pgoalkeeper,pball);
 	}
 	pgoalkeeper->old_pos=pgoalkeeper->now_pos;
 	pgoalkeeper->now_pos.y+=pgoalkeeper->velocity.y;
@@ -332,6 +344,7 @@ void GoalkeeperUpdate(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball
 }
 void BallUpdate(struct _BALL *pball,struct _PLAYER *pplayer)
 {
+	float slow_rate=0.95;//减速率
 	pball->old_pos.x=pball->now_pos.x;
 	pball->old_pos.y=pball->now_pos.y;
 	if (pball->control==1)
@@ -355,6 +368,8 @@ void BallUpdate(struct _BALL *pball,struct _PLAYER *pplayer)
 	{
 		pball->now_pos.x+=pball->velocity.x;
 		pball->now_pos.y+=pball->velocity.y;
+		pball->velocity.x*=slow_rate;
+		pball->velocity.y*=slow_rate;
 	}
 	setfillstyle(1,GREEN);
 		

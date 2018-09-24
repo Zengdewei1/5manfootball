@@ -12,14 +12,14 @@ void init_goalkeeper(_goalkeeper *pgoalkeeper,enum TEAM_NAME team_name);
 
 // void PlayerChangestate(_player *pplayer,player_state *pnewstate,_team *pmyteam,_team *popteam);
 
-void ChasingBallExecute(_team *pteam1,_team *pteam2,_ball *pball);
-void DribbleExecute(_team *pteam1,_team *pteam2,_ball *pball);
-void WaitExecute(_team *pteam1,_team *pteam2,_ball *pball);
+void ChasingBallExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
+void DribbleExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
+void WaitExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
 // void SupportingExecute(_team *team,_ball *pball);
 // void ReceivingBallExecute(_team *team,_ball *pball);
 
-void TendGoalExecute(_team *pteam1,_team *pteam2,_ball *pball);
-void ReturnHomeExecute(_team *pteam1,_team *pteam2,_ball *pball);
+void TendGoalExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball);
+void ReturnHomeExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball);
 
 void BallUpdate(struct _BALL *pball,struct _PLAYER *pplayer);
 void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);

@@ -10,10 +10,16 @@ typedef struct _POS2d
 }Pos2d;
 typedef struct PLAYER_STATE
 {
-    void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
-    void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
-    void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
+    void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
+    void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
+    void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
 }player_state;
+typedef struct KEEPER_STATE
+{
+    void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
+    void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
+    void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
+}keeper_state;
 typedef struct _PLAYER
 {
     Pos2d velocity;
@@ -33,8 +39,8 @@ typedef struct _GOALKEEPER
     int ID;
     int dir;
     int control;
-    player_state *pnowstate;
-    player_state TendGoal,ReturnHome;
+    keeper_state *pnowstate;
+    keeper_state TendGoal,ReturnHome;
 }_goalkeeper;
 typedef struct _BALL
 {
@@ -73,9 +79,15 @@ enum TEAM_NAME
 };
 void shoot(_team *team,_ball *pball);
 void pass(struct _BALL *pball,struct _TEAM *team);
+
 double distance(double x1,double y1,double x2,double y2);
 Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);
+
 void action(_team *team,_ball *pball);
+void move_dir(_player *pplayer,_ball *pball);
+void move_area(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
+void move_renctangle(_player *pplayer,int type);
+void arrive(_player *pplayer,double _x,double _y);
 
 void draw_player(int x,int y,int dir,int control,int ID,enum TEAM_NAME team_name);
 void draw_judge(int x,int y);

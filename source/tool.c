@@ -13,13 +13,12 @@
 
 void shoot(_team *team,_ball *pball)
 {
-
     Pos2d gate,shoot_dir;
     gate.x=600;
     gate.y=280;
-    shoot_dir=get_dir(pball->now_pos,gate);
-    pball->control=0;
+	pball->control=0;
 	team->player[team->controlplayer].control=0;
+    shoot_dir=get_dir(pball->now_pos,gate);
     pball->velocity.x=20.0*shoot_dir.x;
     pball->velocity.y=20.0*shoot_dir.y;
 	// setfillstyle(1,BLACK);
@@ -169,7 +168,261 @@ void action(_team *team,_ball *pball)
 		    }
         }
 }
+//限制球员的活动范围在一个矩形区域,type1-6表示6个不同的活动范围
+void move_renctangle(_player *pplayer,int type)
+{
+	switch(type)
+	{
+		case(1):if(pplayer->now_pos.x<=240.0)//中场上
+				{
+					pplayer->now_pos.x=240.0;
+				}
+				if(pplayer->now_pos.x>=400.0)
+				{
+					pplayer->now_pos.x=400.0;
+				}
+				if(pplayer->now_pos.y>=280)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				if(pplayer->now_pos.y<=80.0)
+				{
+					pplayer->now_pos.y=80.0;
+				}
+				break;
+		case(2):if(pplayer->now_pos.x<=240.0)//中场下
+				{
+					pplayer->now_pos.x=240.0;
+				}
+				if(pplayer->now_pos.x>=400.0)
+				{
+					pplayer->now_pos.x=400.0;
+				}
+				if(pplayer->now_pos.y>=480.0)
+				{
+					pplayer->now_pos.y=480.0;
+				}
+				if(pplayer->now_pos.y<=280.0)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				break;
+		case(3):if(pplayer->now_pos.x<=400.0)//右场上
+				{
+					pplayer->now_pos.x=400.0;
+				}
+				if(pplayer->now_pos.x>=480.0)
+				{
+					pplayer->now_pos.x=400.0;
+				}
+				if(pplayer->now_pos.y>=280)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				if(pplayer->now_pos.y<=80.0)
+				{
+					pplayer->now_pos.y=80.0;
+				}
+				break;
+		case(4):if(pplayer->now_pos.x<=400.0)//右场下
+				{
+					pplayer->now_pos.x=400.0;
+				}
+				if(pplayer->now_pos.x>=480.0)
+				{
+					pplayer->now_pos.x=480.0;
+				}
+				if(pplayer->now_pos.y>=480.0)
+				{
+					pplayer->now_pos.y=480.0;
+				}
+				if(pplayer->now_pos.y<=280.0)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				break;
+		case(5):if(pplayer->now_pos.x<=160.0)//左场上
+				{
+					pplayer->now_pos.x=160.0;
+				}
+				if(pplayer->now_pos.x>=240.0)
+				{
+					pplayer->now_pos.x=240.0;
+				}
+				if(pplayer->now_pos.y>=280)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				if(pplayer->now_pos.y<=80.0)
+				{
+					pplayer->now_pos.y=80.0;
+				}
+				break;
+		case(6):if(pplayer->now_pos.x<=160.0)//左场下
+				{
+					pplayer->now_pos.x=160.0;
+				}
+				if(pplayer->now_pos.x>=240.0)
+				{
+					pplayer->now_pos.x=240.0;
+				}
+				if(pplayer->now_pos.y>=480.0)
+				{
+					pplayer->now_pos.y=480.0;
+				}
+				if(pplayer->now_pos.y<=280.0)
+				{
+					pplayer->now_pos.y=280.0;
+				}
+				break;
+	}
+}
+void arrive(_player *pplayer,double _x,double _y)
+{
+	Pos2d destination,dir;
+	destination.x=_x;
+	destination.y=_y;
+	dir=get_dir(pplayer->now_pos,destination);
+	pplayer->velocity.x=5.0*dir.x;
+	pplayer->velocity.y=5.0*dir.y;
+}
+void move_area(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
+{
+	if(pteam1->team_name==Red)
+	{
+		if(pteam1->iscontrol==1)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+						{
+							arrive(pplayer,320.0,180.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,1);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(1):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+						{
+							arrive(pplayer,320.0,380.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,2);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(2):if(pplayer->now_pos.x<=400.0||pplayer->now_pos.x>=480.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+						{
+							arrive(pplayer,440.0,180.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,3);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(3):if(pplayer->now_pos.x<=400.0||pplayer->now_pos.x>=480.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+						{
+							arrive(pplayer,440.0,380.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,4);
+							move_dir(pplayer,pball);
+						}
+						break;
+			}
+		}
+		else
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(pplayer->now_pos.x<=160.0||pplayer->now_pos.x>=240.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+						{
+							arrive(pplayer,200.0,180.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,5);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(1):if(pplayer->now_pos.x<=160.0||pplayer->now_pos.x>=240.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+						{
+							arrive(pplayer,320.0,180.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,6);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(2):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+						{
+							arrive(pplayer,320.0,180.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,1);
+							move_dir(pplayer,pball);
+						}
+						break;
+				case(3):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+						{
+							arrive(pplayer,320.0,380.0);
+						}
+						else
+						{
+							move_renctangle(pplayer,2);
+							move_dir(pplayer,pball);
+						}
+						break;
+			}
+		}
+	}
+	else
+	{
+		if(pteam1->iscontrol==1)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):move_renctangle(pplayer,1);
+						move_dir(pplayer,pball);
+				case(1):move_renctangle(pplayer,2);
+						move_dir(pplayer,pball);
+				case(2):move_renctangle(pplayer,5);
+						move_dir(pplayer,pball);
+				case(3):move_renctangle(pplayer,6);
+						move_dir(pplayer,pball);
+			}
+		}
+		else
+		{
+			switch(pplayer->ID)
+			{
+				case(0):move_renctangle(pplayer,3);
+						move_dir(pplayer,pball);
+				case(1):move_renctangle(pplayer,4);
+						move_dir(pplayer,pball);
+				case(2):move_renctangle(pplayer,1);
+						move_dir(pplayer,pball);
+				case(3):move_renctangle(pplayer,2);
+						move_dir(pplayer,pball);
+			}
+		}
+	}
+}
 
+void move_dir(_player *pplayer,_ball *pball)
+{
+	Pos2d dir;
+	dir=get_dir(pplayer->now_pos,pball->now_pos);
+	pplayer->velocity.x=5.0*dir.x;
+	pplayer->velocity.y=5.0*dir.y;
+}
 double distance(double x1,double y1,double x2,double y2)
 {
 	double x,y,dist,distance;
