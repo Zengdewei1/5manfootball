@@ -19,8 +19,8 @@ void shoot(_team *team,_ball *pball)
 	pball->control=0;
 	team->player[team->controlplayer].control=0;
     shoot_dir=get_dir(pball->now_pos,gate);
-    pball->velocity.x=20.0*shoot_dir.x;
-    pball->velocity.y=20.0*shoot_dir.y;
+    pball->velocity.x=16.0*shoot_dir.x;
+    pball->velocity.y=16.0*shoot_dir.y;
 	// setfillstyle(1,BLACK);
 	// 	circle(30,30,5);
 }
@@ -92,27 +92,27 @@ void pass(struct _BALL *pball,struct _TEAM *team)
 				flag=-1;
 			}
         }
-        else if(KeyPress(KEY_4))
-        {
-            if(team->controlplayer!=4)
-			{
-				pball->control=0;
-				team->player[team->controlplayer].control=0;
-				// team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
-				team->controlplayer=4;
-				flag=4;
-			}
-            else
-			{
-				flag=-1;
-			}
-        }
+        // else if(KeyPress(KEY_4))
+        // {
+        //     if(team->controlplayer!=4)
+		// 	{
+		// 		pball->control=0;
+		// 		team->player[team->controlplayer].control=0;
+		// 		// team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Wait;
+		// 		team->controlplayer=4;
+		// 		flag=4;
+		// 	}
+            // else
+			// {
+			// 	flag=-1;
+			// }
+        // }
     }
 	if(flag==1)
 	{
 		pass_dir=get_dir(pball->now_pos,team->player[team->controlplayer].now_pos);
-        pball->velocity.x=20*pass_dir.x;
-        pball->velocity.y=20*pass_dir.y;
+        pball->velocity.x=14.0*pass_dir.x;
+        pball->velocity.y=14.0*pass_dir.y;
 		team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].ChasingBall;
 		// setfillstyle(1,BLACK);
 		// circle(10,10,10);
@@ -120,13 +120,12 @@ void pass(struct _BALL *pball,struct _TEAM *team)
 	else if(flag==4)
 	{
 		pass_dir=get_dir(pball->now_pos,team->goalkeeper.now_pos);
-        pball->velocity.x=20*pass_dir.x;
-        pball->velocity.y=20*pass_dir.y;
+        pball->velocity.x=8.0*pass_dir.x;
+        pball->velocity.y=8.0*pass_dir.y;
 		team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].ChasingBall;
 	}
 	// setfillstyle(1,BLACK);
 	// 	circle(20,20,10);
-	delay(20);
 
 }
 void action(_team *team,_ball *pball)
@@ -134,26 +133,26 @@ void action(_team *team,_ball *pball)
 	
         if(KeyPress(KEY_A))
 		{
-			team->player[team->controlplayer].velocity.x=-20;
+			team->player[team->controlplayer].velocity.x=-12.0;
 			team->player[team->controlplayer].velocity.y=0;
 			team->player[team->controlplayer].dir=Left;
 		}
 		if(KeyPress(KEY_D))
 		{
-			team->player[team->controlplayer].velocity.x=20;
+			team->player[team->controlplayer].velocity.x=12.0;
 			team->player[team->controlplayer].velocity.y=0;	
 			team->player[team->controlplayer].dir=Right;
 		}
 		if(KeyPress(KEY_S))
 		{
 			team->player[team->controlplayer].velocity.x=0;
-			team->player[team->controlplayer].velocity.y=20;
+			team->player[team->controlplayer].velocity.y=12.0;
 
 		}
 		if(KeyPress(KEY_W))
 		{
 			team->player[team->controlplayer].velocity.x=0;
-			team->player[team->controlplayer].velocity.y=-20;
+			team->player[team->controlplayer].velocity.y=-12.0;
 
 		}
         if(team->player[team->controlplayer].pnowstate==&team->player[team->controlplayer].Dribble)
@@ -169,248 +168,313 @@ void action(_team *team,_ball *pball)
         }
 }
 //限制球员的活动范围在一个矩形区域,type1-6表示6个不同的活动范围
-void move_renctangle(_player *pplayer,int type)
-{
-	switch(type)
-	{
-		case(1):if(pplayer->now_pos.x<=240.0)//中场上
-				{
-					pplayer->now_pos.x=240.0;
-				}
-				if(pplayer->now_pos.x>=400.0)
-				{
-					pplayer->now_pos.x=400.0;
-				}
-				if(pplayer->now_pos.y>=280)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				if(pplayer->now_pos.y<=80.0)
-				{
-					pplayer->now_pos.y=80.0;
-				}
-				break;
-		case(2):if(pplayer->now_pos.x<=240.0)//中场下
-				{
-					pplayer->now_pos.x=240.0;
-				}
-				if(pplayer->now_pos.x>=400.0)
-				{
-					pplayer->now_pos.x=400.0;
-				}
-				if(pplayer->now_pos.y>=480.0)
-				{
-					pplayer->now_pos.y=480.0;
-				}
-				if(pplayer->now_pos.y<=280.0)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				break;
-		case(3):if(pplayer->now_pos.x<=400.0)//右场上
-				{
-					pplayer->now_pos.x=400.0;
-				}
-				if(pplayer->now_pos.x>=480.0)
-				{
-					pplayer->now_pos.x=400.0;
-				}
-				if(pplayer->now_pos.y>=280)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				if(pplayer->now_pos.y<=80.0)
-				{
-					pplayer->now_pos.y=80.0;
-				}
-				break;
-		case(4):if(pplayer->now_pos.x<=400.0)//右场下
-				{
-					pplayer->now_pos.x=400.0;
-				}
-				if(pplayer->now_pos.x>=480.0)
-				{
-					pplayer->now_pos.x=480.0;
-				}
-				if(pplayer->now_pos.y>=480.0)
-				{
-					pplayer->now_pos.y=480.0;
-				}
-				if(pplayer->now_pos.y<=280.0)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				break;
-		case(5):if(pplayer->now_pos.x<=160.0)//左场上
-				{
-					pplayer->now_pos.x=160.0;
-				}
-				if(pplayer->now_pos.x>=240.0)
-				{
-					pplayer->now_pos.x=240.0;
-				}
-				if(pplayer->now_pos.y>=280)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				if(pplayer->now_pos.y<=80.0)
-				{
-					pplayer->now_pos.y=80.0;
-				}
-				break;
-		case(6):if(pplayer->now_pos.x<=160.0)//左场下
-				{
-					pplayer->now_pos.x=160.0;
-				}
-				if(pplayer->now_pos.x>=240.0)
-				{
-					pplayer->now_pos.x=240.0;
-				}
-				if(pplayer->now_pos.y>=480.0)
-				{
-					pplayer->now_pos.y=480.0;
-				}
-				if(pplayer->now_pos.y<=280.0)
-				{
-					pplayer->now_pos.y=280.0;
-				}
-				break;
-	}
-}
+// void move_renctangle(_player *pplayer,int type)
+// {
+// 	switch(type)
+// 	{
+// 		case(1):if(pplayer->now_pos.x<=240.0)//中场上
+// 				{
+// 					pplayer->now_pos.x=240.0;
+// 				}
+// 				if(pplayer->now_pos.x>=400.0)
+// 				{
+// 					pplayer->now_pos.x=400.0;
+// 				}
+// 				if(pplayer->now_pos.y>=280)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				if(pplayer->now_pos.y<=80.0)
+// 				{
+// 					pplayer->now_pos.y=80.0;
+// 				}
+// 				break;
+// 		case(2):if(pplayer->now_pos.x<=240.0)//中场下
+// 				{
+// 					pplayer->now_pos.x=240.0;
+// 				}
+// 				if(pplayer->now_pos.x>=400.0)
+// 				{
+// 					pplayer->now_pos.x=400.0;
+// 				}
+// 				if(pplayer->now_pos.y>=480.0)
+// 				{
+// 					pplayer->now_pos.y=480.0;
+// 				}
+// 				if(pplayer->now_pos.y<=280.0)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				break;
+// 		case(3):if(pplayer->now_pos.x<=400.0)//右场上
+// 				{
+// 					pplayer->now_pos.x=400.0;
+// 				}
+// 				if(pplayer->now_pos.x>=480.0)
+// 				{
+// 					pplayer->now_pos.x=400.0;
+// 				}
+// 				if(pplayer->now_pos.y>=280)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				if(pplayer->now_pos.y<=80.0)
+// 				{
+// 					pplayer->now_pos.y=80.0;
+// 				}
+// 				break;
+// 		case(4):if(pplayer->now_pos.x<=400.0)//右场下
+// 				{
+// 					pplayer->now_pos.x=400.0;
+// 				}
+// 				if(pplayer->now_pos.x>=480.0)
+// 				{
+// 					pplayer->now_pos.x=480.0;
+// 				}
+// 				if(pplayer->now_pos.y>=480.0)
+// 				{
+// 					pplayer->now_pos.y=480.0;
+// 				}
+// 				if(pplayer->now_pos.y<=280.0)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				break;
+// 		case(5):if(pplayer->now_pos.x<=160.0)//左场上
+// 				{
+// 					pplayer->now_pos.x=160.0;
+// 				}
+// 				if(pplayer->now_pos.x>=240.0)
+// 				{
+// 					pplayer->now_pos.x=240.0;
+// 				}
+// 				if(pplayer->now_pos.y>=280)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				if(pplayer->now_pos.y<=80.0)
+// 				{
+// 					pplayer->now_pos.y=80.0;
+// 				}
+// 				break;
+// 		case(6):if(pplayer->now_pos.x<=160.0)//左场下
+// 				{
+// 					pplayer->now_pos.x=160.0;
+// 				}
+// 				if(pplayer->now_pos.x>=240.0)
+// 				{
+// 					pplayer->now_pos.x=240.0;
+// 				}
+// 				if(pplayer->now_pos.y>=480.0)
+// 				{
+// 					pplayer->now_pos.y=480.0;
+// 				}
+// 				if(pplayer->now_pos.y<=280.0)
+// 				{
+// 					pplayer->now_pos.y=280.0;
+// 				}
+// 				break;
+// 	}
+// }
+
 void arrive(_player *pplayer,double _x,double _y)
 {
 	Pos2d destination,dir;
 	destination.x=_x;
 	destination.y=_y;
 	dir=get_dir(pplayer->now_pos,destination);
-	pplayer->velocity.x=5.0*dir.x;
-	pplayer->velocity.y=5.0*dir.y;
+	pplayer->velocity.x=4.0*dir.x;
+	pplayer->velocity.y=4.0*dir.y;
 }
 void move_area(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 {
-	if(pteam1->team_name==Red)
+	if(pteam1->name==Player)
 	{
-		if(pteam1->iscontrol==1)
+		if(pteam1->iscontrol==1)//我方进攻时
 		{
 			switch(pplayer->ID)
 			{
-				case(0):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+				case(0):if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
 						{
-							arrive(pplayer,320.0,180.0);
+							arrive(pplayer,160.0,pball->now_pos.y);
 						}
-						else
-						{
-							move_renctangle(pplayer,1);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,1);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(1):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+				case(1):if(pplayer->now_pos.x<=280.0||pplayer->now_pos.x>=360.0)
 						{
-							arrive(pplayer,320.0,380.0);
+							arrive(pplayer,320.0,pball->now_pos.y);
 						}
-						else
-						{
-							move_renctangle(pplayer,2);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,2);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(2):if(pplayer->now_pos.x<=400.0||pplayer->now_pos.x>=480.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+				case(2):if(pplayer->now_pos.x<=440.0||pplayer->now_pos.x>=520.0)
 						{
-							arrive(pplayer,440.0,180.0);
+							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else
-						{
-							move_renctangle(pplayer,3);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,3);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(3):if(pplayer->now_pos.x<=400.0||pplayer->now_pos.x>=480.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+				case(3):if(pplayer->now_pos.x<=440.0||pplayer->now_pos.x>=520.0)
 						{
-							arrive(pplayer,440.0,380.0);
+							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else
-						{
-							move_renctangle(pplayer,4);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,4);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
 			}
 		}
-		else
+		else//我方防守时
 		{
 			switch(pplayer->ID)
 			{
-				case(0):if(pplayer->now_pos.x<=160.0||pplayer->now_pos.x>=240.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+				case(0):if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
 						{
-							arrive(pplayer,200.0,180.0);
+							arrive(pplayer,120.0,200.0);
 						}
-						else
-						{
-							move_renctangle(pplayer,5);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,5);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(1):if(pplayer->now_pos.x<=160.0||pplayer->now_pos.x>=240.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+				case(1):if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
 						{
-							arrive(pplayer,320.0,180.0);
+							arrive(pplayer,120.0,360.0);
 						}
-						else
-						{
-							move_renctangle(pplayer,6);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,6);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(2):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+				case(2):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
-							arrive(pplayer,320.0,180.0);
+							arrive(pplayer,240.0,pball->now_pos.y);
 						}
-						else
-						{
-							move_renctangle(pplayer,1);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,1);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
-				case(3):if(pplayer->now_pos.x<=240.0||pplayer->now_pos.x>=400.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
-							arrive(pplayer,320.0,380.0);
+							arrive(pplayer,240.0,380.0);
 						}
-						else
-						{
-							move_renctangle(pplayer,2);
-							move_dir(pplayer,pball);
-						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,2);
+						// 	move_dir(pplayer,pball);
+						// }
 						break;
 			}
 		}
 	}
 	else
 	{
-		if(pteam1->iscontrol==1)
+		if(pteam1->iscontrol==1)//电脑进攻时
 		{
 			switch(pplayer->ID)
 			{
-				case(0):move_renctangle(pplayer,1);
-						move_dir(pplayer,pball);
-				case(1):move_renctangle(pplayer,2);
-						move_dir(pplayer,pball);
-				case(2):move_renctangle(pplayer,5);
-						move_dir(pplayer,pball);
-				case(3):move_renctangle(pplayer,6);
-						move_dir(pplayer,pball);
+				case(0):if(pplayer->now_pos.x<=440.0||pplayer->now_pos.x>=520.0)
+						{
+							arrive(pplayer,480.0,pball->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,1);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(1):if(pplayer->now_pos.x<=280.0||pplayer->now_pos.x>=360.0)
+						{
+							arrive(pplayer,320.0,pball->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,2);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(2):if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
+						{
+							arrive(pplayer,160.0,pplayer->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,5);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(3):if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
+						{
+							arrive(pplayer,160.0,pplayer->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,6);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
 			}
 		}
-		else
+		else//电脑防守时
 		{
 			switch(pplayer->ID)
 			{
-				case(0):move_renctangle(pplayer,3);
-						move_dir(pplayer,pball);
-				case(1):move_renctangle(pplayer,4);
-						move_dir(pplayer,pball);
-				case(2):move_renctangle(pplayer,1);
-						move_dir(pplayer,pball);
-				case(3):move_renctangle(pplayer,2);
-						move_dir(pplayer,pball);
+				case(0):if(pplayer->now_pos.x<=440.0||pplayer->now_pos.x>=520.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)
+						{
+							arrive(pplayer,480.0,200.0);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,3);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(1):if(pplayer->now_pos.x<=440.0||pplayer->now_pos.x>=520.0||pplayer->now_pos.y<=280.0||pplayer->now_pos.y>=480.0)
+						{
+							arrive(pplayer,480.0,360.0);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,4);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(2):if(pplayer->now_pos.x<=360.0||pplayer->now_pos.x>=440.0)
+						{
+							arrive(pplayer,400.0,pball->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,1);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
+				case(3):if(pplayer->now_pos.x<=280.0||pplayer->now_pos.x>=360.0)
+						{
+							arrive(pplayer,320.0,pball->now_pos.y);
+						}
+						// else
+						// {
+						// 	move_renctangle(pplayer,2);
+						// 	move_dir(pplayer,pball);
+						// }
+						break;
 			}
 		}
 	}
@@ -460,25 +524,25 @@ void draw_judge(int x,int y)
 	bar(x+12,y+19,x+18,y+23);
 }
 
-void draw_player(int x,int y,int dir,int control,int ID,enum TEAM_NAME team_name)
+void draw_player(int x,int y,int dir,int control,int ID,int color)
 {
     setlinestyle(0,0,1);
-	if (team_name==Red)
+	if (color==Red)
 	{
 		setcolor(RED);
-        switch(ID)
-        {
-        case(0):outtextxy(x+1,y+6,"0");
-                break;
-        case(1):outtextxy(x+1,y+6,"1");
-                break;
-        case(2):outtextxy(x+1,y+6,"2");
-                break;
-        case(3):outtextxy(x+1,y+6,"3");
-                break;
-        case(4):outtextxy(x+1,y+6,"4");
-                break;
-        }
+        // switch(ID)
+        // {
+        // case(0):outtextxy(x+1,y+3,"0");
+        //         break;
+        // case(1):outtextxy(x+1,y+3,"1");
+        //         break;
+        // case(2):outtextxy(x+1,y+3,"2");
+        //         break;
+        // case(3):outtextxy(x+1,y+3,"3");
+        //         break;
+        // case(4):outtextxy(x+1,y+3,"4");
+        //         break;
+        // }
 	}
 	else
 	{
@@ -508,11 +572,11 @@ void draw_player(int x,int y,int dir,int control,int ID,enum TEAM_NAME team_name
 
 void draw_ball(int x,int y)
 {
+	setcolor(BLACK);
 	setfillstyle(1,WHITE);
 	pieslice(x+8,y+8,0,360,6);
 	setfillstyle(1,BLACK);
 	pieslice(x+8,y+8,0,360,1);
-	delay(60);
 	pieslice(x+8,y+5,0,360,1);
 	pieslice(x+5,y+8,0,360,1);
 	pieslice(x+11,y+8,0,360,1);
@@ -526,7 +590,7 @@ void draw_ground()
 	rectangle(0,220,40,340);
 	rectangle(600,220,638,340);
 	line(320,80,320,474);
-	circle(320,280,80);
+	circle(320,280,60);
 	arc(40,280,0,90,120);
 	arc(40,280,270,360,120);
 	arc(600,280,90,270,120);
@@ -534,4 +598,19 @@ void draw_ground()
 	arc(40,474,0,90,20);
 	arc(600,80,180,270,20);
 	arc(600,474,90,180,20);
+}
+draw_num(int x,int y,int num,int size)
+{
+	setlinestyle(0,0,1);
+	switch(num)
+	{
+		case(0):line(x,y,x+size,y);
+				lineto(x+size,y+2*size);
+				lineto(x,y+2*size);
+				lineto(x,y);
+		case(1):line(x+size,y,x+size,y+2*size);
+		case(2):line(x,y,x+size,y);
+				lineto(x+size,y+size);
+				lineto(x+size,y+size);
+	}
 }

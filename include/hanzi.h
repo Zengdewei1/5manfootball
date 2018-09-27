@@ -1,8 +1,8 @@
-#ifndef _HANZI_H_
-#define _HANZI_H_
+#ifndef  _HZ_H
+#define  _HZ_H
 
-void printHZ12(int x,int y,char *s,int color,int dx,int dy,int gap,int mode);       /*12*12点阵汉字的显示*/
-//void printHZ16(int x,int y,char *s,int color ,int dx,int dy);       /*16*16点阵汉字的显示*/
-void printASC(char *s,int x,int y,int dx,int dy,short color);
+void puthz(int x, int y, char *s, int flag, int part, int color);
+int  outputLetterNum(char ch, int x, int y, int color);
+
 
 #endif

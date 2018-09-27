@@ -15,5 +15,6 @@ void main()
 	driver=VGA;
 	mode=VGAHI;
 	initgraph(&driver,&mode,"C:\\BORLANDC\\BGI");
-    game();
+    game(Left,Right,Red,Blue);
+	// menu();
 }

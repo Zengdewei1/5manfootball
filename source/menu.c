@@ -97,8 +97,16 @@ void changci()
 	while(1)
 	{
 		Newxy();
-		if(Mouse_press(20,160,220,320)||Mouse_press(420,160,620,320))
-			game();
+		if(Mouse_press(20,160,220,320))
+		{
+			game(Left,Right,Red,Blue);
+			game(Right,Left,Red,Blue);
+		}
+		if(Mouse_press(420,160,620,320))
+		{
+			game(Left,Right,Blue,Red);
+			game(Right,Left,Blue,Red);
+		}
 		if(KeyPress(KEY_ESC))
 			menu();
 	}

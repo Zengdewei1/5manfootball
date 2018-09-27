@@ -3,6 +3,10 @@
 
 #define Right 1001
 #define Left 1002
+#define Red 1003
+#define Blue 1004
+#define Player 1005
+#define Computer 1006
 
 typedef struct _POS2d
 {
@@ -49,7 +53,7 @@ typedef struct _BALL
     Pos2d old_pos;
     int control;
     int owner;
-    enum TEAM_NAME team_name;
+    int name;
     int timecount;
 }_ball;
 typedef struct _JUDGE
@@ -67,16 +71,13 @@ typedef struct _TEAM
 {
     int controlplayer;
     int iscontrol;
+    int name;
+    int color;
+    int position;
     _player player[4];
     _goalkeeper goalkeeper;
-    enum TEAM_NAME team_name;
 }_team;
 
-enum TEAM_NAME
-{
-    Blue,
-    Red
-};
 void shoot(_team *team,_ball *pball);
 void pass(struct _BALL *pball,struct _TEAM *team);
 
@@ -86,10 +87,10 @@ Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);
 void action(_team *team,_ball *pball);
 void move_dir(_player *pplayer,_ball *pball);
 void move_area(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
-void move_renctangle(_player *pplayer,int type);
+// void move_renctangle(_player *pplayer,int type);
 void arrive(_player *pplayer,double _x,double _y);
 
-void draw_player(int x,int y,int dir,int control,int ID,enum TEAM_NAME team_name);
+void draw_player(int x,int y,int dir,int control,int ID,int color);
 void draw_judge(int x,int y);
 void draw_ground();
 void draw_ball(int x,int y);

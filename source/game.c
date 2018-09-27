@@ -11,40 +11,53 @@
 #include"tool.h"
 #include"game.h"
 
+/*第一次大更新，
+加入上半场、下半场变量，更改球队颜色变量，加入球队名称变量
+*/
+
+/*AI第一次更新，
+玩家控球时：
+	对玩家：一名前锋玩家控制，另一前锋前往后场接应（远离另一前锋，远离对方球员），一个前锋上路，一个前锋下路，一名后卫守在后场（纵坐标和球一致），一名后卫守在中场（稍远离敌方前锋），作为接应球员
+	对电脑：
+电脑控球时：
+	对玩家：2名后卫守在禁区门口（一个紧跟球，另一球员紧跟另一前锋），一名前锋回防后场（稍远离2后卫，防守另一边），另一前锋中场徘徊（纵坐标和球一致），等待反击
+	对电脑：
+*/
+
 /*游戏界面*/
-void game()
+void game(int position1,int position2,int color1,int color2)
 {
+	int i;
 	_ball ball;
 	_judge judge;
 	_team myteam;
 	_team opteam;
-	int i;
+	myteam.name=Player;
+	myteam.position=position1;
+	myteam.color=color1;
+	opteam.name=Computer;
+	opteam.position=position2;
+	opteam.color=color2;
 	cleardevice();
 	InstallKeyboard();
 	// setfillstyle(1,BLACK);
 	// circle(10,10,5);
 	setfillstyle(1,GREEN);
     bar(0,0,640,480);
-	init_team(&myteam,Red);
-	init_team(&opteam,Blue);
-	
-	// for(i=0;i<4;i++)
-	// {
-	// 	init_player(&Rplayer[i],i);
-	// 	init_player(&Bplayer[i],i);
-	// }
+	init_team(&myteam);
+	init_team(&opteam);
 	init_ball(&ball);
 	init_judge(&judge);
 	for(i=0;i<4;i++)
 	{
-		draw_player((int)(opteam.player[i].now_pos.x),(int)(opteam.player[i].now_pos.y),opteam.player[i].dir,0,opteam.player[i].ID,opteam.team_name);
+		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,myteam.player[i].ID,myteam.color);
 	}
-	draw_player((int)(opteam.goalkeeper.now_pos.x),(int)(opteam.goalkeeper.now_pos.y),opteam.goalkeeper.dir,0,4,opteam.team_name);
+	draw_player((int)(myteam.goalkeeper.now_pos.x),(int)(myteam.goalkeeper.now_pos.y),myteam.goalkeeper.dir,0,4,myteam.color);
 	for(i=0;i<4;i++)
 	{
-		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,myteam.player[i].ID,opteam.team_name);
+		draw_player((int)(opteam.player[i].now_pos.x),(int)(opteam.player[i].now_pos.y),opteam.player[i].dir,0,opteam.player[i].ID,opteam.color);
 	}
-	draw_player((int)(myteam.goalkeeper.now_pos.x),(int)(myteam.goalkeeper.now_pos.y),myteam.goalkeeper.dir,0,4,myteam.team_name);
+	draw_player((int)(opteam.goalkeeper.now_pos.x),(int)(opteam.goalkeeper.now_pos.y),opteam.goalkeeper.dir,0,4,opteam.color);
 	draw_ground();
 	draw_judge((int)(judge.pos.x),(int)(judge.pos.y));
 	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y));
@@ -94,7 +107,7 @@ void ChasingBallExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pbal
 			pteam1->player[pteam1->controlplayer].control=1;
 			pteam1->iscontrol=1;
 			pball->control=1;
-			pball->team_name=pteam1->team_name;
+			pball->name=pteam1->name;
 			pteam1->player[pteam1->controlplayer].pnowstate=&pteam1->player[pteam1->controlplayer].Dribble;
 			// PlayerChangeState();
 	}
@@ -105,10 +118,8 @@ void DribbleExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 }
 void WaitExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 {
-	int slow_rate=0.5,i=0;
-	pplayer->velocity.x*=slow_rate;
-	pplayer->velocity.y*=slow_rate;
-	if(i%10==0)
+	int i=0;
+	if(i%100==0)
 		move_area(pteam1,pteam2,pplayer,pball);
 	i++;
 	// switch(pteam1)
@@ -125,7 +136,7 @@ void WaitExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 // 		{
 // 			team->player[team->controlplayer].control=1;
 // 			pball->control=1;
-// 			pball->team_name=team->team_name;
+// 			pball->name=team->name;
 // 			pball->owner=team->controlplayer;
 // 			team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Dribble;
 // 			// PlayerChangeState();
@@ -141,7 +152,7 @@ void TendGoalExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball 
 			pteam1->goalkeeper.control=1;
 			pteam1->controlplayer=4;
 			pball->control=1;
-			pball->team_name=pteam1->team_name;
+			pball->name=pteam1->name;
 			pteam1->goalkeeper.pnowstate=&pteam1->goalkeeper.ReturnHome;
 			// PlayerChangeState();
 		}
@@ -150,21 +161,20 @@ void ReturnHomeExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_bal
 {
 	int i=0;
 }
-void init_team(struct _TEAM *team,enum TeamName team_name)
+void init_team(struct _TEAM *team)
 {
 	int i=0;
-	team->team_name=team_name;
 	team->iscontrol=0;
 	team->controlplayer=-1;
-	if(team_name==Red)
+	if(team->name==Player)
 		team->controlplayer=3;
 	for(;i<4;i++)
-		init_player(&team->player[i],team->team_name,i);
-	init_goalkeeper(&team->goalkeeper,team->team_name); 
+		init_player(&team->player[i],team->position,i,team->name);
+	init_goalkeeper(&team->goalkeeper,team->position); 
 }
 
 //初始化球员位置信息
-void init_player(_player *pplayer,enum TEAM_NAME team_name,int ID)
+void init_player(_player *pplayer,int position,int ID,int name)
 {	
 	pplayer->ID=ID;
 	pplayer->pnowstate=NULL;
@@ -188,8 +198,9 @@ void init_player(_player *pplayer,enum TEAM_NAME team_name,int ID)
     // pplayer->Supporting.Enter = NULL;
     // pplayer->Supporting.Execute = SupportingExecute;
     // // pplayer->Supporting.Exit = SupportingExit;
-
-	if(team_name==Red)
+	if(name==Computer)
+		pplayer->pnowstate=&pplayer->Wait;
+	if(position==Left)
 	{
 		switch(ID)
 		{
@@ -254,12 +265,12 @@ void init_player(_player *pplayer,enum TEAM_NAME team_name,int ID)
 	}
 }	
 
-void init_goalkeeper(_goalkeeper *pgoalkeeper,enum TEAM_NAME team_name)
+void init_goalkeeper(_goalkeeper *pgoalkeeper,int position)
 {
 	srand((unsigned)time(NULL));
 	pgoalkeeper->TendGoal.Execute=TendGoalExecute;
 	pgoalkeeper->ReturnHome.Execute=ReturnHomeExecute;
-	if(team_name==Red)
+	if(position==Left)
 	{
 		pgoalkeeper->now_pos.x=40;
 		pgoalkeeper->now_pos.y=305-rand()%86;
@@ -300,28 +311,27 @@ void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 {
 	if(pplayer->pnowstate!=NULL)
 	{
-		// if(pplayer->ID==0)
-		// {
-		// 	setfillstyle(1,BLACK);
-		// circle(20,20,5);
-		// }
 		pplayer->pnowstate->Execute(pteam1,pteam2,pplayer,pball);
 	}
+	if(pplayer->velocity.x>0)
+		pplayer->dir=Right;
+	if(pplayer->velocity.x<0)
+		pplayer->dir=Left;
 	pplayer->old_pos.x=pplayer->now_pos.x;
 	pplayer->old_pos.y=pplayer->now_pos.y;
 	pplayer->now_pos.x+=pplayer->velocity.x;
 	pplayer->now_pos.y+=pplayer->velocity.y;
 	setfillstyle(1,GREEN);
 	bar((int)(pplayer->old_pos.x),(int)(pplayer->old_pos.y),(int)(pplayer->old_pos.x)+12,(int)(pplayer->old_pos.y)+34);
-	draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pteam1->team_name);
-    if(pteam1->team_name==Red)
-	{
-		if(pplayer->ID==pteam1->controlplayer)
-		{
+	draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pteam1->color);
+    // if(pteam1->name==Player)
+	// {
+	// 	if(pplayer->ID==pteam1->controlplayer)
+	// 	{
 			pplayer->velocity.x=0;
     		pplayer->velocity.y=0;
-		}
-	}
+	// 	}
+	// }
 	delay(5);
 }
 
@@ -340,11 +350,11 @@ void GoalkeeperUpdate(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball
 		pgoalkeeper->velocity.y*=(-1.0);
 	setfillstyle(1,GREEN);
 	bar((int)(pgoalkeeper->old_pos.x),(int)(pgoalkeeper->old_pos.y),(int)(pgoalkeeper->old_pos.x)+12,(int)(pgoalkeeper->old_pos.y)+34);
-	draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pteam1->team_name);
+	draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pteam1->color);
 }
 void BallUpdate(struct _BALL *pball,struct _PLAYER *pplayer)
 {
-	float slow_rate=0.95;//减速率
+	float slow_rate=0.98;//减速率
 	pball->old_pos.x=pball->now_pos.x;
 	pball->old_pos.y=pball->now_pos.y;
 	if (pball->control==1)
@@ -380,5 +390,5 @@ void BallUpdate(struct _BALL *pball,struct _PLAYER *pplayer)
 	{
 		pball->timecount%=FPS;
 	}
-	delay(20);
+	delay(10);
 }

@@ -55,7 +55,7 @@ void puthz(int x, int y,char *s,int flag,int part,int color)
 					int x0=x;
 					// hzk_p = fopen("c:\\myCCD\\SOURSE\\hz\\hzk16","rb");            //使用相对路径
 					// hzk_p = fopen("SOURSE\\hz\\hzk16", "rb");
-					hzk_p = fopen("c:\\mycode\\hzk\\HZK16","rb");
+					hzk_p = fopen("c:\\mycode\\hzkHZK16","rb");
 					 if(hzk_p==NULL)
 					 {
 						settextjustify(LEFT_TEXT,TOP_TEXT);          //左部对齐，顶部对齐

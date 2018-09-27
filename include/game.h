@@ -3,12 +3,12 @@
 
 #define FPS 40
 
-void game();
+void game(int position1,int position2,int color1,int color2);
 void init_ball(struct _BALL *pball);
 void init_judge(struct _JUDGE *pjudge);
-void init_player(_player *pplayer,enum TEAM_NAME team_name,int ID);
-void init_team(struct _TEAM *team,enum TeamName team_name);
-void init_goalkeeper(_goalkeeper *pgoalkeeper,enum TEAM_NAME team_name);
+void init_player(_player *pplayer,int position,int ID,int name);
+void init_team(struct _TEAM *team);
+void init_goalkeeper(_goalkeeper *pgoalkeeper,int position);
 
 // void PlayerChangestate(_player *pplayer,player_state *pnewstate,_team *pmyteam,_team *popteam);
 
