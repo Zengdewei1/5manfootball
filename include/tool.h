@@ -8,22 +8,33 @@
 #define Player 1005
 #define Computer 1006
 
+
 typedef struct _POS2d
 {
     double x,y;
 }Pos2d;
-typedef struct PLAYER_STATE
+typedef struct PLAYER_STATE//pteam是相对而言的
 {
     void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
-    void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
+    // void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _PLAYER *pplayer,struct _BALL *pball);
 }player_state;
 typedef struct KEEPER_STATE
 {
     void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
-    void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
+    // void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
 }keeper_state;
+typedef struct BALL_STATE
+{
+    void (*Enter)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
+    void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
+	// void (*Exit)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
+}ball_state;
+typedef struct TEAM_STATE
+{
+    void (*Execute)(struct _TEAM *pteam1,struct _TEAM *pteam2,struct _BALL *pball);
+}team_state;
 typedef struct _PLAYER
 {
     Pos2d velocity;
@@ -31,7 +42,13 @@ typedef struct _PLAYER
     Pos2d old_pos;
     int ID;
     int dir;
-    int control;
+    int control;                        //球员是否控球
+    int rate;                           //非加速状态的速度
+    int accelerate;                 //加速速度，用于摆脱对手时的参数 
+    int power;                         // 力量，决定传球和射门时给球的速度
+    int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
+    double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
+    double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
     player_state Dribble,ReceivingBall,Wait,ChasingBall,Supporting;
 }_player;
@@ -42,57 +59,55 @@ typedef struct _GOALKEEPER
     Pos2d old_pos;
     int ID;
     int dir;
-    int control;
+    int control;     //守门员是否控球
     keeper_state *pnowstate;
-    keeper_state TendGoal,ReturnHome;
+    keeper_state TendGoal,Pounce,ControlBall;
 }_goalkeeper;
 typedef struct _BALL
 {
     Pos2d velocity;
     Pos2d now_pos; 
     Pos2d old_pos;
-    int control;
-    int owner;
-    int name;
+    Pos2d start_pos;
+    Pos2d end_pos;
+    int control;//足球控制人，-1不受控制
     int timecount;
+    ball_state *pnowstate;
+    ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
 }_ball;
 typedef struct _JUDGE
 {
     Pos2d velocity;
     Pos2d pos; 
 }_judge;
-typedef struct TEAM_STATE
-{
-    void (*Enter)(struct _TEAM *team,struct _BALL *pball);
-    void (*Execute)(struct _TEAM *team,struct _BALL *pball);
-    void (*Exit)(struct _TEAM *team,struct _BALL *pball);
-}team_state;
+
 typedef struct _TEAM
 {
-    int controlplayer;
-    int iscontrol;
+    int controlplayer;//玩家控制的球员ID
     int name;
     int color;
     int position;
+    int control;//球队控球人，-1不控球
     _player player[4];
     _goalkeeper goalkeeper;
+    team_state *pnowstate;
+    team_state Attack,Defend;
 }_team;
-
-void shoot(_team *team,_ball *pball);
-void pass(struct _BALL *pball,struct _TEAM *team);
+void pass(_team *pteam1,_team *pteam2,_ball *pball);
 
 double distance(double x1,double y1,double x2,double y2);
 Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);
 
-void action(_team *team,_ball *pball);
+void action(_team *pteam1,_team *pteam2,_ball *pball);
 void move_dir(_player *pplayer,_ball *pball);
-void move_area(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
+void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball);
 // void move_renctangle(_player *pplayer,int type);
 void arrive(_player *pplayer,double _x,double _y);
 
-void draw_player(int x,int y,int dir,int control,int ID,int color);
+void draw_player(int x,int y,int dir,int control,int ID,int color,int name);
 void draw_judge(int x,int y);
 void draw_ground();
 void draw_ball(int x,int y);
-
+void draw_num(int x,int y,int num,int size);
+// void reback(int x,int y,int x_size,int y_size);
 #endif

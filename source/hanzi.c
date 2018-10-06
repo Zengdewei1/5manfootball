@@ -138,7 +138,8 @@ void puthz(int x, int y,char *s,int flag,int part,int color)
 					 int y0=y;
 					 int x0=x;
 					//hzk_p = fopen("c:\\myCCD\\SOURSE\\hz\\hzk24s","rb");
-					 hzk_p = fopen("SOURSE\\hz\\hzk24s", "rb");
+					//  hzk_p = fopen("SOURSE\\hz\\hzk24s", "rb");
+					hzk_p = fopen("c:\\mycode\\hzk\\HZK24s","rb");
 					if (hzk_p==NULL)
 					{
 						settextjustify(LEFT_TEXT,TOP_TEXT);          //左部对齐，顶部对齐
@@ -192,7 +193,8 @@ void puthz(int x, int y,char *s,int flag,int part,int color)
 					int y0=y;
 					int x0=x;
 					// hzk_p = fopen("c:\\myCCD\\SOURSE\\hz\\hzk32s","rb");
-					hzk_p = fopen("SOURSE\\hz\\hzk32s", "rb");
+					// hzk_p = fopen("SOURSE\\hz\\hzk32s", "rb");
+					hzk_p = fopen("c:\\mycode\\hzk\\HZK32s","rb");
 					 if(hzk_p==NULL)
 					 {
 						settextjustify(LEFT_TEXT,TOP_TEXT);          //左部对齐，顶部对齐
@@ -254,7 +256,8 @@ void puthz(int x, int y,char *s,int flag,int part,int color)
 					int y0=y;
 					int x0=x;
 					// hzk_p = fopen("c:\\myCCD\\SOURSE\\hz\\hzk48s","rb");
-					hzk_p = fopen("SOURSE\\hz\\hzk48s", "rb");
+					// hzk_p = fopen("SOURSE\\hz\\hzk48s", "rb");
+					hzk_p = fopen("c:\\mycode\\hzk\\HZK48s","rb");
 					 if(hzk_p==NULL)
 					 {
 						settextjustify(LEFT_TEXT,TOP_TEXT);          //左部对齐，顶部对齐

@@ -10,6 +10,6 @@ void Mouse_savebk(int x,int y);
 void Mouse_putbk(int x,int y);
 int Mouse_press(int x1,int y1,int x2,int y2);
 int Mouse_above(int x1,int y1,int x2,int y2);
-
+void NewBK();
 
 #endif

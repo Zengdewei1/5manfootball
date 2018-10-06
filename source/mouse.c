@@ -143,3 +143,8 @@ int Mouse_above(int x1,int y1,int x2,int y2)
   else
   return(0);
 }
+
+void NewBK()
+{
+        default1=0;
+}
