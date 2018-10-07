@@ -10,25 +10,24 @@
 #include"menu.h"
 #include"tool.h"
 #include"game.h"
+#include"state.h"
 
 //传球函数
-void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
+void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 {
     int flag;
-	double radio,start,x_dis,y_dis;
     Pos2d pass_dir;
-	start=pball->now_pos.x;
     flag=0;
     while(flag==0)
     {
         if(KeyPress(KEY_0))
         {
-			if(pteam1->controlplayer!=0)
+			if(pmyteam->controlplayer!=0)
 			{
 				pball->control=-1;
-				pteam1->player[pteam1->controlplayer].control=0;
-				PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].Wait);
-				pteam1->controlplayer=0;
+				pmyteam->player[pmyteam->controlplayer].control=0;
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
+				pmyteam->controlplayer=0;
 				flag=1;
 			}
             else 
@@ -38,12 +37,12 @@ void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
         }
         else if(KeyPress(KEY_1))
         {
-            if(pteam1->controlplayer!=1)
+            if(pmyteam->controlplayer!=1)
 			{
 				pball->control=-1;
-				pteam1->player[pteam1->controlplayer].control=0;
-				PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].Wait);
-				pteam1->controlplayer=1;
+				pmyteam->player[pmyteam->controlplayer].control=0;
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
+				pmyteam->controlplayer=1;
 				flag=1;
 			}
             else
@@ -53,12 +52,12 @@ void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
         }
         else if(KeyPress(KEY_2))
         {
-            if(pteam1->controlplayer!=2)
+            if(pmyteam->controlplayer!=2)
 			{
 				pball->control=-1;
-				pteam1->player[pteam1->controlplayer].control=0;
-				PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].Wait);
-				pteam1->controlplayer=2;
+				pmyteam->player[pmyteam->controlplayer].control=0;
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
+				pmyteam->controlplayer=2;
 				flag=1;
 			}
             else
@@ -68,12 +67,12 @@ void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
         }
         else if(KeyPress(KEY_3))
         {
-            if(pteam1->controlplayer!=3)
+            if(pmyteam->controlplayer!=3)
 			{
 				pball->control=-1;
-				pteam1->player[pteam1->controlplayer].control=0;
-				PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].Wait);
-				pteam1->controlplayer=3;
+				pmyteam->player[pmyteam->controlplayer].control=0;
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
+				pmyteam->controlplayer=3;
 				flag=1;
 			}
             else
@@ -86,10 +85,10 @@ void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
 	// {
 		if(flag==1)
 		{
-			pball->end_pos.x=pteam1->player[pteam1->controlplayer].now_pos.x;
-			pball->end_pos.y=pteam1->player[pteam1->controlplayer].now_pos.y;
-			PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].ChasingBall);
-			BallChangestate(pteam1,pteam2,pball,&pball->Short_pass);
+			pball->end_pos.x=pmyteam->player[pmyteam->controlplayer].now_pos.x;
+			pball->end_pos.y=pmyteam->player[pmyteam->controlplayer].now_pos.y;
+			PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
+			BallChangestate(pmyteam,popteam,pball,&pball->Short_pass);
 		}
 		// else if(flag==4)
 		// {
@@ -111,48 +110,55 @@ void pass(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为玩家球队
 
 }
 //控制球员移动或射门函数
-void action(_team *pteam1,_team *pteam2,_ball *pball)//pteam1玩家球队
+void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
 {
+	setfillstyle(1,BLACK);
+	circle(10,10,10);
 		if(KeyPress(KEY_A))
 		{
-			pteam1->player[pteam1->controlplayer].velocity.x=-12.0;
-			pteam1->player[pteam1->controlplayer].velocity.y=0;
-			pteam1->player[pteam1->controlplayer].dir=Left;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=-12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
+			setfillstyle(1,BLACK);
+			circle(20,20,10);
 		}
 		if(KeyPress(KEY_D))
 		{
-			pteam1->player[pteam1->controlplayer].velocity.x=12.0;
-			pteam1->player[pteam1->controlplayer].velocity.y=0;	
-			pteam1->player[pteam1->controlplayer].dir=Right;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
+			setfillstyle(1,BLACK);
+			circle(30,30,10);
+
 		}
 		if(KeyPress(KEY_S))
 		{
-			pteam1->player[pteam1->controlplayer].velocity.x=0;
-			pteam1->player[pteam1->controlplayer].velocity.y=12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=12.0;
 
 		}
 		if(KeyPress(KEY_W))
 		{
-			pteam1->player[pteam1->controlplayer].velocity.x=0;
-			pteam1->player[pteam1->controlplayer].velocity.y=-12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=-12.0;
 
 		}
-        if(pteam1->player[pteam1->controlplayer].pnowstate==&pteam1->player[pteam1->controlplayer].Dribble)
+        if(pmyteam->player[pmyteam->controlplayer].pnowstate==&pmyteam->player[pmyteam->controlplayer].Dribble)
         {
             if(KeyPress(KEY_J))
 		    {
 				pball->control=-1;
-				pteam1->player[pteam1->controlplayer].control=0;
+				pmyteam->player[pmyteam->controlplayer].control=0;
 				pball->pnowstate=&pball->Short_shoot;
-				BallChangestate(pteam1,pteam2,pball,&pball->Short_shoot);
-				KeeperChangestate(pteam1,pteam2,&pteam2->goalkeeper,pball,&pteam2->goalkeeper.Pounce);
-				PlayerChangestate(pteam1,pteam2,&pteam1->player[pteam1->controlplayer],pball,&pteam1->player[pteam1->controlplayer].Wait);
+				BallChangestate(pmyteam,popteam,pball,&pball->Short_shoot);
+				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 		    }
             if(KeyPress(KEY_K))
 		    {
-		    	pass(pteam1,pteam2,pball);
+		    	pass(pmyteam,popteam,pball);
 		    }
         }
+		setfillstyle(1,BLACK);
+			circle(30,30,10);
 	
 }
 //限制球员的活动范围在一个矩形区域,type1-6表示6个不同的活动范围
@@ -274,13 +280,13 @@ void arrive(_player *pplayer,double _x,double _y)
 	pplayer->velocity.x=4.0*dir.x;
 	pplayer->velocity.y=4.0*dir.y;
 }
-void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
+void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	Pos2d far_dir,near_dir;
 	double dy;
-	if(pteam1->name==Player)
+	if(pplayer->name==Player)
 	{
-		if(pteam1->control!=-1)//我方进攻时
+		if(pmyteam->control!=-1)//我方进攻时
 		{
 			switch(pplayer->ID)
 			{
@@ -299,9 +305,9 @@ void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,320.0,pball->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam2->player[3].now_pos.x,pteam2->player[3].now_pos.y)<=100.0)//跑位，适当远离对方前锋3
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[3].now_pos.x,popteam->player[3].now_pos.y)<=100.0)//跑位，适当远离对方前锋3
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam2->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
@@ -315,21 +321,21 @@ void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam1->player[3].now_pos.x,pteam1->player[3].now_pos.y)<=100.0)//跑位，适当远离我方前锋
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[3].now_pos.x,pmyteam->player[3].now_pos.y)<=100.0)//跑位，适当远离我方前锋
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam2->player[0].now_pos.x,pteam2->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam2->player[1].now_pos.x,pteam2->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
@@ -343,21 +349,21 @@ void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam1->player[2].now_pos.x,pteam1->player[2].now_pos.y)<=100.0)//跑位，适当远离我方前锋
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[2].now_pos.x,pmyteam->player[2].now_pos.y)<=100.0)//跑位，适当远离我方前锋
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[2].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam2->player[0].now_pos.x,pteam2->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[2].now_pos);
+							far_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pteam2->player[1].now_pos.x,pteam2->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
 						{
-							far_dir=get_dir(pplayer->now_pos,pteam1->player[2].now_pos);
+							far_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
@@ -393,15 +399,15 @@ void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 
 							arrive(pplayer,120.0,360.0);
 						}
-						else if(pteam2->controlplayer==3)//紧跟对方2前锋
+						else if(popteam->controlplayer==3)//紧跟对方2前锋
 						{
-							near_dir=get_dir(pplayer->now_pos,pteam2->player[2].now_pos);
+							near_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
 							pplayer->velocity.y=4.0*near_dir.y;
 						}
-						else if(pteam2->controlplayer==2)//紧跟对方3前锋
+						else if(popteam->controlplayer==2)//紧跟对方3前锋
 						{
-							near_dir=get_dir(pplayer->now_pos,pteam2->player[3].now_pos);
+							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
 							pplayer->velocity.y=4.0*near_dir.y;
 						}
@@ -446,7 +452,7 @@ void auto_move(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 
 	else
 	{
-		if(pteam1->control!=-1)//电脑进攻时
+		if(popteam->control!=-1)//电脑进攻时
 		{
 			switch(pplayer->ID)
 			{
@@ -586,10 +592,10 @@ void draw_judge(int x,int y)
 	bar(x+12,y+19,x+18,y+23);
 }
 
-void draw_player(int x,int y,int dir,int control,int ID,int color,int name)
+void draw_player(int x,int y,int dir,int control,int ID,int teamcolor,int teamname)
 {
     setlinestyle(0,0,1);
-	if (color==Red)
+	if (teamcolor==Red)
 	{
 		setcolor(RED);
         
@@ -598,7 +604,7 @@ void draw_player(int x,int y,int dir,int control,int ID,int color,int name)
 	{
 		setcolor(BLUE);
 	}
-	if(name==Player)
+	if(teamname==Player)
 		draw_num(x+4,y+2,ID,4);
     circle(x+6,y+6,6);
     line(x+6,y+12,x+6,y+28);

@@ -10,6 +10,7 @@
 #include"menu.h"
 #include"tool.h"
 #include"game.h"
+#include"state.h"
 
 /*第一次大更新，
 加入上半场、下半场变量，更改球队颜色变量，加入球队名称变量
@@ -68,286 +69,44 @@ void game(int position1,int position2,int color1,int color2)
 		}
 		for(i=0;i<4;i++)
 		{
-			PlayerUpdate(&opteam,&myteam,&opteam.player[i],&ball);
+			PlayerUpdate(&myteam,&opteam,&myteam.player[i],&ball,myteam.name);
 		}
-		GoalkeeperUpdate(&myteam,&opteam,&myteam.goalkeeper,&ball);
-		GoalkeeperUpdate(&opteam,&myteam,&opteam.goalkeeper,&ball);
-		if(myteam.control!=-1)
-			BallUpdate(&myteam,&opteam,&ball);
-		else
-			BallUpdate(&opteam,&myteam,&ball);
 		for(i=0;i<4;i++)
 		{
-			PlayerUpdate(&myteam,&opteam,&myteam.player[i],&ball);
+			PlayerUpdate(&myteam,&opteam,&opteam.player[i],&ball,opteam.name);
 		}
+		GoalkeeperUpdate(&myteam,&opteam,&myteam.goalkeeper,&ball,myteam.name);
+		GoalkeeperUpdate(&myteam,&opteam,&opteam.goalkeeper,&ball,opteam.name);
+		BallUpdate(&myteam,&opteam,&ball);
+		// TeamUpdate(&myteam,&opteam,&ball);
 		draw_ground();
 	}
 }
 
-void PlayerChangestate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball,player_state *pnewstate)//pteam是相对而言的
-{
-	// if(pplayer->pnowstate->Exit!=NULL)
-	// {
-	// 	pplayer->pnowstate->Exit(pteam1,pteam2,pplayer,pball);
-	// }
-	pplayer->pnowstate=pnewstate;
-	if(pplayer->pnowstate->Enter!=NULL)
-	{
-		pplayer->pnowstate->Enter(pteam1,pteam2,pplayer,pball);
-	}
-}
 
-void KeeperChangestate(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball,keeper_state *pnewstate)
-{
-	// if(pgoalkeeper->pnowstate->Exit!=NULL)
-	// {
-	// 	pgoalkeeper->pnowstate->Exit(pteam1,pteam2,pgoalkeeper,pball);
-	// }
-	pgoalkeeper->pnowstate=pnewstate;
-	if(pgoalkeeper->pnowstate->Enter!=NULL)
-	{
-		pgoalkeeper->pnowstate->Enter(pteam1,pteam2,pgoalkeeper,pball);
-	}
-}
 
-void BallChangestate(_team *pteam1,_team *pteam2,_ball *pball,ball_state *pnewstate)
-{
-	// if(pball->pnowstate->Exit!=NULL)
-	// {
-		// pball->pnowstate->Exit(pteam1,pteam2,pball);
-	// }
-	pball->pnowstate=pnewstate;
-	if(pball->pnowstate->Enter!=NULL)
-	{
-		pball->pnowstate->Enter(pteam1,pteam2,pball);
-	}
-}
-	
-//球队状态
-void AttackExecute(_team *pteam1,_team *pteam2,_ball *pball)//pteam是相对而言的
+void init_team(_team *team)
 {
 	int i=0;
-}
-
-void DefendExecute(_team *pteam1,_team *pteam2,_ball *pball)
-{
-	int i=0;
-}
-
-
-//球员状态
-void ChasingBallExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)//pteam是相对而言的
-{
-	if(pteam1->name==Player&&pplayer->ID==pteam1->controlplayer)
-		action(pteam1,pteam2,pball);
-	// pplayer->control=0;
-	// pball->control=-1;
-	if(distance(pteam1->player[pteam1->controlplayer].now_pos.x+6,pteam1->player[pteam1->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<30.0)
-	{
-			pplayer->control=1;
-			pteam1->control=pplayer->ID;
-			pball->control=pplayer->ID;
-			BallChangestate(pteam1,pteam2,pball,&pball->Control);
-			PlayerChangestate(pteam1,pteam2,pplayer,pball,&pplayer->Dribble);
-	}
-}
-void DribbleExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)//pteam是相对而言的
-{
-	if(pteam1->name==Player&&pplayer->ID==pteam1->controlplayer)
-		action(pteam1,pteam2,pball);
-	else
-		pplayer->velocity.y*=(-1);
-}
-void WaitExecute(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)//pteam是相对而言的
-{
-	int i=0;
-	if(i%100==0)
-		auto_move(pteam1,pteam2,pplayer,pball);
-	i++;
-	// switch(pteam1)
-	// team->player[team->controlplayer].control=0;
-	// pball->control=0;
-}
-// void SupportingExecute(_team *team,_ball *pball)
-// {
-// 	int n=0;
-// }
-// void ReceivingBallExecute(_team *team,_ball *pball)
-// {
-// 	if(distance(team->player[team->controlplayer].now_pos.x+6,team->player[team->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<25.0)
-// 		{
-// 			team->player[team->controlplayer].control=1;
-// 			pball->control=1;
-// 			pball->name=team->name;
-// 			pball->control=team->controlplayer;
-// 			team->player[team->controlplayer].pnowstate=&team->player[team->controlplayer].Dribble;
-// 			// PlayerChangeState();
-// 		}
-// }
-// //守门员的状态
-// void TendGoalExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
-// {
-// 	if(pgoalkeeper->now_pos.y>=306.0)
-// 		pgoalkeeper->velocity.y*=(-1.0);
-// 	else if(pgoalkeeper->now_pos.y<=220.0)
-// 		pgoalkeeper->velocity.y*=(-1.0);
-// 	if(distance(pteam1->goalkeeper.now_pos.x+6,pteam1->goalkeeper.now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<30.0)
-// 		{
-// 			pteam2->control=0;
-// 			pteam2->player[pteam2->controlplayer].pnowstate=&pteam2->player[pteam2->controlplayer].Wait;
-// 			pteam2->controlplayer=-1;
-// 			pteam1->control=1;
-// 			pteam1->goalkeeper.control=1;
-// 			pteam1->controlplayer=4;
-// 			pball->control=1;
-// 			pball->name=pteam1->name;
-// 			pteam1->goalkeeper.pnowstate=&pteam1->goalkeeper.Control;
-// 			pgoalkeeper->velocity.x=0;
-// 			pgoalkeeper->velocity.y=0;
-// 			// PlayerChangeState();
-// 		}
-// }
-// void ControlExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
-// {
-// 	Pos2d pass_dir;
-// 	// if(pteam2->player[2].now_pos.x<=320.0&&pteam2->player[3].now_pos.x<=320.0)
-// 	// {
-// 	// 	pteam1->player[0].pnowstate=&pteam1->player[0].ChasingBall;
-// 	// 	pball->control=0;
-// 	// 	pteam1->goalkeeper.control=0;
-// 	// 	pass_dir=get_dir(pball->now_pos,pteam1->player[0].now_pos);
-// 	// 	pball->velocity.x=4.0*pass_dir.x;
-// 	// 	pball->velocity.y=4.0*pass_dir.y;
-// 	// 	pgoalkeeper->pnowstate=&pgoalkeeper->TendGoal;
-// 	// 	pgoalkeeper->velocity.y=4.0;
-// 	// 	pteam1->controlplayer=-1;
-// 	// }
-// }
-//守门员的状态
-void TendGoalExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)//pteam是相对而言的
-{
-	if(pgoalkeeper->now_pos.y>=276.0)
-		pgoalkeeper->velocity.y*=(-1.0);
-	else if(pgoalkeeper->now_pos.y<=250.0)
-		pgoalkeeper->velocity.y*=(-1.0);
-}
-void PounceEnter(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
-{
-	if(pgoalkeeper->now_pos.y+17>280)
-                {
-                            pgoalkeeper->velocity.y=-2;
-                }
-    else
-                {
-                            pgoalkeeper->velocity.y=2;  
-                }
-}
-void PounceExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
-{
-            //   if(pball->now_pos.x>610.0)
-			//   {
-			// 	  init_team(pteam1);
-			// 	  init_team(pteam2);
-			// 	  pball->control=3;
-			// 	  pteam2
-			//   }
-              if(distance(pball->now_pos.x+6,pball->now_pos.y+6,pgoalkeeper->now_pos.x+6,pgoalkeeper->now_pos.y+17)<30.0)
-                {
-                     pgoalkeeper->pnowstate=&pgoalkeeper->ControlBall;
-					 pgoalkeeper->control=1;
-					 pball->control=4;
-                }
-
-}
-void ControlBallExecute(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
-{
-	Pos2d pass_dir;
-	// if(pteam2->player[2].now_pos.x<=320.0&&pteam2->player[3].now_pos.x<=320.0)
-	//  {
-	// 	pteam1->player[0].pnowstate=&pteam1->player[0].ChasingBall;
-	// 	pball->control=0;
-	// 	pteam1->goalkeeper.control=0;
-	// 	pass_dir=get_dir(pball->now_pos,pteam1->player[0].now_pos);
-	//                 pball->velocity.x=4.0*pass_dir.x;
-	// 	pball->velocity.y=4.0*pass_dir.y;
-	// 	pgoalkeeper->pnowstate=&pgoalkeeper->TendGoal;
-	// 	pgoalkeeper->velocity.y=4.0;
-	// 	pteam1->controlplayer=-1;
-	//  }
-}
-
-// void Long_passExecute(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为控球球队
-// {
-// 	double radio,x,y;
-// 	x=team->player[team->controlplayer].now_pos.x-pball->now_pos.x;
-// 	radio=(team->player[team->controlplayer].now_pos.y-pball->now_pos.y)/abs(x)/abs(x);
-// 	if(x>0)
-// 		pball->velocity.x=10.0;
-// 	else
-// 		pball->velocity.x=-10.0;
-// 	pball->velocity.y=10.0*2*radio*abs(pball->now_pos.x-pball->start_pos.x);
-// }
-
-//足球状态
-
-void Short_passEnter(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为控球球队
-{
-	Pos2d pass_dir;
-	pass_dir=get_dir(pball->now_pos,pball->end_pos);
-    pball->velocity.x=16.0*pass_dir.x;
-    pball->velocity.y=16.0*pass_dir.y;
-	
-}
-
-void Short_shootEnter(_team *pteam1,_team *pteam2,_ball *pball)//pteam1为控球球队
-{
-	Pos2d gate,shoot_dir;
-	gate.x=600.0;
-	if(pteam2->goalkeeper.now_pos.y+17>280)
-    	gate.y=220.0;
-    else
-		gate.y=340.0-12.0;
-	shoot_dir=get_dir(pball->now_pos,gate);
-    pball->velocity.x=18.0*shoot_dir.x;
-    pball->velocity.y=18.0*shoot_dir.y;
-}
-
-void ControlExecute(_team *pteam1,_team *pteam2,_ball *pball)
-{
-	pball->velocity.x=0.0;
-	pball->velocity.y=0.0;
-	if(pteam1->player[pteam1->controlplayer].dir==Left)
-	{
-		pball->now_pos.x=pteam1->player[pteam1->controlplayer].now_pos.x-16.0;
-		pball->now_pos.y=pteam1->player[pteam1->controlplayer].now_pos.y+18.0;
-	}
-	else
-	{
-		pball->now_pos.x=pteam1->player[pteam1->controlplayer].now_pos.x+12.0;
-		pball->now_pos.y=pteam1->player[pteam1->controlplayer].now_pos.y+18.0;
-		
-	}
-}
-
-void init_team(struct _TEAM *team)
-{
-	int i=0;
-	team->pnowstate=NULL;
-	team->Attack.Execute=AttackExecute;
-	team->Defend.Execute=DefendExecute;
+	// team->pnowstate=NULL;
+	// team->Attack.Execute=AttackExecute;
 	team->control=-1;
 	team->controlplayer=-1;
-	if(team->name==Player)
-		team->controlplayer=3;
 	for(;i<4;i++)
 		init_player(&team->player[i],team->position,i,team->name);
-	init_goalkeeper(&team->goalkeeper,team->position); 
+	init_goalkeeper(&team->goalkeeper,team->position,team->name); 
+	if(team->name==Player)
+	{
+		team->controlplayer=3;
+		team->player[3].pnowstate=&team->player[3].ChasingBall;
+	}
 }
 
 //初始化球员位置信息
 void init_player(_player *pplayer,int position,int ID,int name)
 {	
 	pplayer->ID=ID;
+	pplayer->name=name;
 	// pplayer->pnowstate = &pplayer->Wait;
 	pplayer->Wait.Enter = NULL;
     pplayer->Wait.Execute = WaitExecute;
@@ -373,7 +132,6 @@ void init_player(_player *pplayer,int position,int ID,int name)
 	{
 		switch(ID)
 		{
-			
 			case 0:	pplayer->now_pos.x=160;
 				pplayer->now_pos.y=220;
 				pplayer->velocity.x=0;
@@ -397,7 +155,6 @@ void init_player(_player *pplayer,int position,int ID,int name)
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
 				pplayer->dir=Right;
-				pplayer->pnowstate = &pplayer->ChasingBall;
 				break;
 		}
 	}
@@ -433,9 +190,10 @@ void init_player(_player *pplayer,int position,int ID,int name)
 		}
 	}
 }
-void init_goalkeeper(_goalkeeper *pgoalkeeper,int position)
+void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name)
 {
 	srand((unsigned)time(NULL));
+	pgoalkeeper->name=name;
 	pgoalkeeper->TendGoal.Enter=NULL;
 	pgoalkeeper->TendGoal.Execute=TendGoalExecute;
 	// pgoalkeeper->TendGoal.Exit=NULL;
@@ -466,7 +224,7 @@ void init_goalkeeper(_goalkeeper *pgoalkeeper,int position)
 	}
 }
 //初始化足球和裁判
-void init_ball(struct _BALL *pball)
+void init_ball(_ball *pball)
 {
 	pball->now_pos.x=322;
 	pball->now_pos.y=280;
@@ -484,27 +242,27 @@ void init_ball(struct _BALL *pball)
 	pball->Short_shoot.Execute=NULL;
 	// pball->Long_shoot.Execute=Long_shootExecute;
 }
-void init_judge(struct _JUDGE *pjudge)
+void init_judge(_judge *pjudge)
 {
 	pjudge->pos.x=320.0;
 	pjudge->pos.y=57.0;
 }
 
-void TeamUpdate(_team *pteam1,_team *pteam2,_ball *pball)//pteam是相对而言的
-{
-	if(pteam1->pnowstate!=NULL)
-		pteam1->pnowstate->Execute(pteam1,pteam2,pball);
-}
+// void TeamUpdate(_team *pmyteam,_team *popteam,_ball *pball)//pteam是相对而言的
+// {
+// 	if(pmyteam->pnowstate!=NULL)
+// 		pmyteam->pnowstate->Execute(pmyteam,popteam,pball);
+// }
 
-void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
+void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball,int teamname)
 {
 	if(pplayer->pnowstate!=NULL)
 	{
-		pplayer->pnowstate->Execute(pteam1,pteam2,pplayer,pball);
+		pplayer->pnowstate->Execute(pmyteam,popteam,pplayer,pball);
 	}
-	if(pplayer->velocity.x>0)
+	if(pplayer->velocity.x>0.0)
 		pplayer->dir=Right;
-	if(pplayer->velocity.x<0)
+	if(pplayer->velocity.x<0.0)
 		pplayer->dir=Left;
 	pplayer->old_pos.x=pplayer->now_pos.x;
 	pplayer->old_pos.y=pplayer->now_pos.y;
@@ -512,32 +270,39 @@ void PlayerUpdate(_team *pteam1,_team *pteam2,_player *pplayer,_ball *pball)
 	pplayer->now_pos.y+=pplayer->velocity.y;
 	setfillstyle(1,GREEN);
 	bar((int)(pplayer->old_pos.x),(int)(pplayer->old_pos.y),(int)(pplayer->old_pos.x)+12,(int)(pplayer->old_pos.y)+34);
-	draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pteam1->color,pteam1->name);
+	if(teamname==pmyteam->name)
+		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pmyteam->color,pmyteam->name);
+	else
+		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,popteam->color,popteam->name);
 	pplayer->velocity.x=0.0;
     pplayer->velocity.y=0.0;
 	delay(5);
 }
 
-void GoalkeeperUpdate(_team *pteam1,_team *pteam2,_goalkeeper *pgoalkeeper,_ball *pball)
+void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball,int teamname)
 {
 	if(pgoalkeeper->pnowstate!=NULL)
 	{
-		pgoalkeeper->pnowstate->Execute(pteam1,pteam2,pgoalkeeper,pball);
+		pgoalkeeper->pnowstate->Execute(pmyteam,popteam,pgoalkeeper,pball);
 	}
 	pgoalkeeper->old_pos=pgoalkeeper->now_pos;
 	pgoalkeeper->now_pos.y+=pgoalkeeper->velocity.y;
 	pgoalkeeper->now_pos.x+=pgoalkeeper->velocity.x;
 	setfillstyle(1,GREEN);
 	bar((int)(pgoalkeeper->old_pos.x),(int)(pgoalkeeper->old_pos.y),(int)(pgoalkeeper->old_pos.x)+12,(int)(pgoalkeeper->old_pos.y)+34);
-	draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pteam1->color,pteam1->name);
+	if(teamname==pmyteam->name)
+		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pmyteam->color,pmyteam->name);
+	else
+		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,popteam->color,popteam->name);
 }
-void BallUpdate(_team *pteam1,_team *pteam2,struct _BALL *pball)//pteam1为控球球队
+
+void BallUpdate(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为控球球队
 {
 	float slow_rate=0.99;//减速率
 	pball->old_pos.x=pball->now_pos.x;
 	pball->old_pos.y=pball->now_pos.y;
 	if(pball->pnowstate->Execute!=NULL)
-		pball->pnowstate->Execute(pteam1,pteam2,pball);
+		pball->pnowstate->Execute(pmyteam,popteam,pball);
 	if (pball->control==-1)
 	{
 		pball->now_pos.x+=pball->velocity.x;
@@ -547,12 +312,12 @@ void BallUpdate(_team *pteam1,_team *pteam2,struct _BALL *pball)//pteam1为控球球
 	}	
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
 	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
-	pball->timecount++;
-	if(pball->timecount>2500)
-	{
-		pball->timecount%=FPS;
-	}
-	delay(10);
+	// pball->timecount++;
+	// if(pball->timecount>2500)
+	// {
+	// 	pball->timecount%=FPS;
+	// }
+	// delay(10);
 	// if(pball->old_pos.x!=pball->now_pos.x&&pball->old_pos.y!=pball->now_pos.y)
 	// 	reback(pball->old_pos.x,pball->old_pos.y,16,16);
 }

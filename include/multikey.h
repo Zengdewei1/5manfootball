@@ -1,41 +1,41 @@
 /**********************************************************
-Copyright (C) 2017 éƒ­è£•ç¥º é»„æ°è±ª.
+Copyright (C) 2017 ¹ùÔ£ì÷ »Æ½ÜºÀ.
 File name:      MultiKey.h
-Author:         éƒ­è£•ç¥º
-Versionï¼š        1.0
-Dateï¼š           2017/9/23
-Descriptionï¼š    å¤šæŒ‰é”®æ£€æµ‹æ¨¡å—å¤´æ–‡ä»¶ã€‚
+Author:         ¹ùÔ£ì÷
+Version£º        1.0
+Date£º           2017/9/23
+Description£º    ¶à°´¼ü¼ì²âÄ£¿éÍ·ÎÄ¼ş¡£
 
-                å¯¹æœ¬æ–‡ä»¶çš„ä¿®æ”¹è¯·åŠæ—¶æŒ‰å¦‚ä¸‹æ ¼å¼è®°å½•åœ¨ä¸‹é¢ï¼ˆæ¯ä¸ªä¿®æ”¹å•ç‹¬åˆ—å‡ºï¼‰ï¼
+                ¶Ô±¾ÎÄ¼şµÄĞŞ¸ÄÇë¼°Ê±°´ÈçÏÂ¸ñÊ½¼ÇÂ¼ÔÚÏÂÃæ£¨Ã¿¸öĞŞ¸Äµ¥¶ÀÁĞ³ö£©£¡
 
-Function Listï¼š
+Function List£º
     1.void ShutDownKeyboard(void); 
-        æ¢å¤9Hä¹‹å‰çš„ä¸­æ–­å‡½æ•°
+        »Ö¸´9HÖ®Ç°µÄÖĞ¶Ïº¯Êı
 
     2.void far interrupt NewInt9(void); 
-        æ–°çš„ä¸­æ–­å‡½æ•°
+        ĞÂµÄÖĞ¶Ïº¯Êı
 
     3.void InstallKeyboard(void);
-        å°†æ–°çš„ä¸­æ–­å†™å…¥æ–°çš„å‘é‡è¡¨ï¼Œå¹¶ä¿å­˜æ—§çš„ä¸­æ–­ã€‚
+        ½«ĞÂµÄÖĞ¶ÏĞ´ÈëĞÂµÄÏòÁ¿±í£¬²¢±£´æ¾ÉµÄÖĞ¶Ï¡£
 		
 	4.int GetKey(int ScanCode);
-		æ£€æµ‹ç»™å®šæŒ‰é”®æ˜¯å¦æŒ‰ä¸‹è¿‡
+		¼ì²â¸ø¶¨°´¼üÊÇ·ñ°´ÏÂ¹ı
 	
 	5.int KeyPress(int ScanCode); 
-		æ£€æµ‹ç»™å®šæŒ‰é”®å½“å‰æ˜¯å¦å¤„äºæŒ‰ä¸‹çŠ¶æ€
+		¼ì²â¸ø¶¨°´¼üµ±Ç°ÊÇ·ñ´¦ÓÚ°´ÏÂ×´Ì¬
 
 
 	
-Historyï¼š        å¯¹æœ¬æ–‡ä»¶çš„ä¿®æ”¹è¯·åŠæ—¶æŒ‰å¦‚ä¸‹æ ¼å¼è®°å½•åœ¨ä¸‹é¢ï¼ˆæ¯ä¸ªä¿®æ”¹å•ç‹¬åˆ—å‡ºï¼‰ï¼
-    Exampleï¼š    Dateï¼š
-                Authorï¼š
-                Versionï¼š
-                Modificationï¼š
+History£º        ¶Ô±¾ÎÄ¼şµÄĞŞ¸ÄÇë¼°Ê±°´ÈçÏÂ¸ñÊ½¼ÇÂ¼ÔÚÏÂÃæ£¨Ã¿¸öĞŞ¸Äµ¥¶ÀÁĞ³ö£©£¡
+    Example£º    Date£º
+                Author£º
+                Version£º
+                Modification£º
 
-1.  Dateï¼š2017/9/23
-        Authorï¼šéƒ­è£•ç¥º
-        Versionï¼š1.0
-        Modificationï¼šæ­¤å‰æ³¨é‡Šå¹¶æœªå½¢æˆè§„èŒƒï¼Œæ­¤æ¬¡é‡æ–°æ¢³ç†äº†ä¸€éï¼Œå°†ç‰ˆæœ¬å·å®šä¸º1.0
+1.  Date£º2017/9/23
+        Author£º¹ùÔ£ì÷
+        Version£º1.0
+        Modification£º´ËÇ°×¢ÊÍ²¢Î´ĞÎ³É¹æ·¶£¬´Ë´ÎÖØĞÂÊáÀíÁËÒ»±é£¬½«°æ±¾ºÅ¶¨Îª1.0
 
 **********************************************************/
 
@@ -128,64 +128,64 @@ Historyï¼š        å¯¹æœ¬æ–‡ä»¶çš„ä¿®æ”¹è¯·åŠæ—¶æŒ‰å¦‚ä¸‹æ ¼å¼è®°å½•åœ¨ä¸‹é¢ï¼
 #define KEY_DEL 0x53
 
 /**********************************************************
-Functionï¼š      ShutDownKeyboard
+Function£º      ShutDownKeyboard
 
-Descriptionï¼š   æ¢å¤9Hä¹‹å‰çš„ä¸­æ–­å‡½æ•°
+Description£º   »Ö¸´9HÖ®Ç°µÄÖĞ¶Ïº¯Êı
 
-Inputï¼š      None
-Outputï¼š     None
-Returnï¼š     None
-Othersï¼š     None
+Input£º      None
+Output£º     None
+Return£º     None
+Others£º     None
 **********************************************************/
 void ShutDownKeyboard(void); 
 
 /**********************************************************
-Functionï¼š      NewInt9
+Function£º      NewInt9
 
-Descriptionï¼š   æ–°çš„ä¸­æ–­å‡½æ•°
+Description£º   ĞÂµÄÖĞ¶Ïº¯Êı
 
-Inputï¼š      None
-Outputï¼š     None
-Returnï¼š     None
-Othersï¼š     None
+Input£º      None
+Output£º     None
+Return£º     None
+Others£º     None
 **********************************************************/                   
 void far interrupt NewInt9(void);              
 
 /**********************************************************
-Functionï¼š      InstallKeyboard
+Function£º      InstallKeyboard
 
-Descriptionï¼š   å°†æ–°ä¸­æ–­å†™å…¥å‘é‡è¡¨ï¼Œå¹¶ä¿å­˜æ—§çš„ä¸­æ–­
+Description£º   ½«ĞÂÖĞ¶ÏĞ´ÈëÏòÁ¿±í£¬²¢±£´æ¾ÉµÄÖĞ¶Ï
 
-Inputï¼š      None
-Outputï¼š     None
-Returnï¼š     None
-Othersï¼š     None
+Input£º      None
+Output£º     None
+Return£º     None
+Others£º     None
 **********************************************************/ 
 void InstallKeyboard(void);                     
 
 /**********************************************************
-Functionï¼š      GetKey
+Function£º      GetKey
 
-Descriptionï¼š   æ£€æµ‹ç»™å®šæŒ‰é”®æ˜¯å¦æŒ‰ä¸‹è¿‡
+Description£º   ¼ì²â¸ø¶¨°´¼üÊÇ·ñ°´ÏÂ¹ı
 
-Inputï¼š      int ScanCode         ç»™å®šæŒ‰é”®é”®å€¼ï¼Œè§æ–‡ä»¶å¼€å¤´çš„å®å®šä¹‰  
+Input£º      int ScanCode         ¸ø¶¨°´¼ü¼üÖµ£¬¼ûÎÄ¼ş¿ªÍ·µÄºê¶¨Òå  
 
-Outputï¼š     None
-Returnï¼š     None
-Othersï¼š     None
+Output£º     None
+Return£º     None
+Others£º     None
 **********************************************************/ 
 int GetKey(int ScanCode);                      
 
 /**********************************************************
-Functionï¼š     KeyPress
+Function£º     KeyPress
 
-Descriptionï¼š   æ£€æµ‹ç»™å®šæŒ‰é”®å½“å‰æ˜¯å¦å¤„äºæŒ‰ä¸‹çŠ¶æ€
+Description£º   ¼ì²â¸ø¶¨°´¼üµ±Ç°ÊÇ·ñ´¦ÓÚ°´ÏÂ×´Ì¬
 
-Inputï¼š      int ScanCode         ç»™å®šæŒ‰é”®é”®å€¼ï¼Œè§æ–‡ä»¶å¼€å¤´çš„å®å®šä¹‰  
+Input£º      int ScanCode         ¸ø¶¨°´¼ü¼üÖµ£¬¼ûÎÄ¼ş¿ªÍ·µÄºê¶¨Òå  
 
-Outputï¼š     None
-Returnï¼š     None
-Othersï¼š     None
+Output£º     None
+Return£º     None
+Others£º     None
 **********************************************************/ 
 int KeyPress(int ScanCode);                    
 

@@ -9,6 +9,7 @@
 #include"menu.h"
 #include"tool.h"
 #include"game.h"
+#include"state.h"
 void main()
 {
     int driver,mode;
