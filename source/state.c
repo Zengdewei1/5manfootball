@@ -52,10 +52,10 @@ void BallChangestate(_team *pmyteam,_team *popteam,_ball *pball,ball_state *pnew
 }
 	
 //球队状态
-void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
-{
-	int k=0;
-}
+// void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
+// {
+// 	int k=0;
+// }
 
 
 
@@ -83,7 +83,7 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 }
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)//pteam是相对而言的
 {
-	if(pplayer->name==pmyteam->name)
+	if(pplayer->name==Player)
 		action(pmyteam,popteam,pball);
 	else
 		pplayer->velocity.y*=(-1);
@@ -93,7 +93,6 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)//p
 	int k=0;
 	// if(i%100==0)
 	// 	auto_move(pmyteam,popteam,pplayer,pball);
-	k++;
 	// switch(pmyteam)
 	// team->player[team->controlplayer].control=0;
 	// pball->control=0;
@@ -163,13 +162,13 @@ void TendGoalExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_bal
 }
 void PounceEnter(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
 {
-	if(pgoalkeeper->now_pos.y+17>280)
+	if(pgoalkeeper->now_pos.y+17.0>280.0)
                 {
-                            pgoalkeeper->velocity.y=-2;
+                            pgoalkeeper->velocity.y=-2.0;
                 }
     else
                 {
-                            pgoalkeeper->velocity.y=2;  
+                            pgoalkeeper->velocity.y=2.0;  
                 }
 }
 void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)

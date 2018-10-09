@@ -6,7 +6,7 @@ void PlayerChangestate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pba
 void KeeperChangestate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball,keeper_state *pnewstate);
 void BallChangestate(_team *pmyteam,_team *popteam,_ball *pball,ball_state *pnewstate);
 
-void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball);
+// void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball);
 
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);

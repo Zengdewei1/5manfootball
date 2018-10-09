@@ -16,7 +16,6 @@
 void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
 {
     int flag;
-    Pos2d pass_dir;
     flag=0;
     while(flag==0)
     {

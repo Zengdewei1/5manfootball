@@ -69,16 +69,16 @@ void game(int position1,int position2,int color1,int color2)
 		}
 		for(i=0;i<4;i++)
 		{
-			PlayerUpdate(&myteam,&opteam,&myteam.player[i],&ball,myteam.name);
-		}
-		for(i=0;i<4;i++)
-		{
 			PlayerUpdate(&myteam,&opteam,&opteam.player[i],&ball,opteam.name);
 		}
 		GoalkeeperUpdate(&myteam,&opteam,&myteam.goalkeeper,&ball,myteam.name);
 		GoalkeeperUpdate(&myteam,&opteam,&opteam.goalkeeper,&ball,opteam.name);
 		BallUpdate(&myteam,&opteam,&ball);
 		// TeamUpdate(&myteam,&opteam,&ball);
+		for(i=0;i<4;i++)
+		{
+			PlayerUpdate(&myteam,&opteam,&myteam.player[i],&ball,myteam.name);
+		}
 		draw_ground();
 	}
 }
