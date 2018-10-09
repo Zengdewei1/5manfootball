@@ -1,22 +1,18 @@
 #ifndef _TOOL_H
 #define _TOOL_H
 
-#define Right 101
-#define Left 102
-#define Red 103
-#define Blue 104
-#define Player 105
-#define Computer 106
+#define Right 1001
+#define Left 1002
+#define Red 1003
+#define Blue 1004
+#define Player 1005
+#define Computer 1006
 
 
 typedef struct _POS2d
 {
     double x,y;
 }Pos2d;
-// typedef struct TEAM_STATE
-// {
-//     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
-// }team_state;
 typedef struct PLAYER_STATE//pteam是相对而言的
 {
     void (*Enter)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
@@ -35,23 +31,26 @@ typedef struct BALL_STATE
     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
 	// void (*Exit)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
 }ball_state;
+typedef struct TEAM_STATE
+{
+    void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
+}team_state;
 typedef struct _PLAYER
 {
     Pos2d velocity;
     Pos2d now_pos; 
     Pos2d old_pos;
-    int name;                           //球员所属球队
     int ID;
     int dir;
     int control;                        //球员是否控球
-    // int rate;                           //非加速状态的速度
-    // int accelerate;                 //加速速度，用于摆脱对手时的参数 
-    // int power;                         // 力量，决定传球和射门时给球的速度
-    // int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
-    // double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
-    // double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
+    int rate;                           //非加速状态的速度
+    int accelerate;                 //加速速度，用于摆脱对手时的参数 
+    int power;                         // 力量，决定传球和射门时给球的速度
+    int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
+    double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
+    double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
-    player_state Dribble,Wait,ChasingBall;
+    player_state Dribble,ReceivingBall,Wait,ChasingBall,Supporting;
 }_player;
 typedef struct _GOALKEEPER
 {
@@ -59,7 +58,6 @@ typedef struct _GOALKEEPER
     Pos2d now_pos; 
     Pos2d old_pos;
     int ID;
-    int name;
     int dir;
     int control;     //守门员是否控球
     keeper_state *pnowstate;
@@ -92,8 +90,8 @@ typedef struct _TEAM
     int control;//球队控球人，-1不控球
     _player player[4];
     _goalkeeper goalkeeper;
-    // team_state *pnowstate;
-    // team_state Attack;
+    team_state *pnowstate;
+    team_state Attack,Defend;
 }_team;
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
 

@@ -10,12 +10,14 @@
 #include"menu.h"
 #include"tool.h"
 #include"game.h"
-#include"state.h"
 
 //传球函数
 void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 {
     int flag;
+	double radio,start,x_dis,y_dis;
+    Pos2d pass_dir;
+	start=pball->now_pos.x;
     flag=0;
     while(flag==0)
     {
@@ -111,22 +113,17 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 //控制球员移动或射门函数
 void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
 {
-	setfillstyle(1,BLACK);
-	circle(10,10,10);
 		if(KeyPress(KEY_A))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=-12.0;
 			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
-			setfillstyle(1,BLACK);
-			circle(20,20,10);
+			pmyteam->player[pmyteam->controlplayer].dir=Left;
 		}
 		if(KeyPress(KEY_D))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=12.0;
-			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
-			setfillstyle(1,BLACK);
-			circle(30,30,10);
-
+			pmyteam->player[pmyteam->controlplayer].velocity.y=0;	
+			pmyteam->player[pmyteam->controlplayer].dir=Right;
 		}
 		if(KeyPress(KEY_S))
 		{
@@ -156,8 +153,6 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
 		    	pass(pmyteam,popteam,pball);
 		    }
         }
-		setfillstyle(1,BLACK);
-			circle(30,30,10);
 	
 }
 //限制球员的活动范围在一个矩形区域,type1-6表示6个不同的活动范围
@@ -283,7 +278,7 @@ void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	Pos2d far_dir,near_dir;
 	double dy;
-	if(pplayer->name==Player)
+	if(pmyteam->name==Player)
 	{
 		if(pmyteam->control!=-1)//我方进攻时
 		{
@@ -328,13 +323,13 @@ void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
 						{
-							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
 						{
-							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
@@ -356,13 +351,13 @@ void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//跑位，远离对方后卫0
 						{
-							far_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//跑位，远离对方后卫1
 						{
-							far_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
+							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
@@ -451,7 +446,7 @@ void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 	else
 	{
-		if(popteam->control!=-1)//电脑进攻时
+		if(pmyteam->control!=-1)//电脑进攻时
 		{
 			switch(pplayer->ID)
 			{
@@ -591,10 +586,10 @@ void draw_judge(int x,int y)
 	bar(x+12,y+19,x+18,y+23);
 }
 
-void draw_player(int x,int y,int dir,int control,int ID,int teamcolor,int teamname)
+void draw_player(int x,int y,int dir,int control,int ID,int color,int name)
 {
     setlinestyle(0,0,1);
-	if (teamcolor==Red)
+	if (color==Red)
 	{
 		setcolor(RED);
         
@@ -603,7 +598,7 @@ void draw_player(int x,int y,int dir,int control,int ID,int teamcolor,int teamna
 	{
 		setcolor(BLUE);
 	}
-	if(teamname==Player)
+	if(name==Player)
 		draw_num(x+4,y+2,ID,4);
     circle(x+6,y+6,6);
     line(x+6,y+12,x+6,y+28);
