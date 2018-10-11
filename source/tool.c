@@ -15,9 +15,6 @@
 void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 {
     int flag;
-	double radio,start,x_dis,y_dis;
-    Pos2d pass_dir;
-	start=pball->now_pos.x;
     flag=0;
     while(flag==0)
     {
@@ -25,7 +22,6 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
 			if(pmyteam->controlplayer!=0)
 			{
-				pball->control=-1;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=0;
@@ -40,7 +36,6 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=1)
 			{
-				pball->control=-1;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=1;
@@ -55,7 +50,6 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=2)
 			{
-				pball->control=-1;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=2;
@@ -70,7 +64,6 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=3)
 			{
-				pball->control=-1;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=3;
@@ -89,7 +82,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 			pball->end_pos.x=pmyteam->player[pmyteam->controlplayer].now_pos.x;
 			pball->end_pos.y=pmyteam->player[pmyteam->controlplayer].now_pos.y;
 			PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
-			BallChangestate(pmyteam,popteam,pball,&pball->Short_pass);
+			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 		}
 		// else if(flag==4)
 		// {
@@ -141,10 +134,9 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
         {
             if(KeyPress(KEY_J))
 		    {
-				pball->control=-1;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				pball->pnowstate=&pball->Short_shoot;
-				BallChangestate(pmyteam,popteam,pball,&pball->Short_shoot);
+				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
 				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 		    }

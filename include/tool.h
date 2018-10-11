@@ -27,8 +27,8 @@ typedef struct KEEPER_STATE
 }keeper_state;
 typedef struct BALL_STATE
 {
-    void (*Enter)(struct _TEAM *pteam_own,struct _TEAM *pteam_no,struct _BALL *pball);
-    void (*Execute)(struct _TEAM *pteam_own,struct _TEAM *pteam_no,struct _BALL *pball);
+    void (*Enter)(struct _TEAM *popteam,struct _TEAM *pmyteam,struct _BALL *pball);
+    void (*Execute)(struct _TEAM *popteam,struct _TEAM *pmyteam,struct _BALL *pball);
 	// void (*Exit)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
 }ball_state;
 typedef struct TEAM_STATE
