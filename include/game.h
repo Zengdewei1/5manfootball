@@ -4,10 +4,10 @@
 #define FPS 40
 
 void game(int position1,int position2,int color1,int color2);
-void init_ball(struct _BALL *pball);
+void init_ball(_team *pmyteam,_team *popteam,_ball *pball);
 void init_judge(struct _JUDGE *pjudge);
 void init_player(_player *pplayer,int position,int ID,int name);
-void init_team(struct _TEAM *team);
+void init_team(_team *team,_ball *pball);
 void init_goalkeeper(_goalkeeper *pgoalkeeper,int position);
 
 void PlayerChangestate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball,player_state *pnewstate);
@@ -29,8 +29,8 @@ void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball 
 void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball);
 
 void Short_passEnter(_team *pmyteam,_team *popteam,_ball *pball);
-void Short_shootEnter(_team *pmyteam,_team *popteam,_ball *pball);
-void ControlExecute(_team *pmyteam,_team *popteam,_ball *pball);
+void Short_shootEnter(_team *pteam_own,_team *pteam_no,_ball *pball);
+void ControlExecute(_team *pteam_own,_team *pteam_no,_ball *pball);
 
 void BallUpdate(_team *pmyteam,_team *popteam,_ball *pball);
 void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
