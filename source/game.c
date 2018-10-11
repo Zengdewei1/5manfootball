@@ -73,10 +73,10 @@ void game(int position1,int position2,int color1,int color2)
 		}
 		for(i=0;i<4;i++)
 		{
-			PlayerUpdate(&opteam,&myteam,&opteam.player[i],&ball);
+			PlayerUpdate(&myteam,&opteam,&opteam.player[i],&ball);
 		}
 		GoalkeeperUpdate(&myteam,&opteam,&myteam.goalkeeper,&ball);
-		GoalkeeperUpdate(&opteam,&myteam,&opteam.goalkeeper,&ball);
+		GoalkeeperUpdate(&myteam,&opteam,&opteam.goalkeeper,&ball);
 		BallUpdate(&opteam,&myteam,&ball);
 		draw_ground();
 	}
@@ -369,8 +369,8 @@ void ControlExecute(_team *popteam,_team *pmyteam,_ball *pball)
 	}
 	else
 	{
-		setfillstyle(1,BLACK);
-		circle(10,10,10);
+		// setfillstyle(1,BLACK);
+		// circle(10,10,10);
 		if(pmyteam->control==4)
 		{
 			if(pmyteam->goalkeeper.dir==Left)
@@ -418,7 +418,7 @@ void init_team(_team *team,_ball *pball)
 		init_player(&team->player[i],team->position,i,team->name);
 		
 	}
-	init_goalkeeper(&team->goalkeeper,team->position); 
+	init_goalkeeper(&team->goalkeeper,team->position,team->name); 
 	if(pball->timecount>1e-5)
 		bar((int)(team->goalkeeper.old_pos.x-5),(int)(team->goalkeeper.old_pos.y-5),(int)(team->goalkeeper.old_pos.x)+12+5,(int)(team->goalkeeper.old_pos.y)+34+5);
 }
@@ -427,6 +427,7 @@ void init_team(_team *team,_ball *pball)
 void init_player(_player *pplayer,int position,int ID,int name)
 {	
 	pplayer->ID=ID;
+	pplayer->name=name;
 	// pplayer->pnowstate = &pplayer->Wait;
 	pplayer->Wait.Enter = NULL;
     pplayer->Wait.Execute = WaitExecute;
@@ -512,9 +513,10 @@ void init_player(_player *pplayer,int position,int ID,int name)
 		}
 	}
 }
-void init_goalkeeper(_goalkeeper *pgoalkeeper,int position)
+void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name)
 {
 	srand((unsigned)time(NULL));
+	pgoalkeeper->name=name;
 	pgoalkeeper->TendGoal.Enter=NULL;
 	pgoalkeeper->TendGoal.Execute=TendGoalExecute;
 	// pgoalkeeper->TendGoal.Exit=NULL;
@@ -602,7 +604,10 @@ void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	pplayer->now_pos.y+=pplayer->velocity.y;
 	setfillstyle(1,GREEN);
 	bar((int)(pplayer->old_pos.x),(int)(pplayer->old_pos.y),(int)(pplayer->old_pos.x)+12,(int)(pplayer->old_pos.y)+34);
-	draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pmyteam->color,pmyteam->name);
+	if(pplayer->name==Player)
+		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pmyteam->color,pmyteam->name);
+	else
+		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,popteam->color,popteam->name);
 	pplayer->velocity.x=0.0;
     pplayer->velocity.y=0.0;
 	delay(5);
@@ -619,7 +624,10 @@ void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ba
 	pgoalkeeper->now_pos.x+=pgoalkeeper->velocity.x;
 	setfillstyle(1,GREEN);
 	bar((int)(pgoalkeeper->old_pos.x),(int)(pgoalkeeper->old_pos.y),(int)(pgoalkeeper->old_pos.x)+12,(int)(pgoalkeeper->old_pos.y)+34);
-	draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pmyteam->color,pmyteam->name);
+	if(pgoalkeeper->name==Player)
+		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,pmyteam->color,pmyteam->name);
+	else
+		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,4,popteam->color,popteam->name);
 }
 void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1为控球球队
 {
@@ -634,7 +642,8 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1为控球球队
 		pball->now_pos.y+=pball->velocity.y;
 		pball->velocity.x*=slow_rate;
 		pball->velocity.y*=slow_rate;
-	}	
+	}
+	setfillstyle(1,GREEN);	
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
 	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
 	pball->timecount++;

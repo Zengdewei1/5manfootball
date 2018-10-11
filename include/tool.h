@@ -41,6 +41,7 @@ typedef struct _PLAYER
     Pos2d now_pos; 
     Pos2d old_pos;
     int ID;
+    int name;
     int dir;
     int control;                        //球员是否控球
     int rate;                           //非加速状态的速度
@@ -58,6 +59,7 @@ typedef struct _GOALKEEPER
     Pos2d now_pos; 
     Pos2d old_pos;
     int ID;
+    int name;
     int dir;
     int control;     //守门员是否控球
     keeper_state *pnowstate;
