@@ -229,13 +229,13 @@ void TendGoalExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_bal
 }
 void PounceEnter(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
 {
-	if(pgoalkeeper->now_pos.y+17>280)
+	if(pgoalkeeper->now_pos.y>263.0)
                 {
-                            pgoalkeeper->velocity.y=-2;
+                            pgoalkeeper->velocity.y=-2.5;
                 }
     else
                 {
-                            pgoalkeeper->velocity.y=2;  
+                            pgoalkeeper->velocity.y=2.5;  
                 }
 }
 void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
@@ -257,11 +257,18 @@ void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball 
 					 pmyteam->pnowstate=&pmyteam->Defend;
 					 popteam->control=4;
 					 popteam->pnowstate=&popteam->Attack;
+					 pgoalkeeper->velocity.y=0;
+					 delay(30);
+					//  pgoalkeeper->now_pos.x=600.0;
+					//  pgoalkeeper->now_pos.y=
                 }
 }
+
 void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
 {
-	Pos2d pass_dir;
+		pball->end_pos=popteam->player[3].now_pos;
+		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+	// init_goalkeeper
 	// if(popteam->player[2].now_pos.x<=320.0&&popteam->player[3].now_pos.x<=320.0)
 	//  {
 	// 	pmyteam->player[0].pnowstate=&pmyteam->player[0].ChasingBall;
@@ -311,21 +318,21 @@ void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
 		popteam->control=-1;
 	else
 		pmyteam->control=-1;
-	if(popteam->pnowstate=&popteam->Attack)
+	if(popteam->pnowstate==&popteam->Attack)
 	{
-		gate.x=600.0;
-		if(pmyteam->goalkeeper.now_pos.y+17>280)
-    		gate.y=220.0;
+		gate.x=40.0;
+		if(pmyteam->goalkeeper.velocity.y==(double)2.5)
+    		gate.y=340.0-12.0;
     	else
-			gate.y=340.0-12.0;
+			gate.y=220.0;
 	}
 	else
 	{
-		gate.x=40.0;
-		if(popteam->goalkeeper.now_pos.y+17>280)
-    		gate.y=220.0;
+		gate.x=600.0;
+		if(popteam->goalkeeper.velocity.y>1e-5)
+    		gate.y=340.0-12.0;
     	else
-			gate.y=340.0-12.0;
+			gate.y=220.0;
 	}
 	shoot_dir=get_dir(pball->now_pos,gate);
     pball->velocity.x=18.0*shoot_dir.x;
@@ -421,6 +428,8 @@ void init_team(_team *team,_ball *pball)
 	init_goalkeeper(&team->goalkeeper,team->position,team->name); 
 	if(pball->timecount>1e-5)
 		bar((int)(team->goalkeeper.old_pos.x-5),(int)(team->goalkeeper.old_pos.y-5),(int)(team->goalkeeper.old_pos.x)+12+5,(int)(team->goalkeeper.old_pos.y)+34+5);
+	if(team->name==Player)
+		team->player[3].pnowstate=&team->player[3].ChasingBall;
 }
 
 //初始化球员位置信息
@@ -477,7 +486,6 @@ void init_player(_player *pplayer,int position,int ID,int name)
 				pplayer->velocity.x=0;
 				pplayer->velocity.y=0;
 				pplayer->dir=Right;
-				pplayer->pnowstate = &pplayer->ChasingBall;
 				break;
 		}
 	}

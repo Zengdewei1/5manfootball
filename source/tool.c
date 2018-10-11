@@ -135,9 +135,8 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
             if(KeyPress(KEY_J))
 		    {
 				pmyteam->player[pmyteam->controlplayer].control=0;
-				pball->pnowstate=&pball->Short_shoot;
-				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
 				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
+				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 		    }
             if(KeyPress(KEY_K))
