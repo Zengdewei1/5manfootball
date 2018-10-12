@@ -18,6 +18,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball);
 void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball);
 
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void SupportingExecute(_team *team,_ball *pball);
