@@ -265,13 +265,14 @@ void arrive(_player *pplayer,double _x,double _y)
 	pplayer->velocity.x=4.0*dir.x;
 	pplayer->velocity.y=4.0*dir.y;
 }
-void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
+
+void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	Pos2d far_dir,near_dir;
 	double dy;
 	if(pmyteam->name==Player)
 	{
-		if(pmyteam->control!=-1)//我方进攻时
+		if(pmyteam->pnowstate=&pmyteam->Attack)//我方进攻时
 		{
 			switch(pplayer->ID)
 			{
@@ -437,7 +438,7 @@ void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 	else
 	{
-		if(pmyteam->control!=-1)//电脑进攻时
+		if(popteam->pnowstate=&popteam->Attack)//电脑进攻时
 		{
 			switch(pplayer->ID)
 			{

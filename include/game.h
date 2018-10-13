@@ -10,16 +10,19 @@ void init_player(_player *pplayer,int position,int ID,int name);
 void init_team(_team *team,_ball *pball);
 void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name);
 
+void TeamChangestate(_team *pmyteam,_team *popteam,_ball *pball,team_state *pnewstate_my,team_state *pnewstate_op);
 void PlayerChangestate(_team *popteam,_team *pmopeam,_player *pplayer,_ball *pball,player_state *pnewstate);
 void KeeperChangestate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball,keeper_state *pnewstate);
 void BallChangestate(_team *pmyteam,_team *popteam,_ball *pball,ball_state *pnewstate);
 
+void AttackEnter(_team *pmyteam,_team *popteam,_ball *pball);
 void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball);
 void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball);
 
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void WaitEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void SupportingExecute(_team *team,_ball *pball);
 // void ReceivingBallExecute(_team *team,_ball *pball);

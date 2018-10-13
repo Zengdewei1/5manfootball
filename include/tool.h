@@ -33,6 +33,7 @@ typedef struct BALL_STATE
 }ball_state;
 typedef struct TEAM_STATE
 {
+    void (*Enter)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
 }team_state;
 typedef struct _PLAYER
@@ -102,7 +103,7 @@ Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);
 
 void action(_team *pmyteam,_team *popteam,_ball *pball);
 void move_dir(_player *pplayer,_ball *pball);
-void auto_move(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void move_renctangle(_player *pplayer,int type);
 void arrive(_player *pplayer,double _x,double _y);
 
