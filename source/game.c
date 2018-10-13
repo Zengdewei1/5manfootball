@@ -141,11 +141,17 @@ void BallChangestate(_team *popteam,_team *pmyteam,_ball *pball,ball_state *pnew
 void AttackEnter(_team *pmyteam,_team *popteam,_ball *pball)
 {
 	int i;
+		// setfillstyle(1,BLACK);
+		// circle(10,10,10);
 	for(i=0;i<4;i++)
 	{
-		if(pmyteam->player[i].pnowstate==&pmyteam->player[i].Actioning)
+		if(pmyteam->player[i].pnowstate==&pmyteam->player[i].Actioning||pmyteam->player[i].pnowstate==&pmyteam->player[i].Wait)
+		{
+		// 	setfillstyle(1,BLACK);
+		// circle(10,10,10);
 			PlayerChangestate(pmyteam,popteam,&pmyteam->player[i],pball,&pmyteam->player[i].Wait);
-		if(popteam->player[i].pnowstate==&popteam->player[i].Actioning)
+		}
+		if(popteam->player[i].pnowstate==&popteam->player[i].Actioning||popteam->player[i].pnowstate==&popteam->player[i].Wait)
 			PlayerChangestate(pmyteam,popteam,&popteam->player[i],pball,&popteam->player[i].Wait);
 	}
 }
@@ -255,34 +261,30 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 		}
-		// if(pplayer->now_pos.y>pplayer->old_pos.y&&pball->timecount%50<25)//另一方法，sin/cos,变正负
+		// if(pplayer->now_pos.y>pplayer->old_pos.y&&pball->timecount%60=30)//另一方法，sin/cos,变正负
 		// 	pplayer->velocity.y*=(-1);
 	}
 }
 
-void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
+void WaitEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
+		// setfillstyle(1,BLACK);
+		// circle(10,10,10);
 	if(pplayer->name==Player)
 	{
+		// 	setfillstyle(1,BLACK);
+		// circle(10,10,10);
 		if(pmyteam->pnowstate==&pmyteam->Attack)
 		{
 			switch(pplayer->ID)
 			{
 				case(0):arrive(pplayer,180.0,290.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,180.0,290.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(1):arrive(pplayer,320.0,400.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,320.0,400.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(2):arrive(pplayer,500.0,160.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,500.0,160.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(3):arrive(pplayer,400.0,280.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,280.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 			}
 		}
@@ -291,20 +293,12 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 			switch(pplayer->ID)
 			{
 				case(0):arrive(pplayer,120.0,160.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,120.0,160.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(1):arrive(pplayer,120.0,400.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,120.0,400.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(2):arrive(pplayer,200.0,290.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,200.0,290.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(3):arrive(pplayer,400.0,290.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,290.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 			}
 		}
@@ -316,20 +310,12 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 			switch(pplayer->ID)
 			{
 				case(0):arrive(pplayer,500.0,290.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,500.0,290.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(1):arrive(pplayer,320.0,290.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,320.0,290.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(2):arrive(pplayer,160.0,160.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,160.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(3):arrive(pplayer,160.0,400.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,400.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 			}
 		}
@@ -338,15 +324,88 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 			switch(pplayer->ID)
 			{
 				case(0):arrive(pplayer,540.0,160.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,160.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(1):arrive(pplayer,540.0,400.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,400.0)<5.0)
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 				case(2):arrive(pplayer,440.0,280.0);
-						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,440.0,280.0)<5.0)
+						break;
+			}
+		}
+	}
+}
+
+void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
+{
+	if(pplayer->name==Player)
+	{
+		if(pmyteam->pnowstate==&pmyteam->Attack)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,180.0,290.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,320.0,400.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,500.0,160.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,280.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+			}
+		}
+		else if(pmyteam->pnowstate==&pmyteam->Defend)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,120.0,160.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,120.0,400.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,200.0,290.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,290.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+			}
+		}
+	}
+	else
+	{
+		if(popteam->pnowstate==&popteam->Attack)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,500.0,290.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,320.0,290.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,160.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,400.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+			}
+		}
+		else if(popteam->pnowstate==&popteam->Defend)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,160.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,400.0)<5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
+				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,440.0,280.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 			}
@@ -364,6 +423,12 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 // 	// team->player[team->controlplayer].control=0;
 // 	// pball->control=0;
 // }
+
+void ActioningEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
+{
+	pplayer->velocity.x=0;
+	pplayer->velocity.y=0;
+}
 
 void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
@@ -663,10 +728,10 @@ void init_player(_player *pplayer,int position,int ID,int name)
 	pplayer->ID=ID;
 	pplayer->name=name;
 	// pplayer->pnowstate = &pplayer->Wait;
-	pplayer->Wait.Enter = NULL;
+	pplayer->Wait.Enter = WaitEnter;
     pplayer->Wait.Execute = WaitExecute;
     // pplayer->Wait.Exit = NULL;
-	pplayer->Actioning.Enter=NULL;
+	pplayer->Actioning.Enter=ActioningEnter;
 	pplayer->Actioning.Execute=ActioningExecute;
 
     // pplayer->ReceivingBall.Enter = NULL;
@@ -833,8 +898,14 @@ void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,pmyteam->color,pmyteam->name);
 	else
 		draw_player((int)(pplayer->now_pos.x),(int)(pplayer->now_pos.y),pplayer->dir,pplayer->control,pplayer->ID,popteam->color,popteam->name);
-	pplayer->velocity.x=0.0;
-    pplayer->velocity.y=0.0;
+	if(pplayer->name==Player)
+	{
+		if(pplayer->ID==pmyteam->controlplayer)
+		{
+			pplayer->velocity.x=0.0;
+    		pplayer->velocity.y=0.0;
+		}
+	}
 	delay(5);
 }
 
