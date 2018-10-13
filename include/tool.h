@@ -52,7 +52,7 @@ typedef struct _PLAYER
     double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
     double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
-    player_state Dribble,ReceivingBall,Wait,ChasingBall,Supporting;
+    player_state ChasingBall,Dribble,Wait,Actioning;
 }_player;
 typedef struct _GOALKEEPER
 {

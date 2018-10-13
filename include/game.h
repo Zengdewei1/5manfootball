@@ -22,8 +22,8 @@ void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball);
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
-void WaitEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void SupportingExecute(_team *team,_ball *pball);
 // void ReceivingBallExecute(_team *team,_ball *pball);
 
@@ -36,6 +36,7 @@ void Short_passEnter(_team *popteam,_team *pmyteam,_ball *pball);
 void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball);
 void ControlExecute(_team *popteam,_team *pmyteam,_ball *pball);
 
+void TeamUpdate(_team *pmyteam,_team *popteam,_ball *pball);
 void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball);
 void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball);
