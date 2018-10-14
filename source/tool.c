@@ -108,26 +108,26 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 {
 		if(KeyPress(KEY_A))
 		{
-			pmyteam->player[pmyteam->controlplayer].velocity.x=-12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=-8.0;
 			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
 			pmyteam->player[pmyteam->controlplayer].dir=Left;
 		}
 		if(KeyPress(KEY_D))
 		{
-			pmyteam->player[pmyteam->controlplayer].velocity.x=12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=8.0;
 			pmyteam->player[pmyteam->controlplayer].velocity.y=0;	
 			pmyteam->player[pmyteam->controlplayer].dir=Right;
 		}
 		if(KeyPress(KEY_S))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
-			pmyteam->player[pmyteam->controlplayer].velocity.y=12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=8.0;
 
 		}
 		if(KeyPress(KEY_W))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
-			pmyteam->player[pmyteam->controlplayer].velocity.y=-12.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=-8.0;
 
 		}
         if(pmyteam->player[pmyteam->controlplayer].pnowstate==&pmyteam->player[pmyteam->controlplayer].Dribble)
@@ -262,8 +262,8 @@ void arrive(_player *pplayer,double _x,double _y)
 	destination.x=_x;
 	destination.y=_y;
 	dir=get_dir(pplayer->now_pos,destination);
-	pplayer->velocity.x=4.0*dir.x;
-	pplayer->velocity.y=4.0*dir.y;
+	pplayer->velocity.x=6.0*dir.x;
+	pplayer->velocity.y=6.0*dir.y;
 }
 
 void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)

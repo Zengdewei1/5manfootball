@@ -458,6 +458,8 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,440.0,280.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
+				case(3):PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+						break;
 			}
 		}
 	}
@@ -482,7 +484,138 @@ void ActioningEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
-	int k=9;
+	Pos2d far_dir,near_dir;
+	double dy;
+	if(pplayer->name==Player)
+	{
+		if(pmyteam->pnowstate==&pmyteam->Attack)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);
+						if(dy>=20.0)
+						{
+							pplayer->velocity.y=4.0*(pball->now_pos.y-pplayer->now_pos.y)/dy;
+						}
+						break;
+				case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//ÅÜÎ»£¬ÊÊµ±Ô¶ÀëÇò
+						{
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=-4.0*far_dir.x;
+							pplayer->velocity.y=-4.0*far_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)>=150.0)//ÅÜÎ»£¬ÊÊµ±¿¿½üÇò
+						{
+							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=4.0*near_dir.x;
+							pplayer->velocity.y=4.0*near_dir.y;
+						}
+						break;
+				case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//ÅÜÎ»£¬ÊÊµ±Ô¶ÀëÇò
+						{
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=-4.0*far_dir.x;
+							pplayer->velocity.y=-4.0*far_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)>=150.0)//ÅÜÎ»£¬ÊÊµ±¿¿½üÇò
+						{
+							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=4.0*near_dir.x;
+							pplayer->velocity.y=4.0*near_dir.y;
+						}
+						break;
+				case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//ÅÜÎ»£¬ÊÊµ±Ô¶ÀëÇò
+						{
+							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=-4.0*far_dir.x;
+							pplayer->velocity.y=-4.0*far_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)>=150.0)//ÅÜÎ»£¬ÊÊµ±¿¿½üÇò
+						{
+							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
+							pplayer->velocity.x=4.0*near_dir.x;
+							pplayer->velocity.y=4.0*near_dir.y;
+						}
+						break;
+			}
+		}
+		// else if(pmyteam->pnowstate==&pmyteam->Defend)
+		// {
+		// 	switch(pplayer->ID)
+		// 	{
+		// 		case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,100.0,160.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,100.0,400.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,200.0,290.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,290.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 	}
+		// }
+	}
+	else
+	{
+		// if(popteam->pnowstate==&popteam->Attack)
+		// {
+		// 	switch(pplayer->ID)
+		// 	{
+		// 		case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,500.0,290.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,320.0,290.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,160.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 		case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,160.0,400.0)<5.0)
+		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
+		// 				break;
+		// 	}
+		// }
+		if(popteam->pnowstate==&popteam->Defend)
+		{
+			switch(pplayer->ID)
+			{
+				case(0):if(distance(540.0,160.0,pball->now_pos.x,pball->now_pos.y)<100.0)
+						{
+							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
+							pplayer->velocity.x=3*near_dir.x;
+							pplayer->velocity.y=3*near_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,160.0)>5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						break;
+				case(1):if(distance(540.0,400.0,pball->now_pos.x,pball->now_pos.y)<100.0)
+						{
+							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
+							pplayer->velocity.x=3*near_dir.x;
+							pplayer->velocity.y=3*near_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,400.0)>5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						break;
+				case(2):if(distance(440.0,280.0,pball->now_pos.x,pball->now_pos.y)<100.0)
+						{
+							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
+							pplayer->velocity.x=3*near_dir.x;
+							pplayer->velocity.y=3*near_dir.y;
+						}
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,440.0,280.0)>5.0)
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						break;
+				case(3):near_dir=get_dir(pplayer->now_pos,pball->now_pos);
+						pplayer->velocity.x=3*near_dir.x;
+						pplayer->velocity.y=3*near_dir.y;
+						
+			}
+		}
+	}
 }
 // void SupportingExecute(_team *team,_ball *pball)
 // {
@@ -649,7 +782,7 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 		pmyteam->control=-1;
 		pmyteam->controlplayer=0;
-		PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].ChasingBall);
+		PlayerChangestate(pmyteam,popteam,&pmyteam->player[0],pball,&pmyteam->player[0].ChasingBall);
 		setfillstyle(1,GREEN);
 		bar((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),(int)(pgoalkeeper->now_pos.x)+12,(int)(pgoalkeeper->now_pos.y)+34);
 		pgoalkeeper->control=0;
