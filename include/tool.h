@@ -87,6 +87,7 @@ typedef struct _JUDGE
 typedef struct _TEAM
 {
     int controlplayer;//玩家控制的球员ID
+    int lastcontrol;
     int name;
     int color;
     int position;
@@ -107,7 +108,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void move_renctangle(_player *pplayer,int type);
 void arrive(_player *pplayer,double _x,double _y);
 
-void draw_player(int x,int y,int dir,int control,int ID,int color,int name);
+void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int name);
 void draw_judge(int x,int y);
 void draw_ground();
 void draw_ball(int x,int y);

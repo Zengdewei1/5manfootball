@@ -137,7 +137,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
 				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
-				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Dribble);
 		    }
             if(KeyPress(KEY_K))
 		    {
@@ -262,8 +262,8 @@ void arrive(_player *pplayer,double _x,double _y)
 	destination.x=_x;
 	destination.y=_y;
 	dir=get_dir(pplayer->now_pos,destination);
-	pplayer->velocity.x=2.0*dir.x;
-	pplayer->velocity.y=2.0*dir.y;
+	pplayer->velocity.x=4.0*dir.x;
+	pplayer->velocity.y=4.0*dir.y;
 }
 
 void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
@@ -578,13 +578,12 @@ void draw_judge(int x,int y)
 	bar(x+12,y+19,x+18,y+23);
 }
 
-void draw_player(int x,int y,int dir,int control,int ID,int color,int name)
+void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int name)
 {
     setlinestyle(0,0,1);
 	if (color==Red)
 	{
 		setcolor(RED);
-        
 	}
 	else
 	{
@@ -608,6 +607,11 @@ void draw_player(int x,int y,int dir,int control,int ID,int color,int name)
 	{
 		setfillstyle(1,YELLOW);
 		pieslice(x+6,y+15,0,360,2);
+	}
+	if(action)
+	{
+		setfillstyle(1,BLACK);
+		pieslice(x+6,y+25,0,360,3);
 	}
 	line(x+6,y+28,x,y+34);
     line(x+6,y+28,x+12,y+34);
