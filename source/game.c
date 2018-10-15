@@ -42,6 +42,9 @@ void game(int position1,int position2,int color1,int color2)
 	InstallKeyboard();
 	setfillstyle(1,GREEN);
     bar(0,0,640,480);
+	ball.score_my=0;
+	ball.score_op=0;
+	ball.time=0;
 	ball.timecount=0;
 	init_ball(&opteam,&myteam,&ball);
 	init_team(&myteam,&ball);
@@ -249,8 +252,8 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 		action(pmyteam,popteam,pball);
 		if(distance(pmyteam->player[pmyteam->controlplayer].now_pos.x+6,pmyteam->player[pmyteam->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<20.0)
 		{
-			setfillstyle(1,BLACK);
-		circle(10,10,10);
+		// 	setfillstyle(1,BLACK);
+		// circle(10,10,10);
 				pplayer->control=1;
 				pmyteam->control=pplayer->ID;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
@@ -284,8 +287,8 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	// setfillsty/,10);
 	if(pplayer->name==Player)
 	{
-		setfillstyle(1,BLACK);
-		circle(10,10,10);
+	// 	setfillstyle(1,BLACK);
+	// 	circle(10,10,10);
 		action(pmyteam,popteam,pball);
 	}
 	else
@@ -1173,9 +1176,12 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1Îª¿ØÇòÇò¶Ó
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
 	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
 	pball->timecount++;
-	if(pball->timecount>2500)
+	if(pball->timecount%FPS==0)
 	{
-		pball->timecount%=FPS;
+		pball->time++;
+		draw_time(pball->time);
+		draw_score(pball->score_my,pball->score_op);
+		pball->timecount=0;
 	}
 	delay(10);
 	// if(pball->old_pos.x!=pball->now_pos.x&&pball->old_pos.y!=pball->now_pos.y)

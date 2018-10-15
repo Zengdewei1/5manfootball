@@ -74,6 +74,10 @@ typedef struct _BALL
     Pos2d start_pos;
     Pos2d end_pos;
     int control;//足球控制人，-1不受控制
+    int last_control;
+    int score_my;
+    int score_op;
+    int time;
     int timecount;
     ball_state *pnowstate;
     ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
@@ -97,6 +101,14 @@ typedef struct _TEAM
     team_state *pnowstate;
     team_state Attack,Defend;
 }_team;
+
+// typedef struct _RESULT
+// {
+//     int score_my;
+//     int score_op;
+//     int time;
+// }_result;
+
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
 
 double distance(double x1,double y1,double x2,double y2);
@@ -113,5 +125,7 @@ void draw_judge(int x,int y);
 void draw_ground();
 void draw_ball(int x,int y);
 void draw_num(int x,int y,int num,int size);
+void draw_time(int time);
+void draw_score(int score_my,int score_op);
 // void reback(int x,int y,int x_size,int y_size);
 #endif

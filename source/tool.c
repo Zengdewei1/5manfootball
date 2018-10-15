@@ -632,7 +632,6 @@ void draw_ball(int x,int y)
 
 void draw_num(int x,int y,int num,int size)
 {
-	setlinestyle(0,0,1);
 	switch(num)
 	{
 		case(0):line(x,y,x+size,y);
@@ -687,6 +686,45 @@ void draw_num(int x,int y,int num,int size)
 				break;
 	}
 }
+
+void draw_time(int time)
+{
+	int minute,second,ten,single;
+	minute=time/60;
+	second=time%60;
+	ten=second/10;
+	single=second%10;
+	setlinestyle(0,0,3);
+	setcolor(BLACK);
+	rectangle(210,5,310,45);
+	setfillstyle(1,WHITE);
+	bar(213,8,313,42);
+	setcolor(RED);
+	draw_num(215,10,minute,15);
+	setfillstyle(1,RED);
+	pieslice(245,15,0,360,3);
+	pieslice(245,35,0,360,3);
+	draw_num(260,10,ten,15);
+	draw_num(290,10,single,15);
+}
+
+void draw_score(int score_my,int score_op)
+{
+	setlinestyle(0,0,3);
+	setcolor(BLACK);
+	rectangle(320,5,450,45);
+	setfillstyle(1,WHITE);
+	bar(323,8,447,42);
+	setcolor(BLUE);
+	draw_num(325,10,score_my/10,15);
+	draw_num(355,10,score_my%10,15);
+	setfillstyle(1,BLUE);
+	pieslice(385,15,0,360,3);
+	pieslice(385,35,0,360,3);
+	draw_num(400,10,score_op/10,15);
+	draw_num(430,10,score_op%10,15);
+}
+
 void draw_ground()
 {
 	setlinestyle(0,0,3);
