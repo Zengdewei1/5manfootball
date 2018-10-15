@@ -102,12 +102,12 @@ typedef struct _TEAM
     team_state Attack,Defend;
 }_team;
 
-// typedef struct _RESULT
-// {
-//     int score_my;
-//     int score_op;
-//     int time;
-// }_result;
+typedef struct _RESULT
+{
+    int score_my;
+    int score_op;
+    int time;
+}_result;
 
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
 
