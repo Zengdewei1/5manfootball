@@ -1,9 +1,9 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#define FPS 40
+#define FPS 10
 
-void game(int position1,int position2,int color1,int color2);
+_result game(int position1,int position2,int color1,int color2,_result result_before);
 void init_ball(_team *popteam,_team *pmyteam,_ball *pball);
 void init_judge(struct _JUDGE *pjudge);
 void init_player(_player *pplayer,int position,int ID,int name);

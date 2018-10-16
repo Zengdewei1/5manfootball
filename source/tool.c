@@ -137,7 +137,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
 				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
-				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Dribble);
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
 		    }
             if(KeyPress(KEY_K))
 		    {
@@ -648,12 +648,12 @@ void draw_num(int x,int y,int num,int size)
 				line(x,y+2*size,x+size,y+2*size);
 				break;
 		case(3):line(x,y,x+size,y);
-				line(x+size,y,x+size,y+size);
-				line(x+size,y+size,x,y+size);
-				line(x+size,y+size,x+size,y+2*size);
-				line(x+size,y+2*size,x,y+2*size);
+				line(x,y+size,x+size,y+size);
+				line(x,y+2*size,x+size,y+2*size);
+				line(x+size,y,x+size,y+2*size);
 				break;
-		case(4):line(x+size,y,x,y+size);
+		case(4):line(x,y,x,y+size);
+				line(x,y+size,x+size,y+size);
 				line(x,y+size,x+size,y+size);
 				line(x+size,y,x+size,y+2*size);
 				break;
@@ -683,6 +683,7 @@ void draw_num(int x,int y,int num,int size)
 				line(x+size,y,x+size,y+2*size);
 				line(x,y,x,y+size);
 				line(x+size,y+size,x,y+size);
+				line(x,y+2*size,x+size,y+2*size);
 				break;
 	}
 }
@@ -698,7 +699,7 @@ void draw_time(int time)
 	setcolor(BLACK);
 	rectangle(210,5,310,45);
 	setfillstyle(1,WHITE);
-	bar(213,8,313,42);
+	bar(213,8,307,42);
 	setcolor(RED);
 	draw_num(215,10,minute,15);
 	setfillstyle(1,RED);
@@ -742,6 +743,63 @@ void draw_ground()
 	arc(600,80,180,270,20);
 	arc(600,474,90,180,20);
 }
+
+void player_border(_player *pplayer)
+{
+	if(pplayer->now_pos.x<40)
+				{
+				  pplayer->now_pos.x=40;
+				}
+
+			              if(pplayer->now_pos.x>588)
+				 {
+				  pplayer->now_pos.x=588;
+				 }
+
+		 	              if(pplayer->now_pos.y<80)
+				{
+				  pplayer->now_pos.y=80;
+				}
+
+			                if(pplayer->now_pos.y>440)
+			                  {
+			                   pplayer->now_pos.y=440;
+				  }
+}
+
+void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
+{
+	if(pball->now_pos.x<40||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466&&pball->pnowstate!=&pball->Short_shoot)
+	{
+		if(pmyteam->pnowstate==&pmyteam->Attack)
+		{
+			init_team(pmyteam,pball);
+				  init_team(popteam,pball);
+				  setfillstyle(1,GREEN);	
+				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
+				  popteam->player[3].control=1;
+				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+				popteam->control=3;
+				popteam->controlplayer=3;
+				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+				pball->control=3;
+				if(pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
+				{
+					pball->score_my++;
+				}
+				if(pball->now_pos.x<40&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
+				{
+					pball->score_op++;
+				}
+		}
+		// else
+		// {
+
+		// }
+	}
+}
+
  //画被覆盖的背景,2重循环算法
 // void reback(int x,int y,int x_size,int y_size)
 // {

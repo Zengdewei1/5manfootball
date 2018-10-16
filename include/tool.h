@@ -73,12 +73,17 @@ typedef struct _BALL
     Pos2d old_pos;
     Pos2d start_pos;
     Pos2d end_pos;
+    int flag;
     int control;//足球控制人，-1不受控制
     int last_control;
     int score_my;
     int score_op;
     int time;
     int timecount;
+    // Pos2d my_attack[4];
+    // Pos2d my_deffend[4];
+    // Pos2d op_attack[4];
+    // Pos2d op_deffend[4];
     ball_state *pnowstate;
     ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
 }_ball;
@@ -106,7 +111,10 @@ typedef struct _RESULT
 {
     int score_my;
     int score_op;
-    int time;
+    int goal_my[4];
+    int goal_op[4];
+    int help_my[4];
+    int help_op[4];
 }_result;
 
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
@@ -127,5 +135,8 @@ void draw_ball(int x,int y);
 void draw_num(int x,int y,int num,int size);
 void draw_time(int time);
 void draw_score(int score_my,int score_op);
+
+void player_border(_player *pplayer);
+void ball_border(_team *popteam,_team *pmyteam,_ball *pball);
 // void reback(int x,int y,int x_size,int y_size);
 #endif

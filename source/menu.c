@@ -65,6 +65,9 @@ void menu_page()
 //主客场界面
 void changci()
 {
+	_result result_first,result_init,result_final;
+	result_init.score_my=0;
+	result_init.score_op=0;
 	cleardevice();
 	setfillstyle(1,GREEN);
 	bar(0,0,639,479);
@@ -89,13 +92,23 @@ void changci()
 			menu();
 		if(Mouse_press(20,100,220,260))
 		{
-			game(Left,Right,Red,Blue);
-			game(Right,Left,Red,Blue);
+			result_first=game(Left,Right,Red,Blue,result_init);
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+					break;
+			}
+			result_final=game(Right,Left,Red,Blue,result_first);
 		}
 		if(Mouse_press(420,100,620,260))
 		{
-			game(Left,Right,Blue,Red);
-			game(Right,Left,Blue,Red);
+			result_first=game(Left,Right,Blue,Red,result_init);
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+					break;
+			}
+			result_final=game(Right,Left,Blue,Red,result_first);
 		}
 	}
 }
@@ -233,6 +246,9 @@ void choose_player()
 {
     int i,j,x,y=100;
 	int ID[10];
+	_result result_first,result_init,result_final;
+	result_init.score_my=0;
+	result_init.score_op=0;
 	for(i=0;i<10;i++)
 		ID[i]=0;
 	 cleardevice();
@@ -442,7 +458,15 @@ void choose_player()
 		if(ID[9])
 		 	rectangle(346,300,442,330);
 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-	 		game(Right,Left,Blue,Red);
+		{
+			result_first=game(Left,Right,Red,Blue,result_init);
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+					break;
+			}
+			result_final=game(Right,Left,Red,Blue,result_first);
+		}
 	 }
 }
 
