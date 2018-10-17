@@ -28,7 +28,7 @@
 /*ÓÎÏ·½çÃæ*/
 _result game(int position1,int position2,int color1,int color2,_result result_before)
 {
-	int i;
+	int i,j;
 	_result result;
 	_ball ball;
 	_judge judge;
