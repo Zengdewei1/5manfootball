@@ -28,7 +28,7 @@
 /*游戏界面*/
 _result game(int position1,int position2,int color1,int color2,_result result_before)
 {
-	int i,j;
+	int i;
 	_result result;
 	_ball ball;
 	_judge judge;
@@ -187,7 +187,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 		if(popteam->control==0&&pball->timecount%15==0)
 		{
 			pball->end_pos.x=popteam->player[1].now_pos.x+6;
-			pball->end_pos.y=popteam->player[1].now_pos.x+17;
+			pball->end_pos.y=popteam->player[1].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 		// 	setfillstyle(1,BLACK);
 		// circle(10,10,10);
@@ -265,7 +265,7 @@ void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball)
 //球员状态
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
-	Pos2d near_dir;
+	Pos2d near_dir,pos_from,pos_to;
 	if(pplayer->name==Player)
 	{
 		action(pmyteam,popteam,pball);
@@ -275,6 +275,8 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 		// circle(10,10,10);
 			if(popteam->control!=-1)
 			{
+						
+				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->control],pball,&popteam->player[popteam->control].Wait);
 				popteam->player[popteam->control].control=0;
 				popteam->control=-1;
 			}
@@ -288,13 +290,24 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 	}
 	else
 	{
-		near_dir=get_dir(pplayer->now_pos,pball->now_pos);
+		pos_from.x=pplayer->now_pos.x+6;
+		pos_from.y=pplayer->now_pos.y+17;
+		pos_to.x=pball->now_pos.x+6;
+		pos_to.y=pball->now_pos.y+6;
+		near_dir=get_dir(pos_from,pos_to);
 		pplayer->velocity.x=3*near_dir.x;
 		pplayer->velocity.y=3*near_dir.y;
 		if(distance(popteam->player[popteam->controlplayer].now_pos.x+6,popteam->player[popteam->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<20.0)
 		{
 		// 	setfillstyle(1,BLACK);
 		// circle(10,10,10);
+			if(pmyteam->control!=-1)
+				{
+
+					PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->control],pball,&pmyteam->player[pmyteam->control].Wait);
+					pmyteam->player[pmyteam->control].control=0;
+					pmyteam->control=-1;
+				}
 				pplayer->control=1;
 				popteam->control=pplayer->ID;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
@@ -302,8 +315,8 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 				BallChangestate(popteam,pmyteam,pball,&pball->Control);
 				PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Dribble);
 		}
-		if(popteam->pnowstate==&popteam->Defend)
-			PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+		// if(popteam->pnowstate==&popteam->Defend)
+		// 	PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
 	}
 }
 
@@ -362,8 +375,8 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
 		}
-		if(pball->timecount%30==0)//另一方法，sin/cos,变正负
-			pplayer->velocity.y*=(-1);
+		// if(pball->timecount%30==0)//另一方法，sin/cos,变正负
+		// 	pplayer->velocity.y*=(-1);
 	}
 }
 
@@ -589,16 +602,16 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 		// {
 		// 	switch(pplayer->ID)
 		// 	{
-		// 		case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,100.0,160.0)<5.0)
+		// 		case(0):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
 		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 		// 				break;
-		// 		case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,100.0,400.0)<5.0)
+		// 		case(1):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
 		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 		// 				break;
-		// 		case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,200.0,290.0)<5.0)
+		// 		case(2):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
 		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 		// 				break;
-		// 		case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,400.0,290.0)<5.0)
+		// 		case(3):if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
 		// 					PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 		// 				break;
 		// 	}
@@ -636,6 +649,28 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,160.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
+						{
+						
+							if(pmyteam->control!=-1)
+							{
+		// 													setfillstyle(1,BLACK);
+		// circle(10,10,10);
+								PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->control],pball,&pmyteam->player[pmyteam->control].ChasingBall);
+								pmyteam->player[pmyteam->control].control=0;
+								pmyteam->control=-1;
+							}
+							pplayer->control=1;
+							popteam->control=pplayer->ID;
+							pball->control=pplayer->ID;
+							popteam->controlplayer=pplayer->ID;
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Dribble);
+							TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+							BallChangestate(popteam,pmyteam,pball,&pball->Control);
+							
+		// 						setfillstyle(1,BLACK);
+		// circle(10,10,10);
+						}
 						break;
 				case(1):if(distance(540.0,400.0,pball->now_pos.x,pball->now_pos.y)<100.0)
 						{
@@ -645,6 +680,27 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,540.0,400.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
+						{
+						
+							if(pmyteam->control!=-1)
+							{
+
+								PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->control],pball,&pmyteam->player[pmyteam->control].ChasingBall);
+								pmyteam->player[pmyteam->control].control=0;
+								pmyteam->control=-1;
+							}
+							pplayer->control=1;
+							popteam->control=pplayer->ID;
+							popteam->controlplayer=pplayer->ID;
+							pball->control=pplayer->ID;
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Dribble);
+							TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+							BallChangestate(popteam,pmyteam,pball,&pball->Control);
+							
+		// 						setfillstyle(1,BLACK);
+		// circle(10,10,10);
+						}
 						break;
 				case(2):if(distance(440.0,280.0,pball->now_pos.x,pball->now_pos.y)<100.0)
 						{
@@ -654,11 +710,50 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,440.0,280.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
+						{
+						
+							if(pmyteam->control!=-1)
+							{
+
+								PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->control],pball,&pmyteam->player[pmyteam->control].ChasingBall);
+								pmyteam->player[pmyteam->control].control=0;
+								pmyteam->control=-1;
+							}
+							pplayer->control=1;
+							popteam->control=pplayer->ID;
+							pball->control=pplayer->ID;
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Dribble);
+							TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+							BallChangestate(popteam,pmyteam,pball,&pball->Control);
+							
+		// 						setfillstyle(1,BLACK);
+		// circle(10,10,10);
+						}
 						break;
 				case(3):near_dir=get_dir(pplayer->now_pos,pball->now_pos);
 						pplayer->velocity.x=3*near_dir.x;
 						pplayer->velocity.y=3*near_dir.y;
+						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
+						{
 						
+							if(pmyteam->control!=-1)
+							{
+
+								PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->control],pball,&pmyteam->player[pmyteam->control].ChasingBall);
+								pmyteam->player[pmyteam->control].control=0;
+								pmyteam->control=-1;
+							}
+							pplayer->control=1;
+							popteam->control=pplayer->ID;
+							pball->control=pplayer->ID;
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Dribble);
+							TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+							BallChangestate(popteam,pmyteam,pball,&pball->Control);
+							
+		// 						setfillstyle(1,BLACK);
+		// circle(10,10,10);
+						}
 			}
 		}
 	}
@@ -1329,7 +1424,6 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1为控球球队
 		pball->time++;
 		draw_time(pball->time);
 		draw_score(pball->score_my,pball->score_op);
-		pball->timecount=0;
 	}
 	if(pball->time>=40&&pmyteam->position==Left)
 	{
