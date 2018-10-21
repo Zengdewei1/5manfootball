@@ -6,5 +6,5 @@ void menu();
 void changci();
 void jiaoxue();
 void choose_team();
-void choose_player();
+void choose_player(int team);
 #endif

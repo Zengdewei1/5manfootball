@@ -589,7 +589,7 @@ void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int
 	{
 		setcolor(BLUE);
 	}
-	if(name==Player)
+	// if(name==Player)
 		draw_num(x+4,y+2,ID,4);
     circle(x+6,y+6,6);
     line(x+6,y+12,x+6,y+28);
@@ -742,6 +742,86 @@ void draw_ground()
 	arc(40,474,0,90,20);
 	arc(600,80,180,270,20);
 	arc(600,474,90,180,20);
+}
+
+void draw_control(_team *pmyteam,_team *popteam)
+{
+	setlinestyle(0,0,3);
+	setfillstyle(1,RED);
+	setcolor(BLACK);
+	rectangle(5,5,50,30);
+	bar(8,8,47,27);
+	draw_num(20,10,0,5);
+
+	rectangle(5,35,50,60);
+	bar(8,38,47,57);
+	draw_num(20,40,1,5);
+
+	rectangle(95,5,140,30);
+	bar(98,8,137,27);
+	draw_num(110,10,2,5);
+
+	rectangle(95,35,140,60);
+	bar(98,38,137,57);
+	draw_num(110,40,3,5);
+	setfillstyle(1,BLUE);
+	rectangle(640-5-40,5,640-50-40,30);
+	bar(640-8-40,8,640-47-40,27);
+	draw_num(640-20-40,10,2,5);
+
+	rectangle(640-5-40,35,640-50-40,60);
+	bar(640-8-40,38,640-47-40,57);
+	draw_num(640-20-40,40,3,5);
+
+	rectangle(640-95-50,5,640-140-50,30);
+	bar(640-98-50,8,640-137-50,27);
+	draw_num(640-110-50,10,0,5);
+
+	rectangle(640-95-50,35,640-140-50,60);
+	bar(640-98-50,38,640-137-50,57);
+	draw_num(640-110-50,40,1,5);
+	setfillstyle(1,GREEN);
+	bar(52,5,92,65);
+	bar(142,5,180,65);
+	bar(497,5,537,65);
+	bar(597,5,640,65);
+	setcolor(YELLOW);
+	if(pmyteam->pnowstate==&pmyteam->Attack)
+	{
+		switch(pmyteam->controlplayer)
+		{
+			case(0):line(60,15,70,30);
+					line(70,30,90,15);
+					break;
+			case(2):line(60+90,15,70+90,30);
+					line(70+90,30,90+90,15);
+					break;
+			case(1):line(60,15+30,70,30+30);
+					line(70,30+30,90,15+30);
+					break;
+			case(3):line(60+90,15+30,70+90,30+30);
+					line(70+90,30+30,90+90,15+30);
+					break;
+		}
+	}
+	else if(popteam->pnowstate==&popteam->Attack)
+	{
+		switch(popteam->controlplayer)
+		{
+			case(0):line(640-95-40,15,640-125,30);
+					line(640-125,30,640-105,15);
+					break;
+			case(2):line(640-95-40+90,15,640-125+90,30);
+					line(640-125+90,30,640-105+90,15);
+					break;
+			case(1):line(640-95-40,15+30,640-125,30+30);
+					line(640-125,30+30,640-105,15+30);
+					break;
+			case(3):line(640-95-40+90,15+30,640-125+90,30+30);
+					line(640-125+90,30+30,640-105+90,15+30);
+					break;
+		}
+	}
 }
 
 void player_border(_player *pplayer)
