@@ -52,7 +52,7 @@ typedef struct _PLAYER
     double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
     double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
-    player_state ChasingBall,Dribble,Wait,Actioning;
+    player_state ChasingBall,Dribble,Wait,Actioning,Down;
 }_player;
 typedef struct _GOALKEEPER
 {
@@ -73,8 +73,18 @@ typedef struct _BALL
     Pos2d old_pos;
     Pos2d start_pos;
     Pos2d end_pos;
+    int flag;
     int control;//足球控制人，-1不受控制
+    int last_control;
+    int score_my;
+    int score_op;
+    int time;
     int timecount;
+    int downtime;
+    // Pos2d my_attack[4];
+    // Pos2d my_deffend[4];
+    // Pos2d op_attack[4];
+    // Pos2d op_deffend[4];
     ball_state *pnowstate;
     ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
 }_ball;
@@ -87,6 +97,7 @@ typedef struct _JUDGE
 typedef struct _TEAM
 {
     int controlplayer;//玩家控制的球员ID
+    int lastcontrol;
     int name;
     int color;
     int position;
@@ -96,6 +107,7 @@ typedef struct _TEAM
     team_state *pnowstate;
     team_state Attack,Defend;
 }_team;
+
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
 
 double distance(double x1,double y1,double x2,double y2);
@@ -107,10 +119,16 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 // void move_renctangle(_player *pplayer,int type);
 void arrive(_player *pplayer,double _x,double _y);
 
-void draw_player(int x,int y,int dir,int control,int ID,int color,int name);
+void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int name);
 void draw_judge(int x,int y);
 void draw_ground();
 void draw_ball(int x,int y);
 void draw_num(int x,int y,int num,int size);
+void draw_time(int time);
+void draw_score(int score_my,int score_op);
+void draw_control(_team *pmyteam,_team *popteam);
+
+void player_border(_player *pplayer);
+void ball_border(_team *popteam,_team *pmyteam,_ball *pball);
 // void reback(int x,int y,int x_size,int y_size);
 #endif

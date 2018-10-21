@@ -1,7 +1,7 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#define FPS 40
+#define FPS 10
 
 void game(int position1,int position2,int color1,int color2);
 void init_ball(_team *popteam,_team *pmyteam,_ball *pball);
@@ -24,9 +24,10 @@ void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void WaitEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void ActioningEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
-// void SupportingExecute(_team *team,_ball *pball);
-// void ReceivingBallExecute(_team *team,_ball *pball);
+void DownEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
+void DownExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball);
 
 void TendGoalExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball);
 void PounceEnter(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball);

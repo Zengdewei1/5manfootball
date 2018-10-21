@@ -90,12 +90,10 @@ void changci()
 		if(Mouse_press(20,100,220,260))
 		{
 			game(Left,Right,Red,Blue);
-			game(Right,Left,Red,Blue);
 		}
 		if(Mouse_press(420,100,620,260))
 		{
 			game(Left,Right,Blue,Red);
-			game(Right,Left,Blue,Red);
 		}
 	}
 }
@@ -442,7 +440,9 @@ void choose_player()
 		if(ID[9])
 		 	rectangle(346,300,442,330);
 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-	 		game(Right,Left,Blue,Red);
+		{
+			game(Left,Right,Red,Blue);
+		}
 	 }
 }
 
