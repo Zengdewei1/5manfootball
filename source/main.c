@@ -17,6 +17,10 @@ void main()
 	initgraph(&driver,&mode,"C:\\BORLANDC\\BGI");
     setfillstyle(1,GREEN);
     bar(0,0,640,480);
+	// while(1)
+	// {
+	// 	reback(0,0,640,480);
+	// }
     game(Left,Right,Red,Blue);
 	// menu();
 }

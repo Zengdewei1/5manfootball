@@ -4,7 +4,6 @@
 #include<dos.h>
 #include<ctype.h>
 #include<time.h>
-#include<STDIO.H>
 #include"mouse.h"
 #include"hanzi.h"
 #include"multikey.h"
@@ -88,26 +87,14 @@ void changci()
 		Newxy();
 		if(KeyPress(KEY_ESC))
 			menu();
-		// if(Mouse_press(20,100,220,260))
-		// {
-		// 	result_first=game(Left,Right,Red,Blue,result_init);
-		// 	while(1)
-		// 	{
-		// 		if(KeyPress(KEY_ENTER))
-		// 			break;
-		// 	}
-		// 	result_final=game(Right,Left,Red,Blue,result_first);
-		// }
-		// if(Mouse_press(420,100,620,260))
-		// {
-		// 	result_first=game(Left,Right,Blue,Red,result_init);
-		// 	while(1)
-		// 	{
-		// 		if(KeyPress(KEY_ENTER))
-		// 			break;
-		// 	}
-		// 	result_final=game(Right,Left,Blue,Red,result_first);
-		// }
+		if(Mouse_press(20,100,220,260))
+		{
+			game(Left,Right,Red,Blue);
+		}
+		if(Mouse_press(420,100,620,260))
+		{
+			game(Left,Right,Blue,Red);
+		}
 	}
 }
 
@@ -170,14 +157,12 @@ void jiaoxue()
 //选择球队界面
 void choose_team()
 {
-	int x=240;
-	int i=0;
-	int j=0;
+                int x=240;
 	int y=100;
 	cleardevice();
 	setfillstyle(1,GREEN);
-	bar(1,1,640,480);
-	InstallKeyboard();
+	 bar(0,0,640,480);
+
 
 	 setcolor(MAGENTA);
 	 x=250;
@@ -202,165 +187,38 @@ void choose_team()
 	 puthz(x+128,y+100,"上海申花",32,32,BLUE);
 	 puthz(282,195,"选择",32,32,BLUE);
 	 puthz(282,227,"球队",32,32,BLUE);
-
+	Initmouse(0,639,0,479);
+	 InstallKeyboard();
+	 NewBK();
 	while(1)
 	{
 		Newxy();
 		if(KeyPress(KEY_ESC))
-		{
-			NewBK();
 			menu();
-		}
-
 		if(Mouse_press(x,y,x+128,y+40))
 		  {
-			NewBK();
-			choose_player(1);
-			// if((fp=fopen("c:\\mycode\\name\\1.txt","r"))==NULL)
-			//   {
-			// 	settextstyle(1,0,3);
-			// 	outtextxy(200,200,"cannot open the file");
-			// 	exit(1);
-			//   }
-			// while(!feof(fp))
-			// 	 {
-			// 		if((ch=fgetc(fp))!='\n')
-			// 		  {
-			// 			s[i][j]=ch;
-			// 			j++;
-			// 		  }
-			// 		if(ch=='\n')
-			// 		  {
-			// 			s[i][j]='\0';
-			// 			i++;
-			// 			j=0;
-			// 		  }
-
-			// 	 }
-			// 	 s[i][j-1]='\0';
-
-			// 	 fclose(fp);
-				//  choose_player(team);
+	
+			choose_player();
 		  }
-
 		if(Mouse_press(x-128,y+100,x,y+100+40))
 		  {
-			NewBK();
-			choose_player(2);
-			// if((fp=fopen("c:\\mycode\\name\\2.txt","r"))==NULL)
-			//   {
-			// 	settextstyle(1,0,3);
-			// 	outtextxy(200,200,"cannot open the file");
-			// 	exit(1);
-			//   }
-			// while(!feof(fp))
-			// 	 {
-			// 		if((ch=fgetc(fp))!='\n')
-			// 		  {
-			// 			s[i][j]=ch;
-			// 			j++;
-			// 		  }
-			// 		if(ch=='\n')
-			// 		  {
-			// 			s[i][j]='\0';
-			// 			i++;
-			// 			j=0;
-			// 		  }
 
-			// 	 }
-			// 	 s[i][j-1]='\0';
-			// 	 fclose(fp);
-			// 	 choose_player(s);
+			choose_player();
 		  }
-
 		if(Mouse_press(x+128,y+100,x+128+128,y+100+40))
 		  {
-			NewBK();
-			choose_player(3);
-			// if((fp=fopen("c:\\mycode\\name\\3.txt","r"))==NULL)
-			//   {
-			// 	settextstyle(1,0,3);
-			// 	outtextxy(200,200,"cannot open the file");
-			// 	exit(1);
-			//   }
-			// while(!feof(fp))
-			// 	 {
-			// 		if((ch=fgetc(fp))!='\n')
-			// 		  {
-			// 			s[i][j]=ch;
-			// 			j++;
-			// 		  }
-			// 		if(ch=='\n')
-			// 		  {
-			// 			s[i][j]='\0';
-			// 			i++;
-			// 			j=0;
-			// 		  }
 
-			// 	 }
-			// 	 s[i][j-1]='\0';
-			// 	 fclose(fp);
-			// 	 choose_player(s);
+			choose_player();
 		  }
-
 		if(Mouse_press(x-95,y+100*2,x-95+128,y+100*2+40))
 		  {
-			NewBK();
-			choose_player(4);
-			// if((fp=fopen("c:\\mycode\\name\\4.txt","r"))==NULL)
-			//   {
-			// 	settextstyle(1,0,3);
-			// 	outtextxy(200,200,"cannot open the file");
-			// 	exit(1);
-			//   }
-			// while(!feof(fp))
-			// 	 {
-			// 		if((ch=fgetc(fp))!='\n')
-			// 		  {
-			// 			s[i][j]=ch;
-			// 			j++;
-			// 		  }
-			// 		if(ch=='\n')
-			// 		  {
-			// 			s[i][j]='\0';
-			// 			i++;
-			// 			j=0;
-			// 		  }
 
-			// 	 }
-			// 	 s[i][j-1]='\0';
-			// 	 fclose(fp);
-			// 	 choose_player(s);
+			choose_player();
 		  }
-
 		if(Mouse_press(x+95,y+100*2,x+95+128,y+100*2+40))
 		  {
-			NewBK();
-			choose_player(5);
-			// if((fp=fopen("c:\\mycode\\name\\5.txt","r"))==NULL)
-			//   {
-			// 	settextstyle(1,0,3);
-			// 	outtextxy(200,200,"cannot open the file");
-			// 	exit(1);
-			//   }
-			// while(!feof(fp))
-			// 	 {
-			// 		if((ch=fgetc(fp))!='\n')
-			// 		  {
-			// 			s[i][j]=ch;
-			// 			j++;
-			// 		  }
-			// 		if(ch=='\n')
-			// 		  {
-			// 			s[i][j]='\0';
-			// 			i++;
-			// 			j=0;
-			// 		  }
 
-			// 	 }
-			// 	 s[i][j-1]='\0';
-			// 	 fclose(fp);
-			// 	 choose_player(s);
+			choose_player();
 		  }
 	}
 }
@@ -368,75 +226,22 @@ void choose_team()
 // {
 
 // }
-
-
-void choose_player(int team)
+//选择球员界面
+void choose_player()
 {
-	 int i=0,j=0,x,y=100;
-	 int *ID;
-	 char **name;
-	 char ch='\0';
-	 FILE *fp;
-	//  _result result_first,result_init,result_final;
-	 name=(char**)malloc(sizeof(char*)*10);
-	 for(i=0;i<10;i++)
-	 {
-		name[i]=(char*)malloc(sizeof(int)*10);
-	 }
-	//  result_init.score_my=0;
-	// result_init.score_op=0;
-	 switch(team)
-	 {
-		case(1):fp=fopen("c:\\mycode\\name\\1.txt","r");
-		 		break;
-		case(2):fp=fopen("c:\\mycode\\name\\2.txt","r");
-		 		break;
-		case(3):fp=fopen("c:\\mycode\\name\\3.txt","r");
-		 		break;
-		case(4):fp=fopen("c:\\mycode\\name\\4.txt","r");
-		 		break;
-		case(5):fp=fopen("c:\\mycode\\name\\5.txt","r");
-		 		break;
-	 }
-	 i=0;
-	 if(fp==NULL)
-			  {
-				settextstyle(1,0,3);
-				outtextxy(200,200,"cannot open the file");
-				exit(1);
-			  }
-			while(!feof(fp))
-				 {
-					if((ch=fgetc(fp))!='\n')
-					  {
-						name[i][j]=ch;
-						j++;
-					  }
-					if(ch=='\n')
-					  {
-						name[i][j]='\0';
-						i++;
-						j=0;
-					  }
-
-				 }
-				 name[i][j-1]='\0';
-				 fclose(fp);
-	ID=(int*)malloc(sizeof(int)*10);
-	if(ID==NULL)
-	{
-		exit(0);
-	}
+    int i,j,x,y=100;
+	int ID[10];
+	for(i=0;i<10;i++)
+		ID[i]=0;
 	 cleardevice();
-	 InstallKeyboard();
 	 setfillstyle(1,GREEN);
-                 bar(1,1,640,480);
-
+	 bar(0,0,640,480);
 	 setcolor(WHITE);
 	 rectangle(260,0,388,32);
 	 setfillstyle(1,YELLOW);
 	 floodfill(261,1,WHITE);
 	 puthz(260,0,"选择球员",32,32,BLUE);
+	 setcolor(WHITE);
 	 for(j=0;j<3;j++)
 		{
 		 x=130;
@@ -450,8 +255,7 @@ void choose_player(int team)
 
 	 y=101;
 	 for(j=0;j<3;j++)
-		{
-                                 x=131;
+		{x=131;
 		 for(i=0;i<4;i++)
 			{
 			 floodfill(x,y,WHITE);
@@ -459,18 +263,10 @@ void choose_player(int team)
 			}
 		 y+=100;
 		}
-                  rectangle(250,375,400,425);
+	 rectangle(250,375,400,425);
 	 setfillstyle(1,CYAN);
 	 floodfill(300,401,WHITE);
-
-                 setfillstyle(1,GREEN);
-	 floodfill(131,301,WHITE);
-	 floodfill(463,301,WHITE);
-				 setcolor(GREEN);
-	 rectangle(130,300,130+96,300+30);
-	 rectangle(130+108*3,300,130+108*3+96,300+30);
-
-	 setcolor(BLUE);
+	 x=260;
 	 puthz(210,40,"左前锋",32,32,BLUE);
 	 line(242,72,200,92);
 	 line(242,72,284,92);
@@ -479,7 +275,7 @@ void choose_player(int team)
 	 line(462,72,504,92);
 	 puthz(210,140,"左后卫",32,32,BLUE);
 	 line(242,172,200,192);
-	 line(242,172,284,192);
+				 line(242,172,284,192);
 
 	 puthz(430,140,"右后卫",32,32,BLUE);
 	 line(462,172,420,192);
@@ -489,29 +285,34 @@ void choose_player(int team)
 	 line(340,282,300,295);
 	 line(340,282,380,295);
 
-
-
+	 setfillstyle(0,1);
+	 floodfill(131,301,WHITE);
+	 floodfill(463,301,WHITE);
+	 setcolor(GREEN);
+	 rectangle(130,300,130+96,300+30);
+	 rectangle(130+108*3,300,130+108*3+96,300+30);
 	 puthz(260,385,"确认选择",32,32,BLUE);
 
-	 puthz(130,100,name[0],32,32,BLUE);
-	 puthz(238,100,name[1],32,32,BLUE);
-	 puthz(346,100,name[2],32,32,BLUE);
-	 puthz(454,100,name[3],32,32,BLUE);
-	 puthz(130,200,name[4],32,32,BLUE);
-	 puthz(238,200,name[5],32,32,BLUE);
-	 puthz(346,200,name[6],32,32,BLUE);
-	 puthz(454,200,name[7],32,32,BLUE);
-	 puthz(238,300,name[8],32,32,BLUE);
-	 puthz(346,300,name[9],32,32,BLUE);
-	free(name);
+	 puthz(130,100,"孔卡",32,32,BLUE);
+	 puthz(238,100,"金周荣",32,32,BLUE);
+	 puthz(346,100,"杨世元",32,32,BLUE);
+	 puthz(454,100,"埃弗拉",32,32,BLUE);
+
+	 puthz(130,200,"杨博宇",32,32,BLUE);
+	 puthz(238,200,"胡靖航",32,32,BLUE);
+	 puthz(346,200,"朱征宇",32,32,BLUE);
+	 puthz(454,200,"吴海天",32,32,BLUE);
+
+	 puthz(238,300,"吴航",32,32,BLUE);
+	 puthz(346,300,"贾天子",32,32,BLUE);
+	 Initmouse(0,639,0,479);
+	 InstallKeyboard();
+	 NewBK();
 	 while(1)
 	 {
 		 Newxy();
 		 if(KeyPress(KEY_ESC))
-								   {
-												NewBK();
 			choose_team();
-									}
 		if(Mouse_press(130,100,226,130))
 	 	{
 		 	ID[0]=1;
@@ -582,344 +383,66 @@ void choose_player(int team)
 			setcolor(WHITE);
 			rectangle(238,100,334,130);
 		}
-		if(ID[2]==1)
+		if(ID[1]==1)
 		{
 			setcolor(RED);
-			rectangle(346,100,442,130);
+			rectangle(238,100,334,130);
 		}
 		else
 		{
 			setcolor(WHITE);
-			rectangle(346,100,442,130);
+			rectangle(238,100,334,130);
 		}
-		if(ID[3]==1)
+		if(ID[1]==1)
 		{
 			setcolor(RED);
-			rectangle(454,100,550,130);
+			rectangle(238,100,334,130);
 		}
 		else
 		{
 			setcolor(WHITE);
-			rectangle(454,100,550,130);
+			rectangle(238,100,334,130);
 		}
-		if(ID[4]==1)
+		if(ID[1]==1)
 		{
 			setcolor(RED);
-			rectangle(130,200,226,230);
+			rectangle(238,100,334,130);
 		}
 		else
 		{
 			setcolor(WHITE);
-			rectangle(130,200,226,230);
+			rectangle(238,100,334,130);
 		}
-		if(ID[5]==1)
+		if(ID[1]==1)
 		{
 			setcolor(RED);
-			rectangle(238,200,334,230);
+			rectangle(238,100,334,130);
 		}
 		else
 		{
 			setcolor(WHITE);
-			rectangle(238,200,334,230);
+			rectangle(238,100,334,130);
 		}
-		if(ID[6]==1)
+		if(ID[2])
+		 	rectangle(346,100,442,130);
+		if(ID[3])
+		 	rectangle(454,100,550,130);
+		if(ID[4])
+		 	rectangle(130,200,226,230);
+		if(ID[5])
+		 	rectangle(238,200,334,230);
+		if(ID[6])
+		 	rectangle(346,200,442,230);
+		if(ID[7])
+		 	rectangle(454,200,550,230);
+		if(ID[8])
+		 	rectangle(238,300,334,330);
+		if(ID[9])
+		 	rectangle(346,300,442,330);
+		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
 		{
-			setcolor(RED);
-			rectangle(346,200,442,230);
+			game(Left,Right,Red,Blue);
 		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(346,200,442,230);
-		}
-		if(ID[7]==1)
-		{
-			setcolor(RED);
-			rectangle(454,200,550,230);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(454,200,550,230);
-		}
-		if(ID[8]==1)
-		{
-			setcolor(RED);
-			rectangle(238,300,334,330);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(238,300,334,330);
-		}
-		if(ID[9]==1)
-		{
-			setcolor(RED);
-			rectangle(346,300,442,330);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(346,300,442,330);
-		}
-		// if(ID[2])
-		//  	rectangle(346,100,442,130);
-		// if(ID[3])
-		//  	rectangle(454,100,550,130);
-		// if(ID[4])
-		//  	rectangle(130,200,226,230);
-		// if(ID[5])
-		//  	rectangle(238,200,334,230);
-		// if(ID[6])
-		//  	rectangle(346,200,442,230);
-		// if(ID[7])
-		//  	rectangle(454,200,550,230);
-		// if(ID[8])
-		//  	rectangle(238,300,334,330);
-		// if(ID[9])
-		//  	rectangle(346,300,442,330);
-		// if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-		// {
-		// 	NewBK();
-		// 	free(ID);
-		// 	result_first=game(Left,Right,Red,Blue,result_init);
-		// 	while(1)
-		// 	{
-		// 		if(KeyPress(KEY_ENTER))
-		// 			break;
-		// 	}
-		// 	result_final=game(Right,Left,Red,Blue,result_first);
-		// }
 	 }
 }
-
-
-// //选择球员界面
-// void choose_player()
-// {
-//     int i,j,x,y=100;
-// 	int ID[10];
-// 	_result result_first,result_init,result_final;
-// 	result_init.score_my=0;
-// 	result_init.score_op=0;
-// 	for(i=0;i<10;i++)
-// 		ID[i]=0;
-// 	 cleardevice();
-// 	 setfillstyle(1,GREEN);
-// 	 bar(0,0,640,480);
-// 	 setcolor(WHITE);
-// 	 rectangle(260,0,388,32);
-// 	 setfillstyle(1,YELLOW);
-// 	 floodfill(261,1,WHITE);
-// 	 puthz(260,0,"选择球员",32,32,BLUE);
-// 	 setcolor(WHITE);
-// 	 for(j=0;j<3;j++)
-// 		{
-// 		 x=130;
-// 		 for(i=0;i<4;i++)
-// 			{
-// 			 rectangle(x,y,x+96,y+30);
-// 			 x+=108;
-// 			}
-// 		 y+=100;
-// 		}
-
-// 	 y=101;
-// 	 for(j=0;j<3;j++)
-// 		{x=131;
-// 		 for(i=0;i<4;i++)
-// 			{
-// 			 floodfill(x,y,WHITE);
-// 			 x+=108;
-// 			}
-// 		 y+=100;
-// 		}
-// 	 rectangle(250,375,400,425);
-// 	 setfillstyle(1,CYAN);
-// 	 floodfill(300,401,WHITE);
-// 	 x=260;
-// 	 puthz(210,40,"左前锋",32,32,BLUE);
-// 	 line(242,72,200,92);
-// 	 line(242,72,284,92);
-// 	 puthz(430,40,"右前锋",32,32,BLUE);
-// 	 line(462,72,420,92);
-// 	 line(462,72,504,92);
-// 	 puthz(210,140,"左后卫",32,32,BLUE);
-// 	 line(242,172,200,192);
-// 				 line(242,172,284,192);
-
-// 	 puthz(430,140,"右后卫",32,32,BLUE);
-// 	 line(462,172,420,192);
-// 	 line(462,172,504,192);
-
-// 	 puthz(300,250,"守门员",32,32,BLUE);
-// 	 line(340,282,300,295);
-// 	 line(340,282,380,295);
-
-// 	 setfillstyle(0,1);
-// 	 floodfill(131,301,WHITE);
-// 	 floodfill(463,301,WHITE);
-// 	 setcolor(GREEN);
-// 	 rectangle(130,300,130+96,300+30);
-// 	 rectangle(130+108*3,300,130+108*3+96,300+30);
-// 	 puthz(260,385,"确认选择",32,32,BLUE);
-
-// 	 puthz(130,100,"孔卡",32,32,BLUE);
-// 	 puthz(238,100,"金周荣",32,32,BLUE);
-// 	 puthz(346,100,"杨世元",32,32,BLUE);
-// 	 puthz(454,100,"埃弗拉",32,32,BLUE);
-
-// 	 puthz(130,200,"杨博宇",32,32,BLUE);
-// 	 puthz(238,200,"胡靖航",32,32,BLUE);
-// 	 puthz(346,200,"朱征宇",32,32,BLUE);
-// 	 puthz(454,200,"吴海天",32,32,BLUE);
-
-// 	 puthz(238,300,"吴航",32,32,BLUE);
-// 	 puthz(346,300,"贾天子",32,32,BLUE);
-// 	 Initmouse(0,639,0,479);
-// 	 InstallKeyboard();
-// 	 NewBK();
-// 	 while(1)
-// 	 {
-// 		 Newxy();
-// 		 if(KeyPress(KEY_ESC))
-// 			choose_team();
-// 		if(Mouse_press(130,100,226,130))
-// 	 	{
-// 		 	ID[0]=1;
-// 		 	ID[1]=0;
-// 	 	}
-// 		else if(Mouse_press(238,100,334,130))
-// 	 	{
-// 		 	ID[1]=1;
-// 		 	ID[0]=0;
-// 	 	}
-// 		if(Mouse_press(346,100,442,130))
-// 	 	{
-// 		 	ID[2]=1;
-// 		 	ID[3]=0;
-// 	 	}
-// 		else if(Mouse_press(454,100,550,130))
-// 	 	{
-// 		 	ID[3]=1;
-// 		 	ID[2]=0;
-// 	 	}
-// 		if(Mouse_press(130,200,226,230))
-// 	 	{
-// 		 	ID[4]=1;
-// 		 	ID[5]=0;
-// 	 	}
-// 	 	else if(Mouse_press(238,200,334,230))
-// 	 	{
-// 			ID[5]=1;
-// 			ID[4]=0;
-// 	 	}
-// 		 if(Mouse_press(346,200,442,230))
-// 	 	{
-// 		 	ID[6]=1;
-// 		 	ID[7]=0;
-// 	 	}
-// 		 else if(Mouse_press(454,200,550,230))
-// 	 	{
-// 		 	ID[7]=1;
-// 		 	ID[6]=0;
-// 	 	}
-// 		if(Mouse_press(238,300,334,330))
-// 	 	{
-// 		 	ID[8]=1;
-// 		 	ID[9]=0;
-// 	 	}
-// 		 else if(Mouse_press(346,300,442,330))
-// 	 	{
-// 		 	ID[9]=1;
-// 		 	ID[8]=0;
-// 	 	}
-// 		if(ID[0]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(130,100,226,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(130,100,226,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[2])
-// 		 	rectangle(346,100,442,130);
-// 		if(ID[3])
-// 		 	rectangle(454,100,550,130);
-// 		if(ID[4])
-// 		 	rectangle(130,200,226,230);
-// 		if(ID[5])
-// 		 	rectangle(238,200,334,230);
-// 		if(ID[6])
-// 		 	rectangle(346,200,442,230);
-// 		if(ID[7])
-// 		 	rectangle(454,200,550,230);
-// 		if(ID[8])
-// 		 	rectangle(238,300,334,330);
-// 		if(ID[9])
-// 		 	rectangle(346,300,442,330);
-// 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-// 		{
-// 			result_first=game(Left,Right,Red,Blue,result_init);
-// 			while(1)
-// 			{
-// 				if(KeyPress(KEY_ENTER))
-// 					break;
-// 			}
-// 			result_final=game(Right,Left,Red,Blue,result_first);
-// 		}
-// 	 }
-// }
 

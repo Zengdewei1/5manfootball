@@ -17,16 +17,19 @@ typedef struct PLAYER_STATE//pteam是相对而言的
 {
     void (*Enter)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
+    // void (*Exit)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
 }player_state;
 typedef struct KEEPER_STATE
 {
     void (*Enter)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
+    // void (*Exit)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _GOALKEEPER *pgoalkeeper,struct _BALL *pball);
 }keeper_state;
 typedef struct BALL_STATE
 {
     void (*Enter)(struct _TEAM *popteam,struct _TEAM *pmyteam,struct _BALL *pball);
     void (*Execute)(struct _TEAM *popteam,struct _TEAM *pmyteam,struct _BALL *pball);
+	// void (*Exit)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _BALL *pball);
 }ball_state;
 typedef struct TEAM_STATE
 {
@@ -42,12 +45,12 @@ typedef struct _PLAYER
     int name;
     int dir;
     int control;                        //球员是否控球
-    // int rate;                           //非加速状态的速度
-    // int accelerate;                 //加速速度，用于摆脱对手时的参数 
-    // int power;                         // 力量，决定传球和射门时给球的速度
-    // int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
-    // double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
-    // double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
+    int rate;                           //非加速状态的速度
+    int accelerate;                 //加速速度，用于摆脱对手时的参数 
+    int power;                         // 力量，决定传球和射门时给球的速度
+    int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
+    double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
+    double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
     player_state ChasingBall,Dribble,Wait,Actioning,Down;
 }_player;
@@ -75,9 +78,9 @@ typedef struct _BALL
     int last_control;
     int score_my;
     int score_op;
-    int downtime;
     int time;
     int timecount;
+    int downtime;
     // Pos2d my_attack[4];
     // Pos2d my_deffend[4];
     // Pos2d op_attack[4];

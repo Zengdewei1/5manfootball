@@ -589,7 +589,7 @@ void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int
 	{
 		setcolor(BLUE);
 	}
-	// if(name==Player)
+	if(name==Player)
 		draw_num(x+4,y+2,ID,4);
     circle(x+6,y+6,6);
     line(x+6,y+12,x+6,y+28);
