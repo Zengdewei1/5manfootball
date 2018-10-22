@@ -716,12 +716,13 @@ void draw_score(int score_my,int score_op)
 	rectangle(320,5,450,45);
 	setfillstyle(1,WHITE);
 	bar(323,8,447,42);
-	setcolor(BLUE);
+	setcolor(RED);
 	draw_num(325,10,score_my/10,15);
 	draw_num(355,10,score_my%10,15);
 	setfillstyle(1,BLUE);
 	pieslice(385,15,0,360,3);
 	pieslice(385,35,0,360,3);
+	setcolor(BLUE);
 	draw_num(400,10,score_op/10,15);
 	draw_num(430,10,score_op%10,15);
 }
