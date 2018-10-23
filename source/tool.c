@@ -850,9 +850,9 @@ void player_border(_player *pplayer)
 
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 {
-	if(pball->now_pos.x<40||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466&&pball->pnowstate!=&pball->Short_shoot)
-	{
-		if(pmyteam->pnowstate==&pmyteam->Attack)
+	// if(pball->now_pos.x<40||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466)
+	// {
+		if((pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Right))
 		{
 			init_team(pmyteam,pball);
 				  init_team(popteam,pball);
@@ -865,20 +865,52 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				popteam->controlplayer=3;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
 				pball->control=3;
-				if(pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
-				{
-					pball->score_my++;
-				}
-				if(pball->now_pos.x<40&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
-				{
-					pball->score_op++;
-				}
+				pball->score_my++;
+				// if(pmyteam->control!=-1)
+				// {
+
+				// }
 		}
+		if((pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Left))
+		{
+			init_team(pmyteam,pball);
+				  init_team(popteam,pball);
+				  setfillstyle(1,GREEN);	
+				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
+				  pmyteam->player[3].control=1;
+				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+				pmyteam->control=3;
+				pmyteam->controlplayer=3;
+				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
+				pball->control=3;
+				pball->score_op++;
+		}
+
+
+
+
+
+				// if(pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
+				// {
+				// 	if(pmyteam->position==Left)
+				// 		pball->score_my++;
+				// 	else
+				// 		pball->score_op++;
+				// }
+				// if(pball->now_pos.x<30&&pball->now_pos.y>=220&&pball->now_pos.y<=328)
+				// {
+				// 	if(pmyteam->position==Left)
+				// 		pball->score_op++;
+				// 	else
+				// 		pball->score_my++;
+				// }
+		// }
 		// else
 		// {
 
 		// }
-	}
+	// }
 }
 
  //画被覆盖的背景,2重循环算法

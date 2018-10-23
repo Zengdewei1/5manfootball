@@ -21,7 +21,7 @@ void main()
 	// {
 	// 	reback(0,0,640,480);
 	// }
-    // game(Left,Right,Red,Blue);
-	// game(Right,Left,Red,Blue);
-	menu();
+    game(Left,Right,Red,Blue);
+	game(Right,Left,Red,Blue);
+	// menu();
 }
