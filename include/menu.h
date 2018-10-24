@@ -7,4 +7,6 @@ void changci();
 void jiaoxue();
 void choose_team();
 void choose_player();
+void xiuxi();
+void result();
 #endif

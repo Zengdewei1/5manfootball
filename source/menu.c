@@ -14,6 +14,7 @@
 
 void menu()
 {
+	setlinestyle(0,0,1);
 	menu_page();
 	Initmouse(0,639,0,479);
 	InstallKeyboard();
@@ -39,8 +40,6 @@ void menu()
 
 void menu_page()
 {
-
-
 	setcolor(BLACK);
 	setfillstyle(1,GREEN);
 	bar(0,0,639,479);
@@ -67,6 +66,7 @@ void menu_page()
 void changci()
 {
 	cleardevice();
+	setlinestyle(0,0,1);
 	setfillstyle(1,GREEN);
 	bar(0,0,639,479);
 	setfillstyle(1,RED);
@@ -91,10 +91,36 @@ void changci()
 		if(Mouse_press(20,100,220,260))
 		{
 			game(Left,Right,Red,Blue);
+			while(1)
+			{
+				xiuxi();
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Right,Left,Red,Blue);
 		}
 		if(Mouse_press(420,100,620,260))
 		{
 			game(Left,Right,Blue,Red);
+			while(1)
+			{
+				xiuxi();
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Right,Left,Blue,Red);
+			while(1)
+			{
+				result();
+				if(KeyPress(KEY_ENTER))
+				{
+					menu();
+				}
+			}
 		}
 	}
 }
@@ -104,6 +130,7 @@ void changci()
 void jiaoxue()
 {
 	 cleardevice();
+	 setlinestyle(0,0,1);
 	 setfillstyle(1,YELLOW);
 	 bar(0,0,640,480);
 	 setcolor(1);
@@ -163,6 +190,7 @@ void choose_team()
 	int j=0;
 	int y=100;
 	cleardevice();
+	setlinestyle(0,0,1);
 	setfillstyle(1,GREEN);
 	bar(1,1,640,480);
 	InstallKeyboard();
@@ -290,6 +318,7 @@ void choose_player(int team)
 	}
 	 cleardevice();
 	 InstallKeyboard();
+	 setlinestyle(0,0,1);
 	 setfillstyle(1,GREEN);
                  bar(1,1,640,480);
 
@@ -528,10 +557,38 @@ void choose_player(int team)
 			NewBK();
 			free(ID);
 			game(Left,Right,Red,Blue);
+			while(1)
+			{
+				xiuxi();
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Right,Left,Red,Blue);
+			while(1)
+			{
+				result();
+				if(KeyPress(KEY_ENTER))
+				{
+					menu();
+				}
+			}
 		}
 	 }
 }
 
+void xiuxi()
+{
+	setfillstyle(1,GREEN);
+	bar(0,0,640,480);
+}
+
+void result()
+{
+	setfillstyle(1,GREEN);
+	bar(0,0,640,480);
+}
 
 // //选择球员界面
 // void choose_player()

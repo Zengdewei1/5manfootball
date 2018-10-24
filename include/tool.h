@@ -44,7 +44,9 @@ typedef struct _PLAYER
     int ID;
     int name;
     int dir;
-    int control;                        //球员是否控球
+    int control; 
+    int score;
+    int help;                       //球员是否控球
     int rate;                           //非加速状态的速度
     int accelerate;                 //加速速度，用于摆脱对手时的参数 
     int power;                         // 力量，决定传球和射门时给球的速度
@@ -81,10 +83,6 @@ typedef struct _BALL
     int time;
     int timecount;
     int downtime;
-    // Pos2d my_attack[4];
-    // Pos2d my_deffend[4];
-    // Pos2d op_attack[4];
-    // Pos2d op_deffend[4];
     ball_state *pnowstate;
     ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
 }_ball;

@@ -22,6 +22,22 @@ void main()
 	// 	reback(0,0,640,480);
 	// }
     game(Left,Right,Red,Blue);
-	game(Right,Left,Red,Blue);
+			while(1)
+			{
+				xiuxi();
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Left,Right,Red,Blue);
+			while(1)
+			{
+				result();
+				if(KeyPress(KEY_ENTER))
+				{
+					menu();
+				}
+			}
 	// menu();
 }

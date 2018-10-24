@@ -79,6 +79,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
 	// {
 		if(flag==1)
 		{
+			pmyteam->lastcontrol=pmyteam->control;
 			pball->end_pos.x=pmyteam->player[pmyteam->controlplayer].now_pos.x;
 			pball->end_pos.y=pmyteam->player[pmyteam->controlplayer].now_pos.y;
 			PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
@@ -850,9 +851,7 @@ void player_border(_player *pplayer)
 
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 {
-	// if(pball->now_pos.x<40||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466)
-	// {
-		if((pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Right))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right))
 		{
 			init_team(pmyteam,pball);
 				  init_team(popteam,pball);
@@ -866,12 +865,12 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
 				pball->control=3;
 				pball->score_my++;
-				// if(pmyteam->control!=-1)
-				// {
-
-				// }
+				pmyteam->player[pmyteam->controlplayer].score++;
+				if(pmyteam->lastcontrol!=-1)
+					pmyteam->player[pmyteam->lastcontrol].help++;
+				pmyteam->lastcontrol=-1;
 		}
-		if((pball->now_pos.x>588&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=220&&pball->now_pos.y<=328&&pmyteam->position==Left))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
 		{
 			init_team(pmyteam,pball);
 				  init_team(popteam,pball);
@@ -885,6 +884,27 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
 				pball->control=3;
 				pball->score_op++;
+				popteam->player[popteam->controlplayer].score++;
+				if(popteam->lastcontrol!=-1)
+					popteam->player[popteam->lastcontrol].help++;
+				popteam->lastcontrol=-1;
+		}
+		else if(pball->now_pos.x<30||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466)
+		{
+			if(pmyteam->pnowstate==&pmyteam->Attack)
+			{
+				init_team(pmyteam,pball);
+				  init_team(popteam,pball);
+				  setfillstyle(1,GREEN);	
+				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
+				  popteam->player[3].control=1;
+				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+				popteam->control=3;
+				popteam->controlplayer=3;
+				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+				pball->control=3;
+			}
 		}
 
 

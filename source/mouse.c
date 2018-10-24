@@ -146,5 +146,5 @@ int Mouse_above(int x1,int y1,int x2,int y2)
 
 void NewBK()
 {
-        default1=0;
+  default1=0;
 }

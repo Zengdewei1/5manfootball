@@ -46,6 +46,30 @@ void game(int position1,int position2,int color1,int color2)
 	setfillstyle(1,GREEN);
     bar(0,0,640,480);
 	ball.flag=0;
+	ball.timecount=0;
+	init_ball(&opteam,&myteam,&ball);
+	init_team(&myteam,&ball);
+	init_team(&opteam,&ball);
+	init_judge(&judge);
+	for(i=0;i<4;i++)
+	{
+		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,0,myteam.player[i].ID,myteam.color,myteam.name);
+		if(myteam.position==Left)
+		{
+			myteam.player[i].score=0;
+			myteam.player[i].help=0;
+		}
+	}
+	draw_player((int)(myteam.goalkeeper.now_pos.x),(int)(myteam.goalkeeper.now_pos.y),myteam.goalkeeper.dir,0,0,4,myteam.color,myteam.name);
+	for(i=0;i<4;i++)
+	{
+		draw_player((int)(opteam.player[i].now_pos.x),(int)(opteam.player[i].now_pos.y),opteam.player[i].dir,0,0,opteam.player[i].ID,opteam.color,opteam.name);
+		if(myteam.position==Left)
+		{
+			opteam.player[i].score=0;
+			opteam.player[i].help=0;
+		}
+	}
 	if(position1==Left)
 	{
 		ball.time=0;
@@ -56,29 +80,23 @@ void game(int position1,int position2,int color1,int color2)
 	{
 		ball.time=150;
 		fp=fopen("c:\\mycode\\name\\result.txt","r");
-		fscanf(fp,"%d\n%d",&ball.score_my,&ball.score_op);
+		fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
+		for(i=0;i<4;i++)
+		{
+			fscanf(fp,"%d\n%d\n",&myteam.player[i].score,&opteam.player[i].score);
+		}
+		for(i=0;i<4;i++)
+		{
+			fscanf(fp,"%d\n%d\n",&myteam.player[i].help,&opteam.player[i].help);
+		}
 		fclose(fp);
-	}
-	ball.timecount=0;
-	init_ball(&opteam,&myteam,&ball);
-	init_team(&myteam,&ball);
-	init_team(&opteam,&ball);
-	init_judge(&judge);
-	draw_time(ball.time);
-	draw_score(ball.score_my,ball.score_op);
-	for(i=0;i<4;i++)
-	{
-		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,0,myteam.player[i].ID,myteam.color,myteam.name);
-	}
-	draw_player((int)(myteam.goalkeeper.now_pos.x),(int)(myteam.goalkeeper.now_pos.y),myteam.goalkeeper.dir,0,0,4,myteam.color,myteam.name);
-	for(i=0;i<4;i++)
-	{
-		draw_player((int)(opteam.player[i].now_pos.x),(int)(opteam.player[i].now_pos.y),opteam.player[i].dir,0,0,opteam.player[i].ID,opteam.color,opteam.name);
 	}
 	draw_player((int)(opteam.goalkeeper.now_pos.x),(int)(opteam.goalkeeper.now_pos.y),opteam.goalkeeper.dir,0,0,4,opteam.color,opteam.name);
 	draw_ground();
 	draw_judge((int)(judge.pos.x),(int)(judge.pos.y));
 	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y));
+	draw_time(ball.time);
+	draw_score(ball.score_my,ball.score_op);
 	while(ball.flag==0)
 	{
 		TeamUpdate(&myteam,&opteam,&ball);
@@ -99,12 +117,17 @@ void game(int position1,int position2,int color1,int color2)
 		BallUpdate(&opteam,&myteam,&ball);
 		draw_ground();
 	}
-	if(position1==Left)
+	fp=fopen("c:\\mycode\\name\\result.txt","a");
+	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
+	for(i=0;i<4;i++)
 	{
-		fp=fopen("c:\\mycode\\name\\result.txt","w");
-		fprintf(fp,"%d\n%d",ball.score_my,ball.score_op);
-		fclose(fp);
+		fprintf(fp,"%d\n%d\n",myteam.player[i].score,opteam.player[i].score);
 	}
+	for(i=0;i<4;i++)
+	{
+		fprintf(fp,"%d\n%d\n",myteam.player[i].help,opteam.player[i].help);
+	}
+	fclose(fp);
 }
 
 void TeamChangestate(_team *pmyteam,_team *popteam,_ball *pball,team_state *pnewstate_my,team_state *pnewstate_op)
@@ -205,6 +228,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			pball->end_pos.y=popteam->player[1].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Wait);
+			popteam->lastcontrol=popteam->control;
 			popteam->player[0].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=1;
@@ -218,6 +242,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 		// 	setfillstyle(1,BLACK);
 		// circle(10,10,10);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Wait);
+			popteam->lastcontrol=popteam->control;
 			popteam->player[1].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=3;
@@ -228,6 +253,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Wait);
+			popteam->lastcontrol=popteam->control;
 			popteam->player[3].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=-1;
@@ -1237,6 +1263,7 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 {
 	if(popteam->pnowstate==&popteam->Attack&&pball->timecount%15==0)
 	{
+		popteam->lastcontrol=popteam->control;
 		pball->end_pos.x=popteam->player[0].now_pos.x+6;
 		pball->end_pos.y=popteam->player[0].now_pos.y+17;
 		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
@@ -1252,6 +1279,7 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 	}
 	else if(popteam->pnowstate==&popteam->Defend&&pball->timecount%15==0)
 	{
+		pmyteam->lastcontrol=pmyteam->control;
 		pball->end_pos.x=pmyteam->player[0].now_pos.x+6;
 		pball->end_pos.y=pmyteam->player[0].now_pos.y+17;
 		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
@@ -1438,7 +1466,7 @@ void init_team(_team *team,_ball *pball)
 
 //初始化球员位置信息
 void init_player(_player *pplayer,int position,int ID,int name)
-{	
+{
 	pplayer->ID=ID;
 	pplayer->name=name;
 	// pplayer->pnowstate = &pplayer->Wait;
@@ -1733,18 +1761,18 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1为控球球队
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
 	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
 	pball->timecount++;
+	draw_control(pmyteam,popteam);
 	if(pball->timecount%FPS==0)
 	{
 		pball->time++;
 		draw_time(pball->time);
 		draw_score(pball->score_my,pball->score_op);
-		draw_control(pmyteam,popteam);
 	}
-	if(pball->time>=1&&pmyteam->position==Left)
+	if(pball->time>=10&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=300&&pmyteam->position==Right)
+	if(pball->time>=160&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}
