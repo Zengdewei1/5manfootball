@@ -9,4 +9,5 @@ void choose_team();
 void choose_player();
 void xiuxi();
 void result();
+void shop();
 #endif
