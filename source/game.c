@@ -272,16 +272,16 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			popteam->control=-1;
 			popteam->controlplayer=-1;
 		}
-		if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%15==0)
-		{
-			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
-			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
-			popteam->lastcontrol=popteam->control;
-			popteam->player[2].control=0;
-			popteam->control=-1;
-			popteam->controlplayer=-1;
-		}
+		// if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%15==0)
+		// {
+		// 	KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
+		// 	BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+		// 	PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
+		// 	popteam->lastcontrol=popteam->control;
+		// 	popteam->player[2].control=0;
+		// 	popteam->control=-1;
+		// 	popteam->controlplayer=-1;
+		// }
 	}
 }
 
