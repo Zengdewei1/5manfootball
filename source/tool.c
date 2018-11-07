@@ -14,14 +14,14 @@
 //传球函数
 void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 {
-    int flag;
-    flag=0;
+    int flag=0;
     while(flag==0)
     {
         if(KeyPress(KEY_0))
         {
 			if(pmyteam->controlplayer!=0)
 			{
+				pmyteam->passman=pmyteam->control;//记录传球的人（球队当前控球的人/）
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=0;
@@ -36,6 +36,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=1)
 			{
+				pmyteam->passman=pmyteam->control;//记录传球的人（球队当前控球的人/）
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=1;
@@ -50,6 +51,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=2)
 			{
+				pmyteam->passman=pmyteam->control;//记录传球的人（球队当前控球的人/）
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=2;
@@ -64,6 +66,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
         {
             if(pmyteam->controlplayer!=3)
 			{
+				pmyteam->passman=pmyteam->control;//记录传球的人（球队当前控球的人/）
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=3;
@@ -79,7 +82,6 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 	// {
 		if(flag==1)
 		{
-			pmyteam->lastcontrol=pmyteam->control;
 			pball->end_pos.x=pmyteam->player[pmyteam->controlplayer].now_pos.x;
 			pball->end_pos.y=pmyteam->player[pmyteam->controlplayer].now_pos.y;
 			PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
@@ -104,6 +106,22 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 	// }
 
 }
+
+// void findPass(_team *pmyteam,_team *popteam,_ball *pball)
+// {
+// 	double nearDistance[4];
+// 	nearDistance[0]=
+// 	if()
+// }
+
+// double nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer)
+// {
+// 	double nearDistance;
+// 	double dist[4];
+// 	dist[0]=distance
+// 	if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam[0]))
+// }
+
 //控制球员移动或射门函数
 void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队
 {
@@ -853,57 +871,53 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 {
 		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right))
 		{
+			pball->score_my++;
+			pmyteam->player[pmyteam->controlplayer].score++;			
+			if(pmyteam->passman!=-1)
+				pmyteam->player[pmyteam->passman].help++;
+			pmyteam->passman=-1;
 			init_team(pmyteam,pball);
-				  init_team(popteam,pball);
-				  setfillstyle(1,GREEN);	
-				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
-				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
-				pball->control=3;
-				pball->score_my++;
-				pmyteam->player[pmyteam->controlplayer].score++;
-				printf("%d\n",pmyteam->player[pmyteam->controlplayer].score);
-				printf("%d\n",pmyteam->controlplayer);
-				printf("%d\n",pmyteam->player[pmyteam->controlplayer].name);
-				// printf("%d",pmyteam->player[pmyteam->controlplayer].score);				
-				if(pmyteam->lastcontrol!=-1)
-					pmyteam->player[pmyteam->lastcontrol].help++;
-				pmyteam->lastcontrol=-1;
-				popteam->player[3].control=1;
-				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
-				popteam->control=3;
-				popteam->controlplayer=3;
-				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+			init_team(popteam,pball);
+			setfillstyle(1,GREEN);	
+			bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+			BallChangestate(popteam,pmyteam,pball,&pball->Control);
+			pball->control=3;
+			popteam->player[3].control=1;
+			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+			popteam->control=3;
+			popteam->controlplayer=3;
+			TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
 		}
 		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
 		{
-			init_team(pmyteam,pball);
-				  init_team(popteam,pball);
-				  setfillstyle(1,GREEN);	
-				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
-				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
-				  pmyteam->player[3].control=1;
-				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
-				pmyteam->control=3;
-				pmyteam->controlplayer=3;
-				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
-				pball->control=3;
-				pball->score_op++;
+			pball->score_op++;
 				popteam->player[popteam->controlplayer].score++;
-				// if(popteam->lastcontrol!=-1)
-				// 	popteam->player[popteam->lastcontrol].help++;
-				popteam->lastcontrol=-1;
+			if(popteam->passman!=-1)
+					popteam->player[popteam->passman].help++;
+			popteam->passman=-1;
+			init_team(pmyteam,pball);
+			init_team(popteam,pball);
+			setfillstyle(1,GREEN);	
+			bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+			BallChangestate(popteam,pmyteam,pball,&pball->Control);
+			pmyteam->player[3].control=1;
+			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+			pmyteam->control=3;
+			pmyteam->controlplayer=3;
+			TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
+			pball->control=3;
 		}
 		else if(pball->now_pos.x<30||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466)
 		{
 			if(pmyteam->pnowstate==&pmyteam->Attack)
 			{
 				init_team(pmyteam,pball);
-				  init_team(popteam,pball);
-				  setfillstyle(1,GREEN);	
-				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
-				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
-				  popteam->player[3].control=1;
-				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+				init_team(popteam,pball);
+				setfillstyle(1,GREEN);	
+				bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+				BallChangestate(popteam,pmyteam,pball,&pball->Control);
+				popteam->player[3].control=1;
+				PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
 				popteam->control=3;
 				popteam->controlplayer=3;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);

@@ -48,11 +48,11 @@ typedef struct _PLAYER
     int score;
     int help;                       //球员是否控球
     int rate;                           //非加速状态的速度
-    int accelerate;                 //加速速度，用于摆脱对手时的参数 
+    // int accelerate;                 //加速速度，用于摆脱对手时的参数 
     int power;                         // 力量，决定传球和射门时给球的速度
-    int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
-    double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
-    double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
+    // int capability_grabball;        // 抢球能力，距离球同样距离时此参数大的判定为抢到球
+    // double accelerate_CD;         // 加速限制，每次加速完后，只有当所走路程达到一定值时才可再次使用加速
+    // double capability_breakball;    //断球能力，此参数决定在多大范围内判定为抢到球
     player_state *pnowstate;
     player_state ChasingBall,Dribble,Wait,Actioning,Down;
 }_player;
@@ -96,6 +96,7 @@ typedef struct _TEAM
 {
     int controlplayer;//玩家控制的球员ID
     int lastcontrol;
+    int passman;
     int name;
     int color;
     int position;
@@ -107,6 +108,8 @@ typedef struct _TEAM
 }_team;
 
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
+// void findPass(_team *pmyteam,_team *popteam,_ball *pball);
+// float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer);
 
 double distance(double x1,double y1,double x2,double y2);
 Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);

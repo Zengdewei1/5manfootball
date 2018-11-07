@@ -124,6 +124,10 @@ void game(int position1,int position2,int color1,int color2)
 		GoalkeeperUpdate(&myteam,&opteam,&opteam.goalkeeper,&ball);
 		BallUpdate(&opteam,&myteam,&ball);
 		draw_ground();
+		if(myteam.passman!=-1&&ball.time%10==0)
+			printf("%d\n",myteam.passman);
+		if(opteam.passman!=-1&&ball.time%10==0)
+			printf("%d\n",opteam.passman);
 	}
 	fp=fopen("c:\\mycode\\name\\result.txt","w");
 	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
@@ -204,8 +208,8 @@ void BallChangestate(_team *popteam,_team *pmyteam,_ball *pball,ball_state *pnew
 void AttackEnter(_team *pmyteam,_team *popteam,_ball *pball)
 {
 	int i;
-		// setfillstyle(1,BLACK);
-		// circle(10,10,10);
+	pmyteam->passman=-1;
+	popteam->passman=-1;
 	for(i=0;i<4;i++)
 	{
 		if(pmyteam->player[i].pnowstate==&pmyteam->player[i].Actioning||pmyteam->player[i].pnowstate==&pmyteam->player[i].Wait)
@@ -254,50 +258,50 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 	{
 		// setfillstyle(1,BLACK);
 		// circle(10,10,10);
-		if(popteam->control==0&&pball->timecount%15==0)
+		if(popteam->control==0&&pball->timecount%5==0)
 		{
 			pball->end_pos.x=popteam->player[1].now_pos.x+6;
 			pball->end_pos.y=popteam->player[1].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Wait);
-			popteam->lastcontrol=popteam->control;
+			popteam->passman=popteam->control;
 			popteam->player[0].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=1;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].ChasingBall);
 		}
-		if(popteam->control==1&&popteam->player[3].pnowstate==&popteam->player[3].Actioning&&pball->timecount%15==0)
+		if(popteam->control==1&&popteam->player[3].pnowstate==&popteam->player[3].Actioning&&pball->timecount%5==0)
 		{
 			pball->end_pos.x=popteam->player[3].now_pos.x+6;
 			pball->end_pos.y=popteam->player[3].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Wait);
-			popteam->lastcontrol=popteam->control;
+			popteam->passman=popteam->control;
 			popteam->player[1].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=3;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].ChasingBall);
 		}
-		if(popteam->control==3&&distance(popteam->player[3].now_pos.x,popteam->player[3].now_pos.y,x,y)<10.0&&pball->timecount%15==0)
+		if(popteam->control==3&&distance(popteam->player[3].now_pos.x,popteam->player[3].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
 		{
 			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Wait);
-			popteam->lastcontrol=popteam->control;
+			popteam->passman=popteam->control;
 			popteam->player[3].control=0;
 			popteam->control=-1;
 			popteam->controlplayer=-1;
 		}
-		// if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%15==0)
-		// {
-		// 	KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
-		// 	BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
-		// 	PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
-		// 	popteam->lastcontrol=popteam->control;
-		// 	popteam->player[2].control=0;
-		// 	popteam->control=-1;
-		// 	popteam->controlplayer=-1;
-		// }
+		if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
+		{
+			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
+			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
+			popteam->passman=popteam->control;
+			popteam->player[2].control=0;
+			popteam->control=-1;
+			popteam->controlplayer=-1;
+		}
 	}
 }
 
@@ -1232,7 +1236,6 @@ void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball 
 					 pmyteam->control=-1;
 					 popteam->control=4;
 					 pgoalkeeper->velocity.y=0;
-					 delay(30);
 					//  pgoalkeeper->now_pos.x=600.0;
 					//  pgoalkeeper->now_pos.y=
                 }
@@ -1283,7 +1286,6 @@ void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball 
 					 pmyteam->control=4;
 					 popteam->control=-1;
 					 pgoalkeeper->velocity.y=0;
-					 delay(30);
 					//  pgoalkeeper->now_pos.x=600.0;
 					//  pgoalkeeper->now_pos.y=
                 }
@@ -1303,7 +1305,6 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 {
 	if(popteam->pnowstate==&popteam->Attack&&pball->timecount%15==0)
 	{
-		popteam->lastcontrol=popteam->control;
 		pball->end_pos.x=popteam->player[0].now_pos.x+6;
 		pball->end_pos.y=popteam->player[0].now_pos.y+17;
 		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
@@ -1319,10 +1320,10 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 	}
 	else if(popteam->pnowstate==&popteam->Defend&&pball->timecount%15==0)
 	{
-		pmyteam->lastcontrol=pmyteam->control;
 		pball->end_pos.x=pmyteam->player[0].now_pos.x+6;
 		pball->end_pos.y=pmyteam->player[0].now_pos.y+17;
 		BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+		PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 		pmyteam->control=-1;
 		pmyteam->controlplayer=0;
 		PlayerChangestate(pmyteam,popteam,&pmyteam->player[0],pball,&pmyteam->player[0].ChasingBall);
@@ -1489,6 +1490,7 @@ void init_team(_team *team,_ball *pball)
 	team->control=-1;
 	team->controlplayer=-1;
 	team->controlplayer=3;
+	team->passman=-1;
 	setfillstyle(1,GREEN);
 	for(;i<4;i++)
 	{
@@ -1762,7 +1764,6 @@ void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
     		pplayer->velocity.y=0.0;
 		}
 	}
-	delay(5);
 }
 
 void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
@@ -1783,7 +1784,7 @@ void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ba
 }
 void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 {
-	float slow_rate=0.99;//??????
+	double slow_rate=0.99;//??????
 	if(pball->timecount%3==0)
 		ball_border(popteam,pmyteam,pball);
 	pball->old_pos.x=pball->now_pos.x;
@@ -1809,7 +1810,7 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	if(pball->timecount%3==0)
 		draw_score(pball->score_my,pball->score_op);
-	if(pball->time>=20&&pmyteam->position==Left)
+	if(pball->time>=50&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
