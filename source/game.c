@@ -83,11 +83,19 @@ void game(int position1,int position2,int color1,int color2)
 		fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
 		for(i=0;i<4;i++)
 		{
-			fscanf(fp,"%d\n%d\n",&myteam.player[i].score,&opteam.player[i].score);
+			fscanf(fp,"%d\n",&myteam.player[i].score);
 		}
 		for(i=0;i<4;i++)
 		{
-			fscanf(fp,"%d\n%d\n",&myteam.player[i].help,&opteam.player[i].help);
+			fscanf(fp,"%d\n",&opteam.player[i].score);
+		}
+		for(i=0;i<4;i++)
+		{
+			fscanf(fp,"%d\n",&myteam.player[i].help);
+		}
+		for(i=0;i<4;i++)
+		{
+			fscanf(fp,"%d\n",&opteam.player[i].help);
 		}
 		fclose(fp);
 	}
@@ -121,11 +129,19 @@ void game(int position1,int position2,int color1,int color2)
 	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
 	for(i=0;i<4;i++)
 	{
-		fprintf(fp,"%d\n%d\n",myteam.player[i].score,opteam.player[i].score);
+		fprintf(fp,"%d\n",myteam.player[i].score);
 	}
 	for(i=0;i<4;i++)
 	{
-		fprintf(fp,"%d\n%d\n",myteam.player[i].help,opteam.player[i].help);
+		fprintf(fp,"%d\n",opteam.player[i].score);
+	}
+	for(i=0;i<4;i++)
+	{
+		fprintf(fp,"%d\n",myteam.player[i].help);
+	}
+	for(i=0;i<4;i++)
+	{
+		fprintf(fp,"%d\n",opteam.player[i].help);
 	}
 	fclose(fp);
 }
@@ -1785,18 +1801,19 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
 	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
 	pball->timecount++;
-	draw_control(pmyteam,popteam);
+	// draw_control(pmyteam,popteam);
 	if(pball->timecount%FPS==0)
 	{
 		pball->time++;
 		draw_time(pball->time);
-		draw_score(pball->score_my,pball->score_op);
 	}
-	if(pball->time>=60&&pmyteam->position==Left)
+	if(pball->timecount%3==0)
+		draw_score(pball->score_my,pball->score_op);
+	if(pball->time>=20&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=180&&pmyteam->position==Right)
+	if(pball->time>=160&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}

@@ -858,17 +858,21 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				  setfillstyle(1,GREEN);	
 				  bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
 				  BallChangestate(popteam,pmyteam,pball,&pball->Control);
-				  popteam->player[3].control=1;
+				pball->control=3;
+				pball->score_my++;
+				pmyteam->player[pmyteam->controlplayer].score++;
+				printf("%d\n",pmyteam->player[pmyteam->controlplayer].score);
+				printf("%d\n",pmyteam->controlplayer);
+				printf("%d\n",pmyteam->player[pmyteam->controlplayer].name);
+				// printf("%d",pmyteam->player[pmyteam->controlplayer].score);				
+				if(pmyteam->lastcontrol!=-1)
+					pmyteam->player[pmyteam->lastcontrol].help++;
+				pmyteam->lastcontrol=-1;
+				popteam->player[3].control=1;
 				  PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
 				popteam->control=3;
 				popteam->controlplayer=3;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
-				pball->control=3;
-				pball->score_my++;
-				pmyteam->player[pmyteam->controlplayer].score++;
-				if(pmyteam->lastcontrol!=-1)
-					pmyteam->player[pmyteam->lastcontrol].help++;
-				pmyteam->lastcontrol=-1;
 		}
 		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
 		{
@@ -885,8 +889,8 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				pball->control=3;
 				pball->score_op++;
 				popteam->player[popteam->controlplayer].score++;
-				if(popteam->lastcontrol!=-1)
-					popteam->player[popteam->lastcontrol].help++;
+				// if(popteam->lastcontrol!=-1)
+				// 	popteam->player[popteam->lastcontrol].help++;
 				popteam->lastcontrol=-1;
 		}
 		else if(pball->now_pos.x<30||pball->now_pos.x>588||pball->now_pos.y<80||pball->now_pos.y>466)

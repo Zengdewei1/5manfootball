@@ -607,29 +607,37 @@ void xiuxi()
 
 void result()
 {
+	FILE *fp;
+	int i;
+	int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*popHelp;
 	cleardevice();
 	setfillstyle(1,GREEN);
 	bar(0,0,640,480);
-	// FILE *fp;
-	// int i;
-	// int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*PopHelp;
-	// pmyScore=(int *)malloc(sizeof(int)*4);
-	// pmyHelp=(int *)malloc(sizeof(int)*4);
-	// popScore=(int *)malloc(sizeof(int)*4);
-	// PopHelp=(int *)malloc(sizeof(int)*4);
-	// if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||PopHelp==NULL)
-	// 	exit(0);
-	// fp=fopen("c:\\mycode\\name\\result.txt","r");
-	// fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
-	// for(i=0;i<4;i++)
-	// {
-	// 	fscanf(fp,"%d\n%d\n",&pmyScore[i],&popScore[i]);
-	// }
-	// for(i=0;i<4;i++)
-	// {
-	// 	fscanf(fp,"%d\n%d\n",&popScore[i],&PopHelp[i]);
-	// }
-	// fclose(fp);
+	pmyScore=(int *)malloc(sizeof(int)*4);
+	pmyHelp=(int *)malloc(sizeof(int)*4);
+	popScore=(int *)malloc(sizeof(int)*4);
+	popHelp=(int *)malloc(sizeof(int)*4);
+	if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||popHelp==NULL)
+		exit(0);
+	fp=fopen("c:\\mycode\\name\\result.txt","r");
+	fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",&pmyScore);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",&popScore);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",&pmyHelp);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",&popHelp);
+	}
+	fclose(fp);
 }
 
 // //选择球员界面
