@@ -445,6 +445,8 @@ void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	double x[4];
+	int receivingman;
+	receivingman=findPass(pmyteam,popteam,pball);
 	if(pmyteam->position==Left)
 	{
 		x[0]=500.0;
@@ -471,19 +473,59 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 		// circle(10,10,10);
 		switch(pplayer->ID)
 		{
-				case(0):
+				case(0):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+						{
+							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
+							popteam->passman=popteam->control;
+							pplayer->control=0;
+							popteam->control=-1;
+							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[0],290.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
-				case(1):
+				case(1):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+						{
+							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
+							popteam->passman=popteam->control;
+							pplayer->control=0;
+							popteam->control=-1;
+							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[1],290.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
-				case(2):
+				case(2):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+						{
+							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
+							popteam->passman=popteam->control;
+							pplayer->control=0;
+							popteam->control=-1;
+							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[2],160.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
-				case(3):
+				case(3):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+						{
+							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
+							popteam->passman=popteam->control;
+							pplayer->control=0;
+							popteam->control=-1;
+							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[3],400.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
@@ -1764,6 +1806,7 @@ void PlayerUpdate(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
     		pplayer->velocity.y=0.0;
 		}
 	}
+	delay(5);
 }
 
 void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
@@ -1781,6 +1824,7 @@ void GoalkeeperUpdate(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ba
 		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,0,4,pmyteam->color,pmyteam->name);
 	else
 		draw_player((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),pgoalkeeper->dir,pgoalkeeper->control,0,4,popteam->color,popteam->name);
+	delay(10);
 }
 void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 {
@@ -1820,4 +1864,5 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	// if(pball->old_pos.x!=pball->now_pos.x&&pball->old_pos.y!=pball->now_pos.y)
 	// 	reback(pball->old_pos.x,pball->old_pos.y,16,16);
+	delay(20);
 }

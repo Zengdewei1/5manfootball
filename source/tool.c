@@ -107,20 +107,42 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam为玩家球队
 
 }
 
-// void findPass(_team *pmyteam,_team *popteam,_ball *pball)
-// {
-// 	double nearDistance[4];
-// 	nearDistance[0]=
-// 	if()
-// }
+int findPass(_team *pmyteam,_team *popteam,_ball *pball)
+{
+	float nearDistance[4];
+	int receivingman;
+	nearDistance[0]=nearDist(pmyteam,popteam,pball,&popteam->player[0]);
+	nearDistance[1]=nearDist(pmyteam,popteam,pball,&popteam->player[1]);
+	nearDistance[2]=nearDist(pmyteam,popteam,pball,&popteam->player[2]);
+	nearDistance[3]=nearDist(pmyteam,popteam,pball,&popteam->player[3]);
+	if(nearDistance[0]>nearDistance[1])
+	{
+		receivingman=1;
+	}
+	if(nearDistance[receivingman]>nearDistance[2])
+	{
+		receivingman=2;
+	}
+	if(nearDistance[receivingman]>nearDistance[3])
+	{
+		receivingman=3;
+	}
+	return receivingman;
+}
 
-// double nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer)
-// {
-// 	double nearDistance;
-// 	double dist[4];
-// 	dist[0]=distance
-// 	if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam[0]))
-// }
+float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer)
+{
+	float nearDistance;
+	float dist[4];
+	dist[0]=distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[0].now_pos.x,pmyteam->player[0].now_pos.y);
+	dist[1]=distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[1].now_pos.x,pmyteam->player[1].now_pos.y);
+	dist[2]=distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[2].now_pos.x,pmyteam->player[2].now_pos.y);
+	dist[3]=distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[3].now_pos.x,pmyteam->player[3].now_pos.y);
+	nearDistance=(dist[0]<=dist[1])?dist[0]:dist[1];
+	nearDistance=(nearDistance<=dist[2])?nearDistance:dist[2];
+	nearDistance=(nearDistance<=dist[3])?nearDistance:dist[3];
+	return nearDistance;
+}
 
 //控制球员移动或射门函数
 void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteam玩家球队

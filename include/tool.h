@@ -97,6 +97,7 @@ typedef struct _TEAM
     int controlplayer;//玩家控制的球员ID
     int lastcontrol;
     int passman;
+    int receivingman;
     int name;
     int color;
     int position;
@@ -108,8 +109,8 @@ typedef struct _TEAM
 }_team;
 
 void pass(_team *pmyteam,_team *popteam,_ball *pball);
-// void findPass(_team *pmyteam,_team *popteam,_ball *pball);
-// float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer);
+int findPass(_team *pmyteam,_team *popteam,_ball *pball);
+float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer);
 
 double distance(double x1,double y1,double x2,double y2);
 Pos2d get_dir(Pos2d pos_from,Pos2d pos_to);
