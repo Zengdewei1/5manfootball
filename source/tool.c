@@ -21,7 +21,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamΪ������
         {
 			if(pmyteam->controlplayer!=0)
 			{
-				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������/��
+				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������?/��
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=0;
@@ -36,7 +36,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamΪ������
         {
             if(pmyteam->controlplayer!=1)
 			{
-				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������/��
+				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������?/��
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=1;
@@ -51,7 +51,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamΪ������
         {
             if(pmyteam->controlplayer!=2)
 			{
-				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������/��
+				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������?/��
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=2;
@@ -66,7 +66,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamΪ������
         {
             if(pmyteam->controlplayer!=3)
 			{
-				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������/��
+				pmyteam->passman=pmyteam->control;//��¼������ˣ���ӵ�ǰ�������?/��
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=3;
@@ -317,7 +317,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��?
 						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
 						{
 							arrive(pplayer,160.0,pball->now_pos.y);
@@ -332,7 +332,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,320.0,pball->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[3].now_pos.x,popteam->player[3].now_pos.y)<=100.0)//��λ���ʵ�Զ��Է�ǰ��3
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[3].now_pos.x,popteam->player[3].now_pos.y)<=100.0)//��λ���ʵ�Զ��Է�ǰ��?3
 						{
 							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -354,13 +354,13 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//��λ��Զ��Է�����0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//��λ��Զ��Է�����?0
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//��λ��Զ��Է�����1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//��λ��Զ��Է�����?1
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -382,13 +382,13 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//��λ��Զ��Է�����0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//��λ��Զ��Է�����?0
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//��λ��Զ��Է�����1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//��λ��Զ��Է�����?1
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -406,8 +406,8 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��
-						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)//�����
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��?
+						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)//�����?
 						{
 							arrive(pplayer,160.0,200.0);
 						}
@@ -426,13 +426,13 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 							arrive(pplayer,120.0,360.0);
 						}
-						else if(popteam->controlplayer==3)//����Է�2ǰ��
+						else if(popteam->controlplayer==3)//����Է�?2ǰ��
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
 							pplayer->velocity.y=4.0*near_dir.y;
 						}
-						else if(popteam->controlplayer==2)//����Է�3ǰ��
+						else if(popteam->controlplayer==2)//����Է�?3ǰ��
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
@@ -444,7 +444,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��
+				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//��λ�����������һ��?
 						if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
 							arrive(pplayer,240.0,pball->now_pos.y);
@@ -459,7 +459,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)//��λ�����������һ��
+				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)//��λ�����������һ��?
 						{
 							arrive(pplayer,240.0,380.0);
 						}
@@ -864,6 +864,20 @@ void draw_control(_team *pmyteam,_team *popteam)
 					break;
 		}
 	}
+}
+
+void draw_stop()
+{
+	// setfillstyle(1,GREEN);
+	// bar(620,0,640,20);
+	puthz(620,20,"����P��ͣ",32,32,RED);
+}
+
+void draw_start()
+{
+	setfillstyle(1,GREEN);
+	bar(620,0,640,20);
+	puthz(620,0,"����Y����",32,32,RED);
 }
 
 void player_border(_player *pplayer)

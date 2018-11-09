@@ -129,6 +129,8 @@ void draw_num(int x,int y,int num,int size);
 void draw_time(int time);
 void draw_score(int score_my,int score_op);
 void draw_control(_team *pmyteam,_team *popteam);
+void draw_stop();
+void draw_start();
 
 void player_border(_player *pplayer);
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball);

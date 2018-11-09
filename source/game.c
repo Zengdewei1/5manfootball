@@ -31,8 +31,6 @@ void game(int position1,int position2,int color1,int color2)
 {
 	int i,match;
 	FILE *fp,*fpGame;
-	char path[35]="\"c:\\\\mycode\\\\name\\\\result";
-	char str[2];
 	_ball ball;
 	_judge judge;
 	_team myteam;
@@ -53,6 +51,7 @@ void game(int position1,int position2,int color1,int color2)
 	init_team(&myteam,&ball);
 	init_team(&opteam,&ball);
 	init_judge(&judge);
+	// draw_stop();
 	for(i=0;i<4;i++)
 	{
 		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,0,myteam.player[i].ID,myteam.color,myteam.name);
@@ -88,12 +87,7 @@ void game(int position1,int position2,int color1,int color2)
 		fprintf(fpGame,"%d",match);
 		fclose(fpGame);
 		ball.time=150;
-		itoa(match,str,10);
-		printf("%s",str);
-		strcat(path,str);
-		strcat(path,".txt\"");
-		printf("%s",path);
-		fpGame=fopen(path,"w");
+		fp=fopen("c:\\mycode\\name\\result.txt","r");
 		// fp=fopen("c:\\mycode\\name\\result2.txt","w");
 		fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
 		for(i=0;i<4;i++)
@@ -118,7 +112,7 @@ void game(int position1,int position2,int color1,int color2)
 	draw_ground();
 	draw_judge((int)(judge.pos.x),(int)(judge.pos.y));
 	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y));
-	// draw_time(ball.time);
+	draw_time(ball.time);
 	draw_score(ball.score_my,ball.score_op);
 	while(ball.flag==0)
 	{
@@ -126,6 +120,16 @@ void game(int position1,int position2,int color1,int color2)
 		if(KeyPress(KEY_ESC))
 		{
 			exit(0);
+		}
+		if(KeyPress(KEY_P))
+		{
+			while(1)
+			{
+				if(KeyPress(KEY_Y))
+				{
+					break;
+				}
+			}
 		}
 		for(i=0;i<4;i++)
 		{
@@ -144,7 +148,29 @@ void game(int position1,int position2,int color1,int color2)
 		if(opteam.passman!=-1&&ball.time%10==0)
 			printf("%d\n",opteam.passman);
 	}
-	fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// switch(match){
+	// 	case 1:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 2:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 3:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 4:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 5:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 6:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 7:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 8:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 9:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 10:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 11:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 12:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 13:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 14:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 15:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 16:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 17:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 18:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 19:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// 	case 20:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+	// }
+	fp=fopen("c:\\mycode\\name\\result.txt","w");
 	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
 	for(i=0;i<4;i++)
 	{
@@ -1493,6 +1519,16 @@ void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
 	// 	circle(30,30,10);
 }
 
+// void Long_passEnter(_team *popteam,_team *pmyteam,_ball *pball)
+// {
+
+// }
+
+// void Long_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
+// {
+
+// }
+
 void ControlExecute(_team *popteam,_team *pmyteam,_ball *pball)
 {
 	pball->velocity.x=0.0;
@@ -1890,10 +1926,10 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	if(pball->timecount%FPS==0)
 	{
 		pball->time++;
-		// draw_time(pball->time);
+		draw_time(pball->time);
 	}
 	if(pball->timecount%3==0)
-		// draw_score(pball->score_my,pball->score_op);
+		draw_score(pball->score_my,pball->score_op);
 	if(pball->time>=1&&pmyteam->position==Left)
 	{
 		pball->flag=1;
