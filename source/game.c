@@ -29,8 +29,10 @@
 /*???????*/
 void game(int position1,int position2,int color1,int color2)
 {
-	int i;
-	FILE *fp;
+	int i,match;
+	FILE *fp,*fpGame;
+	char path[35]="\"c:\\\\mycode\\\\name\\\\result";
+	char str[2];
 	_ball ball;
 	_judge judge;
 	_team myteam;
@@ -78,8 +80,21 @@ void game(int position1,int position2,int color1,int color2)
 	}
 	else
 	{
+		fpGame=fopen("c:\\mycode\\name\\game.txt","r");
+		fscanf(fpGame,"%d",&match);
+		fclose(fpGame);
+		match+=1;
+		fpGame=fopen("c:\\mycode\\name\\game.txt","w");
+		fprintf(fpGame,"%d",match);
+		fclose(fpGame);
 		ball.time=150;
-		fp=fopen("c:\\mycode\\name\\result.txt","r");
+		itoa(match,str,10);
+		printf("%s",str);
+		strcat(path,str);
+		strcat(path,".txt\"");
+		printf("%s",path);
+		fpGame=fopen(path,"w");
+		// fp=fopen("c:\\mycode\\name\\result2.txt","w");
 		fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
 		for(i=0;i<4;i++)
 		{
@@ -103,7 +118,7 @@ void game(int position1,int position2,int color1,int color2)
 	draw_ground();
 	draw_judge((int)(judge.pos.x),(int)(judge.pos.y));
 	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y));
-	draw_time(ball.time);
+	// draw_time(ball.time);
 	draw_score(ball.score_my,ball.score_op);
 	while(ball.flag==0)
 	{
@@ -129,7 +144,7 @@ void game(int position1,int position2,int color1,int color2)
 		if(opteam.passman!=-1&&ball.time%10==0)
 			printf("%d\n",opteam.passman);
 	}
-	fp=fopen("c:\\mycode\\name\\result.txt","w");
+	fp=fopen("c:\\mycode\\name\\result1.txt","w");
 	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
 	for(i=0;i<4;i++)
 	{
@@ -228,6 +243,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 {
 	double x,y;
 	int i=0;
+	// int receivingman;
 	if(popteam->control==3)
 	{
 		if(pmyteam->position==Left)
@@ -258,6 +274,20 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 	{
 		// setfillstyle(1,BLACK);
 		// circle(10,10,10);
+		if(nearDist(pmyteam,popteam,pball,&popteam->player[popteam->controlplayer])<60.0)
+		{
+			int receivingman=findPass(pmyteam,popteam,pball);
+			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
+			popteam->passman=popteam->control;
+			popteam->player[popteam->controlplayer].control=0;
+			popteam->control=-1;
+			popteam->controlplayer=receivingman;
+			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+			// printf("%d\n",receivingman);
+		}
 		if(popteam->control==0&&pball->timecount%5==0)
 		{
 			pball->end_pos.x=popteam->player[1].now_pos.x+6;
@@ -445,8 +475,6 @@ void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	double x[4];
-	int receivingman;
-	receivingman=findPass(pmyteam,popteam,pball);
 	if(pmyteam->position==Left)
 	{
 		x[0]=500.0;
@@ -473,59 +501,71 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 		// circle(10,10,10);
 		switch(pplayer->ID)
 		{
-				case(0):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
-						{
-							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
-							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
-							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
-							popteam->passman=popteam->control;
-							pplayer->control=0;
-							popteam->control=-1;
-							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
-						}
+				case(0):
+						// if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+						// {
+						// 	receivingman=findPass(pmyteam,popteam,pball);
+						// 	pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+						// 	pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+						// 	BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+						// 	PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+						// 	popteam->passman=popteam->control;
+						// 	pplayer->control=0;
+						// 	popteam->control=-1;
+						// 	PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						// 	printf("%d\n",receivingman);
+						// }
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[0],290.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
-				case(1):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
-						{
-							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
-							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
-							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
-							popteam->passman=popteam->control;
-							pplayer->control=0;
-							popteam->control=-1;
-							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
-						}
+				case(1):
+				// if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+				// 		{
+				// 			receivingman=findPass(pmyteam,popteam,pball);
+				// 			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+				// 			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+				// 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+				// 			PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+				// 			popteam->passman=popteam->control;
+				// 			pplayer->control=0;
+				// 			popteam->control=-1;
+				// 			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+				// 			printf("%d\n",receivingman);
+				// 		}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[1],290.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
-				case(2):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
-						{
-							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
-							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
-							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
-							popteam->passman=popteam->control;
-							pplayer->control=0;
-							popteam->control=-1;
-							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
-						}
+				case(2):
+				// if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+				// 		{
+				// 			receivingman=findPass(pmyteam,popteam,pball);
+				// 			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+				// 			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+				// 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+				// 			PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+				// 			popteam->passman=popteam->control;
+				// 			pplayer->control=0;
+				// 			popteam->control=-1;
+				// 			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+				// 			printf("%d\n",receivingman);
+				// 		}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[2],160.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
-						break;
-				case(3):if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
-						{
-							pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
-							pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
-							BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Down);
-							popteam->passman=popteam->control;
-							pplayer->control=0;
-							popteam->control=-1;
-							PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
-						}
+						break;	
+				case(3):
+				// if(nearDist(pmyteam,popteam,pball,pplayer)<60.0)
+				// 		{
+				// 			receivingman=findPass(pmyteam,popteam,pball);
+				// 			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+				// 			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+				// 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+				// 			PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
+				// 			popteam->passman=popteam->control;
+				// 			pplayer->control=0;
+				// 			popteam->control=-1;
+				// 			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+				// 			printf("%d\n",receivingman);
+				// 		}
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[3],400.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
 						break;
@@ -1126,7 +1166,7 @@ void DownEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 void DownExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	pball->downtime++;
-	if(pball->downtime>5)
+	if(pball->downtime>10)
 	{
 		PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
 	}
@@ -1850,15 +1890,15 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	if(pball->timecount%FPS==0)
 	{
 		pball->time++;
-		draw_time(pball->time);
+		// draw_time(pball->time);
 	}
 	if(pball->timecount%3==0)
-		draw_score(pball->score_my,pball->score_op);
-	if(pball->time>=50&&pmyteam->position==Left)
+		// draw_score(pball->score_my,pball->score_op);
+	if(pball->time>=1&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=160&&pmyteam->position==Right)
+	if(pball->time>=155&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}

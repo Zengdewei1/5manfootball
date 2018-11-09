@@ -11,8 +11,8 @@
 #include"tool.h"
 #include"game.h"
 
-//´«Çòº¯Êý
-void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     int flag=0;
     while(flag==0)
@@ -21,7 +21,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
         {
 			if(pmyteam->controlplayer!=0)
 			{
-				pmyteam->passman=pmyteam->control;//¼ÇÂ¼´«ÇòµÄÈË£¨Çò¶Óµ±Ç°¿ØÇòµÄÈË/£©
+				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=0;
@@ -36,7 +36,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
         {
             if(pmyteam->controlplayer!=1)
 			{
-				pmyteam->passman=pmyteam->control;//¼ÇÂ¼´«ÇòµÄÈË£¨Çò¶Óµ±Ç°¿ØÇòµÄÈË/£©
+				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=1;
@@ -51,7 +51,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
         {
             if(pmyteam->controlplayer!=2)
 			{
-				pmyteam->passman=pmyteam->control;//¼ÇÂ¼´«ÇòµÄÈË£¨Çò¶Óµ±Ç°¿ØÇòµÄÈË/£©
+				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=2;
@@ -66,7 +66,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªÍæ¼ÒÇò¶Ó
         {
             if(pmyteam->controlplayer!=3)
 			{
-				pmyteam->passman=pmyteam->control;//¼ÇÂ¼´«ÇòµÄÈË£¨Çò¶Óµ±Ç°¿ØÇòµÄÈË/£©
+				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=3;
@@ -115,15 +115,15 @@ int findPass(_team *pmyteam,_team *popteam,_ball *pball)
 	nearDistance[1]=nearDist(pmyteam,popteam,pball,&popteam->player[1]);
 	nearDistance[2]=nearDist(pmyteam,popteam,pball,&popteam->player[2]);
 	nearDistance[3]=nearDist(pmyteam,popteam,pball,&popteam->player[3]);
-	if(nearDistance[0]>nearDistance[1])
+	if(nearDistance[0]<nearDistance[1])
 	{
 		receivingman=1;
 	}
-	if(nearDistance[receivingman]>nearDistance[2])
+	if(nearDistance[receivingman]<nearDistance[2])
 	{
 		receivingman=2;
 	}
-	if(nearDistance[receivingman]>nearDistance[3])
+	if(nearDistance[receivingman]<nearDistance[3])
 	{
 		receivingman=3;
 	}
@@ -144,8 +144,8 @@ float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer)
 	return nearDistance;
 }
 
-//¿ØÖÆÇòÔ±ÒÆ¶¯»òÉäÃÅº¯Êý
-void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½
+void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
 		if(KeyPress(KEY_A))
 		{
@@ -187,12 +187,12 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
         }
 	
 }
-//ÏÞÖÆÇòÔ±µÄ»î¶¯·¶Î§ÔÚÒ»¸ö¾ØÐÎÇøÓò,type1-6±íÊ¾6¸ö²»Í¬µÄ»î¶¯·¶Î§
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ä»î¶¯ï¿½ï¿½Î§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,type1-6ï¿½ï¿½Ê¾6ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ä»î¶¯ï¿½ï¿½Î§
 // void move_renctangle(_player *pplayer,int type)
 // {
 // 	switch(type)
 // 	{
-// 		case(1):if(pplayer->now_pos.x<=240.0)//ÖÐ³¡ÉÏ
+// 		case(1):if(pplayer->now_pos.x<=240.0)//ï¿½Ð³ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=240.0;
 // 				}
@@ -209,7 +209,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 					pplayer->now_pos.y=80.0;
 // 				}
 // 				break;
-// 		case(2):if(pplayer->now_pos.x<=240.0)//ÖÐ³¡ÏÂ
+// 		case(2):if(pplayer->now_pos.x<=240.0)//ï¿½Ð³ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=240.0;
 // 				}
@@ -226,7 +226,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 					pplayer->now_pos.y=280.0;
 // 				}
 // 				break;
-// 		case(3):if(pplayer->now_pos.x<=400.0)//ÓÒ³¡ÉÏ
+// 		case(3):if(pplayer->now_pos.x<=400.0)//ï¿½Ò³ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=400.0;
 // 				}
@@ -243,7 +243,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 					pplayer->now_pos.y=80.0;
 // 				}
 // 				break;
-// 		case(4):if(pplayer->now_pos.x<=400.0)//ÓÒ³¡ÏÂ
+// 		case(4):if(pplayer->now_pos.x<=400.0)//ï¿½Ò³ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=400.0;
 // 				}
@@ -260,7 +260,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 					pplayer->now_pos.y=280.0;
 // 				}
 // 				break;
-// 		case(5):if(pplayer->now_pos.x<=160.0)//×ó³¡ÉÏ
+// 		case(5):if(pplayer->now_pos.x<=160.0)//ï¿½ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=160.0;
 // 				}
@@ -277,7 +277,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 					pplayer->now_pos.y=80.0;
 // 				}
 // 				break;
-// 		case(6):if(pplayer->now_pos.x<=160.0)//×ó³¡ÏÂ
+// 		case(6):if(pplayer->now_pos.x<=160.0)//ï¿½ï¿½ï¿½ï¿½
 // 				{
 // 					pplayer->now_pos.x=160.0;
 // 				}
@@ -296,7 +296,7 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÍæ¼ÒÇò¶Ó
 // 				break;
 // 	}
 // }
-//ÇòÔ±½øÈë½ø¹¥»ò·ÀÊØµãÎ»
+//ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Î»
 void arrive(_player *pplayer,double _x,double _y)
 {
 	Pos2d destination,dir;
@@ -313,11 +313,11 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	double dy;
 	if(pmyteam->name==Player)
 	{
-		if(pmyteam->pnowstate=&pmyteam->Attack)//ÎÒ·½½ø¹¥Ê±
+		if(pmyteam->pnowstate=&pmyteam->Attack)//ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ÅÜÎ»£¬×Ý×ø±êºÍÇòÒ»ÖÂ
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
 						{
 							arrive(pplayer,160.0,pball->now_pos.y);
@@ -332,7 +332,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,320.0,pball->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[3].now_pos.x,popteam->player[3].now_pos.y)<=100.0)//ÅÜÎ»£¬ÊÊµ±Ô¶Àë¶Ô·½Ç°·æ3
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[3].now_pos.x,popteam->player[3].now_pos.y)<=100.0)//ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½Ô·ï¿½Ç°ï¿½ï¿½3
 						{
 							far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -348,19 +348,19 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[3].now_pos.x,pmyteam->player[3].now_pos.y)<=100.0)//ÅÜÎ»£¬ÊÊµ±Ô¶ÀëÎÒ·½Ç°·æ
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[3].now_pos.x,pmyteam->player[3].now_pos.y)<=100.0)//ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½ï¿½Ò·ï¿½Ç°ï¿½ï¿½
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//ÅÜÎ»£¬Ô¶Àë¶Ô·½ºóÎÀ0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½0
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//ÅÜÎ»£¬Ô¶Àë¶Ô·½ºóÎÀ1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½1
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[3].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -376,19 +376,19 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						{
 							arrive(pplayer,480.0,pplayer->now_pos.y);
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[2].now_pos.x,pmyteam->player[2].now_pos.y)<=100.0)//ÅÜÎ»£¬ÊÊµ±Ô¶ÀëÎÒ·½Ç°·æ
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pmyteam->player[2].now_pos.x,pmyteam->player[2].now_pos.y)<=100.0)//ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½ï¿½Ò·ï¿½Ç°ï¿½ï¿½
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//ÅÜÎ»£¬Ô¶Àë¶Ô·½ºóÎÀ0
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[0].now_pos.x,popteam->player[0].now_pos.y)<=50.0)//ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½0
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
 							pplayer->velocity.y=-4.0*far_dir.y;
 						}
-						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//ÅÜÎ»£¬Ô¶Àë¶Ô·½ºóÎÀ1
+						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,popteam->player[1].now_pos.x,popteam->player[1].now_pos.y)<=50.0)//ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½1
 						{
 							far_dir=get_dir(pplayer->now_pos,pmyteam->player[2].now_pos);
 							pplayer->velocity.x=-4.0*far_dir.x;
@@ -402,12 +402,12 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						break;
 			}
 		}
-		else//ÎÒ·½·ÀÊØÊ±
+		else//ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ÅÜÎ»£¬×Ý×ø±êºÍÇòÒ»ÖÂ
-						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)//½ô¸úÇò
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)//ï¿½ï¿½ï¿½ï¿½ï¿½
 						{
 							arrive(pplayer,160.0,200.0);
 						}
@@ -426,13 +426,13 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 							arrive(pplayer,120.0,360.0);
 						}
-						else if(popteam->controlplayer==3)//½ô¸ú¶Ô·½2Ç°·æ
+						else if(popteam->controlplayer==3)//ï¿½ï¿½ï¿½ï¿½Ô·ï¿½2Ç°ï¿½ï¿½
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
 							pplayer->velocity.y=4.0*near_dir.y;
 						}
-						else if(popteam->controlplayer==2)//½ô¸ú¶Ô·½3Ç°·æ
+						else if(popteam->controlplayer==2)//ï¿½ï¿½ï¿½ï¿½Ô·ï¿½3Ç°ï¿½ï¿½
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
@@ -444,7 +444,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ÅÜÎ»£¬×Ý×ø±êºÍÇòÒ»ÖÂ
+				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 						if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
 							arrive(pplayer,240.0,pball->now_pos.y);
@@ -459,7 +459,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)//ÅÜÎ»£¬×Ý×ø±êºÍÇòÒ»ÖÂ
+				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 						{
 							arrive(pplayer,240.0,380.0);
 						}
@@ -479,7 +479,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 	else
 	{
-		if(popteam->pnowstate=&popteam->Attack)//µçÄÔ½ø¹¥Ê±
+		if(popteam->pnowstate=&popteam->Attack)//ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½Ê±
 		{
 			switch(pplayer->ID)
 			{
@@ -525,7 +525,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						break;
 			}
 		}
-		else//µçÄÔ·ÀÊØÊ±
+		else//ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½Ê±
 		{
 			switch(pplayer->ID)
 			{
@@ -973,7 +973,7 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 	// }
 }
 
- //»­±»¸²¸ÇµÄ±³¾°,2ÖØÑ­»·Ëã·¨
+ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÄ±ï¿½ï¿½ï¿½,2ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ã·¨
 // void reback(int x,int y,int x_size,int y_size)
 // {
 // 	int mark=0;
@@ -982,7 +982,7 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 // 	{
 // 		for(j=y;j<=y+y_size;j++)
 // 		{
-// 			if(((i>=40&&i<=41)||(i>=320&&i<=321)||(i>=600&&i<=601))&&(j>=80&&y<=480))//»­3ÌõÊúÏß
+// 			if(((i>=40&&i<=41)||(i>=320&&i<=321)||(i>=600&&i<=601))&&(j>=80&&y<=480))//ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 // 				mark=1;
 // 			else if(((i>=0&&i<=1)||(i>=639&&i<=640))&&(j>=220&&j<=340))
 // 				mark=1;
