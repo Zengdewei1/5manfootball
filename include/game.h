@@ -36,6 +36,8 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 
 void Short_passEnter(_team *popteam,_team *pmyteam,_ball *pball);
 void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball);
+void Long_passExecute(_team *popteam,_team *pmyteam,_ball *pball);
+void Long_shootExecute(_team *popteam,_team *pmyteam,_ball *pball);
 void ControlExecute(_team *popteam,_team *pmyteam,_ball *pball);
 
 void TeamUpdate(_team *pmyteam,_team *popteam,_ball *pball);

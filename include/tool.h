@@ -7,6 +7,8 @@
 #define Blue 1004
 #define Player 1005
 #define Computer 1006
+#define Direct 999
+#define Circle 1000
 
 
 typedef struct _POS2d
@@ -108,7 +110,7 @@ typedef struct _TEAM
     team_state Attack,Defend;
 }_team;
 
-void pass(_team *pmyteam,_team *popteam,_ball *pball);
+void pass(_team *pmyteam,_team *popteam,_ball *pball,int type);
 int findPass(_team *pmyteam,_team *popteam,_ball *pball);
 float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer);
 

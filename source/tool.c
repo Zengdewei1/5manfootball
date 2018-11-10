@@ -12,9 +12,10 @@
 #include"game.h"
 
 //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 {
     int flag=0;
+	pball->control=-1;
     while(flag==0)
     {
         if(KeyPress(KEY_0))
@@ -85,7 +86,17 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamÎªï¿½ï¿½ï¿½ï¿½ï¿½ï
 			pball->end_pos.x=pmyteam->player[pmyteam->controlplayer].now_pos.x;
 			pball->end_pos.y=pmyteam->player[pmyteam->controlplayer].now_pos.y;
 			PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
-			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+			if(type==Direct)
+			{
+				BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+			}
+			else
+			{
+				pball->start_pos.x=pball->now_pos.x;
+				pball->start_pos.y=pball->now_pos.y;
+				BallChangestate(popteam,pmyteam,pball,&pball->Long_pass);
+			}
+			
 		}
 		// else if(flag==4)
 		// {
@@ -182,8 +193,12 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï
 		    }
             if(KeyPress(KEY_K))
 		    {
-		    	pass(pmyteam,popteam,pball);
+		    	pass(pmyteam,popteam,pball,Direct);
 		    }
+			if(KeyPress(KEY_M))
+			{
+				pass(pmyteam,popteam,pball,Circle);
+			}
         }
 	
 }

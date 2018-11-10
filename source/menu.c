@@ -61,16 +61,16 @@ void menu_page()
 	bar(50,150,200,250);
 	settextstyle(1,HORIZ_DIR,5);
 
-	puthz(75,175,"商城",48,48,BLACK);
-	puthz(355,100,"键盘教学",32,60,BLACK);
-	puthz(355,180,"快速游戏",32,60,BLACK);
-	puthz(355,260,"创建球队",32,60,BLACK);
-	puthz(195,25,"梦想足球",32,60,BLACK);
+	puthz(75,175,"???",48,48,BLACK);
+	puthz(355,100,"??????",32,60,BLACK);
+	puthz(355,180,"???????",32,60,BLACK);
+	puthz(355,260,"???????",32,60,BLACK);
+	puthz(195,25,"????????",32,60,BLACK);
 }
 
 
 
-//主客场界面
+//?????????
 void changci()
 {
 	cleardevice();
@@ -79,16 +79,16 @@ void changci()
 	bar(0,0,639,479);
 	setfillstyle(1,RED);
 	bar(20,100,220,260);
-	puthz(65,155,"主场",48,60,BLACK);
+	puthz(65,155,"????",48,60,BLACK);
 
 	setcolor(BLACK);
 	line(230,100,410,260);
 	setfillstyle(1,BLUE);
 	bar(420,100,620,260);
-	puthz(465,155,"客场",48,60,BLACK);
-	puthz(270,300,"球衣",48,60,BLACK);
-	puthz(65,300,"红色",48,60,RED);
-	puthz(465,300,"蓝色",48,60,BLUE);
+	puthz(465,155,"???",48,60,BLACK);
+	puthz(270,300,"????",48,60,BLACK);
+	puthz(65,300,"???",48,60,RED);
+	puthz(465,300,"???",48,60,BLUE);
 	Initmouse(0,639,0,479);
 	InstallKeyboard();
 	while(1)
@@ -142,7 +142,7 @@ void changci()
 }
 
 
-//键盘教学界面
+//??????????
 void jiaoxue()
 {
 	 cleardevice();
@@ -153,41 +153,41 @@ void jiaoxue()
 	 rectangle(250,0,378,32);
 	 setfillstyle(1,GREEN);
 	 floodfill(251,1,1);
-	 puthz(250,0,"教学界面",32,32,YELLOW);
-	 puthz(180,50,"球员移动",48,80,GREEN);
+	 puthz(250,0,"???????",32,32,YELLOW);
+	 puthz(180,50,"??????",48,80,GREEN);
 	 rectangle(80,117,103,140);
 	 settextstyle(1,0,4);
 	 outtextxy(80,110,"W");
 	 line(103,129,120,129);
-	 puthz(120,113,"上",32,80,BLUE);
+	 puthz(120,113,"??",32,80,BLUE);
 	 rectangle(198,117,218,142);
 	 outtextxy(200,110,"S");
 	 line(218,129,235,129);
-	 puthz(235,113,"下",32,40,BLUE);
+	 puthz(235,113,"??",32,40,BLUE);
 	 rectangle(316,117,336,142);
 	 outtextxy(318,110,"A");
 	 line(336,129,353,129);
-	 puthz(355,113,"左",32,40,BLUE);
+	 puthz(355,113,"??",32,40,BLUE);
 	 rectangle(450,117,468,142);
 	 outtextxy(450,110,"D");
 	 line(468,129,488,129);
-	 puthz(490,113,"右",32,40,BLUE);
-	 puthz(180,165,"我方控球",48,80,RED);
+	 puthz(490,113,"??",32,40,BLUE);
+	 puthz(180,165,"???????",48,80,RED);
 	 rectangle(80,238,103,262);
 	 outtextxy(85,230,"J");
 	 line(103,250,123,250);
-	 puthz(120,233,"射门",32,40,BLUE);
-	 puthz(80,280,"按",32,40,BLUE);
+	 puthz(120,233,"????",32,40,BLUE);
+	 puthz(80,280,"??",32,40,BLUE);
 	 rectangle(112,288,132,312);
 	 outtextxy(112,280,"K");
-	 puthz(132,280,"再按数字",32,32,BLUE);
+	 puthz(132,280,"???????",32,32,BLUE);
 	 outtextxy(260,278,"(0-4):");
-	 puthz(350,280,"传球给指定球员",32,32,BLUE);
-	 puthz(180,340,"我方控球",48,80,BROWN);
+	 puthz(350,280,"???????????",32,32,BLUE);
+	 puthz(180,340,"???????",48,80,BROWN);
 	 rectangle(80,400,103,424);
 	 outtextxy(85,392,"J");
 	 line(103,412,123,412);
-	 puthz(120,398,"铲球",32,40,BLUE);
+	 puthz(120,398,"????",32,40,BLUE);
 	 Initmouse(0,639,0,479);
 	 InstallKeyboard();
 	while(1)
@@ -198,7 +198,7 @@ void jiaoxue()
 	}
 }
 
-//选择球队界面
+//?????????
 void choose_team()
 {
 	int x=240;
@@ -227,13 +227,13 @@ void choose_team()
 	 circle(314,230,50);
 	 setfillstyle(1,LIGHTCYAN);
 	 floodfill(314,230,MAGENTA);
-	 puthz(x,y,"广州恒大",32,32,BLUE);
-	 puthz(x-128,y+100,"上海上港",32,32,BLUE);
-	 puthz(x-95,y+100*2,"北京国安",32,32,BLUE);
-	 puthz(x+95,y+100*2,"山东鲁能",32,32,BLUE);
-	 puthz(x+128,y+100,"上海申花",32,32,BLUE);
-	 puthz(282,195,"选择",32,32,BLUE);
-	 puthz(282,227,"球队",32,32,BLUE);
+	 puthz(x,y,"??????",32,32,BLUE);
+	 puthz(x-128,y+100,"??????",32,32,BLUE);
+	 puthz(x-95,y+100*2,"????????",32,32,BLUE);
+	 puthz(x+95,y+100*2,"???3??",32,32,BLUE);
+	 puthz(x+128,y+100,"?????",32,32,BLUE);
+	 puthz(282,195,"???",32,32,BLUE);
+	 puthz(282,227,"???",32,32,BLUE);
 
 	while(1)
 	{
@@ -342,7 +342,7 @@ void choose_player(int team)
 	 rectangle(260,0,388,32);
 	 setfillstyle(1,YELLOW);
 	 floodfill(261,1,WHITE);
-	 puthz(260,0,"选择球员",32,32,BLUE);
+	 puthz(260,0,"??????",32,32,BLUE);
 	 for(j=0;j<3;j++)
 		{
 		 x=130;
@@ -377,27 +377,27 @@ void choose_player(int team)
 	 rectangle(130+108*3,300,130+108*3+96,300+30);
 
 	 setcolor(BLUE);
-	 puthz(210,40,"左前锋",32,32,BLUE);
+	 puthz(210,40,"?????",32,32,BLUE);
 	 line(242,72,200,92);
 	 line(242,72,284,92);
-	 puthz(430,40,"右前锋",32,32,BLUE);
+	 puthz(430,40,"?????",32,32,BLUE);
 	 line(462,72,420,92);
 	 line(462,72,504,92);
-	 puthz(210,140,"左后卫",32,32,BLUE);
+	 puthz(210,140,"?????",32,32,BLUE);
 	 line(242,172,200,192);
 	 line(242,172,284,192);
 
-	 puthz(430,140,"右后卫",32,32,BLUE);
+	 puthz(430,140,"?????",32,32,BLUE);
 	 line(462,172,420,192);
 	 line(462,172,504,192);
 
-	 puthz(300,250,"守门员",32,32,BLUE);
+	 puthz(300,250,"?????",32,32,BLUE);
 	 line(340,282,300,295);
 	 line(340,282,380,295);
 
 
 
-	 puthz(260,385,"确认选择",32,32,BLUE);
+	 puthz(260,385,"??????",32,32,BLUE);
 
 	 puthz(130,100,name[0],32,32,BLUE);
 	 puthz(238,100,name[1],32,32,BLUE);
@@ -568,7 +568,7 @@ void choose_player(int team)
 			setcolor(WHITE);
 			rectangle(346,300,442,330);
 		}
-		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
+		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10??????5???????????????????????
 		{
 			NewBK();
 			free(ID);
@@ -599,16 +599,16 @@ void xiuxi()
 	cleardevice();
 	setfillstyle(1,GREEN);
 	bar(0,0,640,480);
-	puthz(240,100,"中场休息",32,32,BLUE);
-	puthz(160,200,"按",32,32,BLUE);
+	puthz(240,100,"?г????",32,32,BLUE);
+	puthz(160,200,"??",32,32,BLUE);
 	outtextxy(200,200,"Enter");
-	puthz(320,200,"进入比赛下半场",32,32,BLUE);
+	puthz(320,200,"????????°?",32,32,BLUE);
 }
 
-void result()
+void result(int historyMatch)//?????????
 {
-	FILE *fp;
-	int i;
+	FILE *fp,*fpGame;
+	int i,match;
 	int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*popHelp;
 	cleardevice();
 	setfillstyle(1,GREEN);
@@ -620,6 +620,32 @@ void result()
 	if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||popHelp==NULL)
 		exit(0);
 	fp=fopen("c:\\mycode\\name\\result.txt","r");
+	fpGame=fopen("c:\\mycode\\name\\game.txt","r");
+	fscanf(fpGame,"%d",&match);
+	fclose(fpGame);
+	match-=historyMatch;
+	switch(match%20){
+		case 1:fp=fopen("c:\\mycode\\name\\result1.txt","w");
+		case 2:fp=fopen("c:\\mycode\\name\\result2.txt","w");
+		case 3:fp=fopen("c:\\mycode\\name\\result3.txt","w");
+		case 4:fp=fopen("c:\\mycode\\name\\result4.txt","w");
+		case 5:fp=fopen("c:\\mycode\\name\\result5.txt","w");
+		case 6:fp=fopen("c:\\mycode\\name\\result6.txt","w");
+		case 7:fp=fopen("c:\\mycode\\name\\result7.txt","w");
+		case 8:fp=fopen("c:\\mycode\\name\\result8.txt","w");
+		case 9:fp=fopen("c:\\mycode\\name\\result9.txt","w");
+		case 10:fp=fopen("c:\\mycode\\name\\result10.txt","w");
+		case 11:fp=fopen("c:\\mycode\\name\\result11.txt","w");
+		case 12:fp=fopen("c:\\mycode\\name\\result12.txt","w");
+		case 13:fp=fopen("c:\\mycode\\name\\result13.tx3t","w");
+		case 14:fp=fopen("c:\\mycode\\name\\result14.txt","w");
+		case 15:fp=fopen("c:\\mycode\\name\\result15.txt","w");
+		case 16:fp=fopen("c:\\mycode\\name\\result16.txt","w");
+		case 17:fp=fopen("c:\\mycode\\name\\result17.txt","w");
+		case 18:fp=fopen("c:\\mycode\\name\\result18.txt","w");
+		case 19:fp=fopen("c:\\mycode\\name\\result19.txt","w");
+		case 20:fp=fopen("c:\\mycode\\name\\result20.txt","w");
+	}
 	fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
 	for(i=0;i<4;i++)
 	{
@@ -640,7 +666,7 @@ void result()
 	fclose(fp);
 }
 
-// //选择球员界面
+// //??????????
 // void choose_player()
 // {
 //     int i,j,x,y=100;
@@ -657,7 +683,7 @@ void result()
 // 	 rectangle(260,0,388,32);
 // 	 setfillstyle(1,YELLOW);
 // 	 floodfill(261,1,WHITE);
-// 	 puthz(260,0,"选择球员",32,32,BLUE);
+// 	 puthz(260,0,"??????",32,32,BLUE);
 // 	 setcolor(WHITE);
 // 	 for(j=0;j<3;j++)
 // 		{
@@ -684,21 +710,21 @@ void result()
 // 	 setfillstyle(1,CYAN);
 // 	 floodfill(300,401,WHITE);
 // 	 x=260;
-// 	 puthz(210,40,"左前锋",32,32,BLUE);
+// 	 puthz(210,40,"?????",32,32,BLUE);
 // 	 line(242,72,200,92);
 // 	 line(242,72,284,92);
-// 	 puthz(430,40,"右前锋",32,32,BLUE);
+// 	 puthz(430,40,"?????",32,32,BLUE);
 // 	 line(462,72,420,92);
 // 	 line(462,72,504,92);
-// 	 puthz(210,140,"左后卫",32,32,BLUE);
+// 	 puthz(210,140,"?????",32,32,BLUE);
 // 	 line(242,172,200,192);
 // 				 line(242,172,284,192);
 
-// 	 puthz(430,140,"右后卫",32,32,BLUE);
+// 	 puthz(430,140,"?????",32,32,BLUE);
 // 	 line(462,172,420,192);
 // 	 line(462,172,504,192);
 
-// 	 puthz(300,250,"守门员",32,32,BLUE);
+// 	 puthz(300,250,"?????",32,32,BLUE);
 // 	 line(340,282,300,295);
 // 	 line(340,282,380,295);
 
@@ -708,20 +734,20 @@ void result()
 // 	 setcolor(GREEN);
 // 	 rectangle(130,300,130+96,300+30);
 // 	 rectangle(130+108*3,300,130+108*3+96,300+30);
-// 	 puthz(260,385,"确认选择",32,32,BLUE);
+// 	 puthz(260,385,"??????",32,32,BLUE);
 
-// 	 puthz(130,100,"孔卡",32,32,BLUE);
-// 	 puthz(238,100,"金周荣",32,32,BLUE);
-// 	 puthz(346,100,"杨世元",32,32,BLUE);
-// 	 puthz(454,100,"埃弗拉",32,32,BLUE);
+// 	 puthz(130,100,"???",32,32,BLUE);
+// 	 puthz(238,100,"??????",32,32,BLUE);
+// 	 puthz(346,100,"?????",32,32,BLUE);
+// 	 puthz(454,100,"??????",32,32,BLUE);
 
-// 	 puthz(130,200,"杨博宇",32,32,BLUE);
-// 	 puthz(238,200,"胡靖航",32,32,BLUE);
-// 	 puthz(346,200,"朱征宇",32,32,BLUE);
-// 	 puthz(454,200,"吴海天",32,32,BLUE);
+// 	 puthz(130,200,"????",32,32,BLUE);
+// 	 puthz(238,200,"??????",32,32,BLUE);
+// 	 puthz(346,200,"??????",32,32,BLUE);
+// 	 puthz(454,200,"????",32,32,BLUE);
 
-// 	 puthz(238,300,"吴航",32,32,BLUE);
-// 	 puthz(346,300,"贾天子",32,32,BLUE);
+// 	 puthz(238,300,"??",32,32,BLUE);
+// 	 puthz(346,300,"??????",32,32,BLUE);
 // 	 Initmouse(0,639,0,479);
 // 	 InstallKeyboard();
 // 	 NewBK();
@@ -856,7 +882,7 @@ void result()
 // 		 	rectangle(238,300,334,330);
 // 		if(ID[9])
 // 		 	rectangle(346,300,442,330);
-// 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
+// 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10??????5???????????????????????
 // 		{
 // 			result_first=game(Left,Right,Red,Blue,result_init);
 // 			while(1)
@@ -909,11 +935,11 @@ void shop()
    circle(430,116,10);
    circle(430,316,10);
 
-   puthz(30,100,"左前锋",32,32,BLUE);
-   puthz(30,150,"右前锋",32,32,BLUE);
-   puthz(30,200,"左后卫",32,32,BLUE);
-   puthz(30,250,"右后卫",32,32,BLUE);
-   puthz(30,300,"守门员",32,32,BLUE);
+   puthz(30,100,"?????",32,32,BLUE);
+   puthz(30,150,"?????",32,32,BLUE);
+   puthz(30,200,"?????",32,32,BLUE);
+   puthz(30,250,"?????",32,32,BLUE);
+   puthz(30,300,"?????",32,32,BLUE);
    rectangle(212,100,308,132);
    rectangle(212,300,308,332);
    rectangle(452,100,548,132);
@@ -1067,9 +1093,9 @@ void shop()
 						   setcolor(BLUE);
 						   rectangle(340,210,372,242);
 						   rectangle(390,210,422,242);
-						   puthz(350,160,"交换",32,32,BLUE);
-						   puthz(340,210,"是",32,32,BLUE);
-						   puthz(390,210,"否",32,32,BLUE);
+						   puthz(350,160,"????",32,32,BLUE);
+						   puthz(340,210,"??",32,32,BLUE);
+						   puthz(390,210,"??",32,32,BLUE);
 						   while(bool)
 								{
 								  Newxy();
@@ -1253,9 +1279,9 @@ void shop()
 						   setcolor(BLUE);
 						   rectangle(340,210,372,242);
 						   rectangle(390,210,422,242);
-						   puthz(350,160,"交换",32,32,BLUE);
-						   puthz(340,210,"是",32,32,BLUE);
-						   puthz(390,210,"否",32,32,BLUE);
+						   puthz(350,160,"????",32,32,BLUE);
+						   puthz(340,210,"??",32,32,BLUE);
+						   puthz(390,210,"??",32,32,BLUE);
 						   while(bool)
 								{
 								  Newxy();
@@ -1439,9 +1465,9 @@ void shop()
 						   setcolor(BLUE);
 						   rectangle(340,210,372,242);
 						   rectangle(390,210,422,242);
-						   puthz(350,160,"交换",32,32,BLUE);
-						   puthz(340,210,"是",32,32,BLUE);
-						   puthz(390,210,"否",32,32,BLUE);
+						   puthz(350,160,"????",32,32,BLUE);
+						   puthz(340,210,"??",32,32,BLUE);
+						   puthz(390,210,"??",32,32,BLUE);
 						   while(bool)
 								{
 								  Newxy();
@@ -1625,9 +1651,9 @@ void shop()
 						   setcolor(BLUE);
 						   rectangle(340,210,372,242);
 						   rectangle(390,210,422,242);
-						   puthz(350,160,"交换",32,32,BLUE);
-						   puthz(340,210,"是",32,32,BLUE);
-						   puthz(390,210,"否",32,32,BLUE);
+						   puthz(350,160,"????",32,32,BLUE);
+						   puthz(340,210,"??",32,32,BLUE);
+						   puthz(390,210,"??",32,32,BLUE);
 						   while(bool)
 								{
 								  Newxy();
@@ -1930,10 +1956,10 @@ void shop()
 
 							bar(380,340,609,490);
 							rectangle(380,340,609,490);
-							puthz(414,340,"速度",32,32,BLUE);
-							puthz(414,372,"力量",32,32,BLUE);
-							puthz(414,404,"断球",32,32,BLUE);
-							puthz(414,436,"抢球",32,32,BLUE);
+							puthz(414,340,"???",32,32,BLUE);
+							puthz(414,372,"????",32,32,BLUE);
+							puthz(414,404,"????",32,32,BLUE);
+							puthz(414,436,"????",32,32,BLUE);
 							puthz(429,468,"CD",16,16,BLUE);
 
 							for(i=1;i<11;i++)
@@ -2033,10 +2059,10 @@ void shop()
 
 							bar(380,140,609,290);
 							rectangle(380,140,609,290);
-							puthz(414,140,"速度",32,32,BLUE);
-							puthz(414,172,"力量",32,32,BLUE);
-							puthz(414,204,"断球",32,32,BLUE);
-							puthz(414,236,"抢球",32,32,BLUE);
+							puthz(414,140,"???",32,32,BLUE);
+							puthz(414,172,"????",32,32,BLUE);
+							puthz(414,204,"????",32,32,BLUE);
+							puthz(414,236,"????",32,32,BLUE);
 							puthz(429,275,"CD",16,16,BLUE);
 
 							for(i=1;i<11;i++)
@@ -2134,10 +2160,10 @@ void shop()
 							puthz(212,300,c3,32,32,BLUE);
 							bar(136,340,365,479);
 							rectangle(136,340,365,479);
-							puthz(170,340,"速度",32,32,BLUE);
-							puthz(170,372,"力量",32,32,BLUE);
-							puthz(170,404,"断球",32,32,BLUE);
-							puthz(170,436,"抢球",32,32,BLUE);
+							puthz(170,340,"???",32,32,BLUE);
+							puthz(170,372,"????",32,32,BLUE);
+							puthz(170,404,"????",32,32,BLUE);
+							puthz(170,436,"????",32,32,BLUE);
 							puthz(185,468,"CD",16,16,BLUE);
 
 							for(i=1;i<11;i++)
@@ -2204,10 +2230,10 @@ void shop()
 
 							bar(136,140,365,290);
 							rectangle(136,140,365,290);
-							puthz(170,140,"速度",32,32,BLUE);
-							puthz(170,172,"力量",32,32,BLUE);
-							puthz(170,204,"断球",32,32,BLUE);
-							puthz(170,236,"抢球",32,32,BLUE);
+							puthz(170,140,"???",32,32,BLUE);
+							puthz(170,172,"????",32,32,BLUE);
+							puthz(170,204,"????",32,32,BLUE);
+							puthz(170,236,"????",32,32,BLUE);
 							puthz(185,275,"CD",16,16,BLUE);
 
 							for(i=1;i<11;i++)
