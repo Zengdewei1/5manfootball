@@ -1,15 +1,4 @@
-#include<graphics.h>
-#include<process.h>
-#include<stdlib.h>
-#include<dos.h>
-#include<ctype.h>
-#include<math.h>
-#include"mouse.h"
-#include"hanzi.h"
-#include"multikey.h"
-#include"menu.h"
-#include"tool.h"
-#include"game.h"
+#include "main.h"
 
 //������
 void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamΪ������

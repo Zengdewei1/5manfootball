@@ -1,17 +1,4 @@
-#include<graphics.h>
-#include<process.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<dos.h>
-#include<ctype.h>
-#include<time.h>
-#include<MATH.H>
-#include"mouse.h"
-#include"hanzi.h"
-#include"multikey.h"
-#include"menu.h"
-#include"tool.h"
-#include"game.h"
+#include "main.h"
 
 /*????ж─?????
 ??????????бу?????????????????????????????????????
@@ -82,55 +69,79 @@ void game(int position1,int position2,int color1,int color2,int match)
 	else
 	{
 		ball.time=150;
-		switch(match%20)
+		if(match!=0)
 		{
-			case 1:fp=fopen("c:\\mycode\\name\\result1.txt","r");
-			case 2:fp=fopen("c:\\mycode\\name\\result2.txt","r");
-			case 3:fp=fopen("c:\\mycode\\name\\result3.txt","r");
-			case 4:fp=fopen("c:\\mycode\\name\\result4.txt","r");
-			case 5:fp=fopen("c:\\mycode\\name\\result5.txt","r");
-			case 6:fp=fopen("c:\\mycode\\name\\result6.txt","r");
-			case 7:fp=fopen("c:\\mycode\\name\\result7.txt","r");
-			case 8:fp=fopen("c:\\mycode\\name\\result8.txt","r");
-			case 9:fp=fopen("c:\\mycode\\name\\result9.txt","r");
-			case 10:fp=fopen("c:\\mycode\\name\\result10.txt","r");
-			case 11:fp=fopen("c:\\mycode\\name\\result11.txt","r");
-			case 12:fp=fopen("c:\\mycode\\name\\result12.txt","r");
-			case 13:fp=fopen("c:\\mycode\\name\\result13.txt","r");
-			case 14:fp=fopen("c:\\mycode\\name\\result14.txt","r");
-			case 15:fp=fopen("c:\\mycode\\name\\result15.txt","r");
-			case 16:fp=fopen("c:\\mycode\\name\\result16.txt","r");
-			case 17:fp=fopen("c:\\mycode\\name\\result17.txt","r");
-			case 18:fp=fopen("c:\\mycode\\name\\result18.txt","r");
-			case 19:fp=fopen("c:\\mycode\\name\\result19.txt","r");
-			case 0:fp=fopen("c:\\mycode\\name\\result20.txt","r");
-		}
-		if(fp==NULL)
-		{
-			printf("cant not open");
-			getch();
-			exit(1);
-		}
+			switch(match%20)
+			{
+				case 1:fp=fopen("c:\\mycode\\result\\result1.txt","w");
+						break;
+				case 2:fp=fopen("c:\\mycode\\result\\result2.txt","w");
+						break;
+				case 3:fp=fopen("c:\\mycode\\result\\result3.txt","w");
+						break;
+				case 4:fp=fopen("c:\\mycode\\result\\result4.txt","w");
+						break;
+				case 5:fp=fopen("c:\\mycode\\result\\result5.txt","w");
+						break;
+				case 6:fp=fopen("c:\\mycode\\result\\result6.txt","w");
+						break;
+				case 7:fp=fopen("c:\\mycode\\result\\result7.txt","w");
+						break;
+				case 8:fp=fopen("c:\\mycode\\result\\result8.txt","w");
+						break;
+				case 9:fp=fopen("c:\\mycode\\result\\result9.txt","w");
+						break;
+				case 10:fp=fopen("c:\\mycode\\result\\result10.txt","w");
+						break;
+				case 11:fp=fopen("c:\\mycode\\result\\result11.txt","w");
+						break;
+				case 12:fp=fopen("c:\\mycode\\result\\result12.txt","w");
+						break;
+				case 13:fp=fopen("c:\\mycode\\result\\result13.txt","w");
+						break;
+				case 14:fp=fopen("c:\\mycode\\result\\result14.txt","w");
+						break;
+				case 15:fp=fopen("c:\\mycode\\result\\result15.txt","w");
+						break;
+				case 16:fp=fopen("c:\\mycode\\result\\result16.txt","w");
+						break;
+				case 17:fp=fopen("c:\\mycode\\result\\result17.txt","w");
+						break;
+				case 18:fp=fopen("c:\\mycode\\result\\result18.txt","w");
+						break;
+				case 19:fp=fopen("c:\\mycode\\result\\result19.txt","w");
+						break;
+				case 0:fp=fopen("c:\\mycode\\result\\result20.txt","w");
+						break;
+			}
+			if(fp==NULL)
+			{
+				printf("can not open");
+				getch();
+				exit(1);
+			}
+			fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
+			for(i=0;i<4;i++)
+			{
+				fscanf(fp,"%d\n",&myteam.player[i].score);
+			}
+			for(i=0;i<4;i++)
+			{
+				fscanf(fp,"%d\n",&opteam.player[i].score);
+			}
+			for(i=0;i<4;i++)
+			{
+				fscanf(fp,"%d\n",&myteam.player[i].help);
+			}
+			for(i=0;i<4;i++)
+			{
+				fscanf(fp,"%d\n",&opteam.player[i].help);
+			}
+			fclose(fp);
+			}
+		// fp=fopen("c:\\mycode\\result\\one.txt","r");
 		// fp=fopen("c:\\mycode\\name\\result.txt","r");
 		// fp=fopen("c:\\mycode\\name\\result2.txt","w");
-		fscanf(fp,"%d\n%d\n",&ball.score_my,&ball.score_op);
-		for(i=0;i<4;i++)
-		{
-			fscanf(fp,"%d\n",&myteam.player[i].score);
-		}
-		for(i=0;i<4;i++)
-		{
-			fscanf(fp,"%d\n",&opteam.player[i].score);
-		}
-		for(i=0;i<4;i++)
-		{
-			fscanf(fp,"%d\n",&myteam.player[i].help);
-		}
-		for(i=0;i<4;i++)
-		{
-			fscanf(fp,"%d\n",&opteam.player[i].help);
-		}
-		fclose(fp);
 	}
 	draw_player((int)(opteam.goalkeeper.now_pos.x),(int)(opteam.goalkeeper.now_pos.y),opteam.goalkeeper.dir,0,0,4,opteam.color,opteam.name);
 	draw_ground();
@@ -172,54 +183,78 @@ void game(int position1,int position2,int color1,int color2,int match)
 		if(opteam.passman!=-1&&ball.time%10==0)
 			printf("%d\n",opteam.passman);
 	}
-	switch(match%20)
+	printf("%d",match);
+	if(match!=0)
 	{
-		case 1:fp=fopen("c:\\mycode\\name\\result1.txt","w");
-		case 2:fp=fopen("c:\\mycode\\name\\result2.txt","w");
-		case 3:fp=fopen("c:\\mycode\\name\\result3.txt","w");
-		case 4:fp=fopen("c:\\mycode\\name\\result4.txt","w");
-		case 5:fp=fopen("c:\\mycode\\name\\result5.txt","w");
-		case 6:fp=fopen("c:\\mycode\\name\\result6.txt","w");
-		case 7:fp=fopen("c:\\mycode\\name\\result7.txt","w");
-		case 8:fp=fopen("c:\\mycode\\name\\result8.txt","w");
-		case 9:fp=fopen("c:\\mycode\\name\\result9.txt","w");
-		case 10:fp=fopen("c:\\mycode\\name\\result10.txt","w");
-		case 11:fp=fopen("c:\\mycode\\name\\result11.txt","w");
-		case 12:fp=fopen("c:\\mycode\\name\\result12.txt","w");
-		case 13:fp=fopen("c:\\mycode\\name\\result13.txt","w");
-		case 14:fp=fopen("c:\\mycode\\name\\result14.txt","w");
-		case 15:fp=fopen("c:\\mycode\\name\\result15.txt","w");
-		case 16:fp=fopen("c:\\mycode\\name\\result16.txt","w");
-		case 17:fp=fopen("c:\\mycode\\name\\result17.txt","w");
-		case 18:fp=fopen("c:\\mycode\\name\\result18.txt","w");
-		case 19:fp=fopen("c:\\mycode\\name\\result19.txt","w");
-		case 0:fp=fopen("c:\\mycode\\name\\result20.txt","w");
+		switch(match%20)
+		{
+			case 1:fp=fopen("c:\\mycode\\result\\result1.txt","w");
+					break;
+			case 2:fp=fopen("c:\\mycode\\result\\result2.txt","w");
+					break;
+			case 3:fp=fopen("c:\\mycode\\result\\result3.txt","w");
+					break;
+			case 4:fp=fopen("c:\\mycode\\result\\result4.txt","w");
+					break;
+			case 5:fp=fopen("c:\\mycode\\result\\result5.txt","w");
+					break;
+			case 6:fp=fopen("c:\\mycode\\result\\result6.txt","w");
+					break;
+			case 7:fp=fopen("c:\\mycode\\result\\result7.txt","w");
+					break;
+			case 8:fp=fopen("c:\\mycode\\result\\result8.txt","w");
+					break;
+			case 9:fp=fopen("c:\\mycode\\result\\result9.txt","w");
+					break;
+			case 10:fp=fopen("c:\\mycode\\result\\result10.txt","w");
+					break;
+			case 11:fp=fopen("c:\\mycode\\result\\result11.txt","w");
+					break;
+			case 12:fp=fopen("c:\\mycode\\result\\result12.txt","w");
+					break;
+			case 13:fp=fopen("c:\\mycode\\result\\result13.txt","w");
+					break;
+			case 14:fp=fopen("c:\\mycode\\result\\result14.txt","w");
+					break;
+			case 15:fp=fopen("c:\\mycode\\result\\result15.txt","w");
+					break;
+			case 16:fp=fopen("c:\\mycode\\result\\result16.txt","w");
+					break;
+			case 17:fp=fopen("c:\\mycode\\result\\result17.txt","w");
+					break;
+			case 18:fp=fopen("c:\\mycode\\result\\result18.txt","w");
+					break;
+			case 19:fp=fopen("c:\\mycode\\result\\result19.txt","w");
+					break;
+			case 0:fp=fopen("c:\\mycode\\result\\result20.txt","w");
+					break;
+		}
+		if(fp==NULL)
+		{
+			printf("end not open");
+			getch();
+			exit(1);
+		}
+		// fp=fopen("c:\\mycode\\name\\result.txt","w");
+		fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
+		for(i=0;i<4;i++)
+		{
+			fprintf(fp,"%d\n",myteam.player[i].score);
+		}
+		for(i=0;i<4;i++)
+		{
+			fprintf(fp,"%d\n",opteam.player[i].score);
+		}
+		for(i=0;i<4;i++)
+		{
+			fprintf(fp,"%d\n",myteam.player[i].help);
+		}
+		for(i=0;i<4;i++)
+		{
+			fprintf(fp,"%d\n",opteam.player[i].help);
+		}
+		fclose(fp);
 	}
-	if(fp==NULL)
-	{
-		printf("cant not open");
-		getch();
-		exit(1);
-	}
-	// fp=fopen("c:\\mycode\\name\\result.txt","w");
-	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
-	for(i=0;i<4;i++)
-	{
-		fprintf(fp,"%d\n",myteam.player[i].score);
-	}
-	for(i=0;i<4;i++)
-	{
-		fprintf(fp,"%d\n",opteam.player[i].score);
-	}
-	for(i=0;i<4;i++)
-	{
-		fprintf(fp,"%d\n",myteam.player[i].help);
-	}
-	for(i=0;i<4;i++)
-	{
-		fprintf(fp,"%d\n",opteam.player[i].help);
-	}
-	fclose(fp);
 }
 
 void TeamChangestate(_team *pmyteam,_team *popteam,_ball *pball,team_state *pnewstate_my,team_state *pnewstate_op)
@@ -1956,22 +1991,73 @@ void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name)
 
 void playerPower(_team *pteam)
 {
-	FILE *fpplayer;
-	if(pteam->name==Player)
+	int team;
+	FILE *fpplayer,*fpteam;
+	if(pteam->name==Player)//????
 	{
+		if((fpteam=fopen("c:\\mycode\\shop\\path.txt","r"))==NULL)
+		{
+			setlinestyle(0,0,1);
+			outtextxy(300,300,"cannot open the file");
+			getch();
+			exit(1);
+		}
+		team=fgetc(fpteam);//??????
+		fclose(fpteam);
+		if(fpplayer==NULL)
+		{
+			printf("can not open");
+			getch();
+			exit(0);
+		}
+		//?????????????
+		switch(team){
+			case 0:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 1:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 2:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 3:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 4:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+		}
+		fclose(fpplayer);
+	}
+	else//????
+	{
+		if((fpteam=fopen("c:\\mycode\\shop\\opteam.txt","r"))==NULL)
+		{
+			setlinestyle(0,0,1);
+			outtextxy(300,300,"cannot open the file");
+			getch();
+			exit(1);
+		}
+		team=fgetc(fpteam);//??????
+		fclose(fpteam);
 		fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+		if(fpplayer==NULL)
+		{
+			printf("can not open");
+			getch();
+			exit(0);
+		}
+		//?????????????
+		switch(team){
+			case 0:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 1:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 2:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 3:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+			case 4:fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+					break;
+		}
+		fclose(fpplayer);
 	}
-	else
-	{
-		fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
-	}
-	if(fpplayer==NULL)
-	{
-		printf("can not open");
-		getch();
-		exit(0);
-	}
-	
 }
 
 void init_ball(_team *popteam,_team *pmyteam,_ball *pball)

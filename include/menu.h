@@ -7,7 +7,9 @@ void changci();
 void jiaoxue();
 void choose_team();
 void choose_player();
+void vsteam();
 void xiuxi();
-void result(int historyMatch);
+// void result(int historyMatch);
+void result();
 void shop();
 #endif
