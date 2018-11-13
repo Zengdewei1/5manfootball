@@ -9,6 +9,7 @@ void init_judge(struct _JUDGE *pjudge);
 void init_player(_player *pplayer,int position,int ID,int name);
 void init_team(_team *team,_ball *pball);
 void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name);
+void playerPower(_team *pteam);
 
 void TeamChangestate(_team *pmyteam,_team *popteam,_ball *pball,team_state *pnewstate_my,team_state *pnewstate_op);
 void PlayerChangestate(_team *popteam,_team *pmopeam,_player *pplayer,_ball *pball,player_state *pnewstate);

@@ -31,6 +31,7 @@ void game(int position1,int position2,int color1,int color2,int match)
 {
 	int i;
 	FILE *fp;
+	// FILE *fpability;
 	_ball ball;
 	_judge judge;
 	_team myteam;
@@ -1820,7 +1821,6 @@ void init_team(_team *team,_ball *pball)
 		if(pball->timecount>1e-5)
 			bar((int)(team->player[i].old_pos.x-5),(int)(team->player[i].old_pos.y-5),(int)(team->player[i].old_pos.x)+12+5,(int)(team->player[i].old_pos.y)+34+5);
 		init_player(&team->player[i],team->position,i,team->name);
-		
 	}
 	init_goalkeeper(&team->goalkeeper,team->position,team->name); 
 	if(pball->timecount>1e-5)
@@ -1953,6 +1953,27 @@ void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name)
 	pgoalkeeper->pnowstate=&pgoalkeeper->TendGoal;
 }
 //?????????????
+
+void playerPower(_team *pteam)
+{
+	FILE *fpplayer;
+	if(pteam->name==Player)
+	{
+		fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+	}
+	else
+	{
+		fpplayer=fopen("c:\\mycode\\shop\\1.txt","r");
+	}
+	if(fpplayer==NULL)
+	{
+		printf("can not open");
+		getch();
+		exit(0);
+	}
+	
+}
+
 void init_ball(_team *popteam,_team *pmyteam,_ball *pball)
 {
 	pball->downtime=0;
