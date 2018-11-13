@@ -11,7 +11,8 @@
                 "F:\\cprogram\\DISK_C\\mycode",
                 "F:\\cprogram\\DISK_C\\BORLANDC\\INCLUDE",
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/include"
+                "${workspaceFolder}/include",
+                "F:/cprogram/DISK_C/BORLANDC/INCLUDE"
             ],
             "compilerPath": "E:\\app\\vscode\\LLVM\\bin\\clang.exe",
             "cStandard": "c11",

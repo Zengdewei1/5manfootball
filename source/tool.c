@@ -95,6 +95,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï
 				pball->start_pos.x=pball->now_pos.x;
 				pball->start_pos.y=pball->now_pos.y;
 				BallChangestate(popteam,pmyteam,pball,&pball->Long_pass);
+				// printf("%s","yes");
 			}
 			
 		}
@@ -198,6 +199,32 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï
 			if(KeyPress(KEY_M))
 			{
 				pass(pmyteam,popteam,pball,Circle);
+			}
+			if(KeyPress(KEY_N))
+			{
+				pball->control=-1;
+				if(popteam->control!=-1)
+					popteam->control=-1;
+				else
+					pmyteam->control=-1;
+				pball->start_pos=pball->now_pos;
+				pball->end_pos.x=600.0;
+				if(pball->now_pos.y>340.0)
+				{
+					pball->end_pos.y=340.0;
+				}
+				else if(pball->now_pos.y<220.0)
+				{
+					pball->end_pos.y=220.0;
+				}
+				else
+				{
+					pball->end_pos.y=280.0;
+				}
+				pmyteam->player[pmyteam->controlplayer].control=0;
+				KeeperChangestate(pmyteam,popteam,&popteam->goalkeeper,pball,&popteam->goalkeeper.Pounce);
+				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].ChasingBall);
 			}
         }
 	
@@ -941,18 +968,22 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 		}
 		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
 		{
+			// printf("%d",popteam->controlplayer);
 			pball->score_op++;
-				popteam->player[popteam->controlplayer].score++;
+			popteam->player[popteam->controlplayer].score++;
 			if(popteam->passman!=-1)
-					popteam->player[popteam->passman].help++;
+			{
+				popteam->player[popteam->passman].help++;
+			}
 			popteam->passman=-1;
+			// printf("%d",pball->score_op);
 			init_team(pmyteam,pball);
 			init_team(popteam,pball);
 			setfillstyle(1,GREEN);	
 			bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
 			BallChangestate(popteam,pmyteam,pball,&pball->Control);
 			pmyteam->player[3].control=1;
-			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Dribble);
+			PlayerChangestate(pmyteam,popteam,&pmyteam->player[3],pball,&pmyteam->player[3].Dribble);
 			pmyteam->control=3;
 			pmyteam->controlplayer=3;
 			TeamChangestate(pmyteam,popteam,pball,&pmyteam->Attack,&popteam->Defend);
@@ -972,6 +1003,20 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 				popteam->control=3;
 				popteam->controlplayer=3;
 				TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
+				pball->control=3;
+			}
+			else
+			{
+				init_team(pmyteam,pball);
+				init_team(popteam,pball);
+				setfillstyle(1,GREEN);	
+				bar((int)(pball->now_pos.x),(int)(pball->now_pos.y),(int)(pball->now_pos.x)+12,(int)(pball->now_pos.y)+12);
+				BallChangestate(popteam,pmyteam,pball,&pball->Control);
+				pmyteam->player[3].control=1;
+				PlayerChangestate(pmyteam,popteam,&pmyteam->player[3],pball,&pmyteam->player[3].Dribble);
+				pmyteam->control=3;
+				pmyteam->controlplayer=3;
+				TeamChangestate(pmyteam,popteam,pball,&popteam->Defend,&pmyteam->Attack);
 				pball->control=3;
 			}
 		}

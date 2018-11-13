@@ -8,6 +8,6 @@ void jiaoxue();
 void choose_team();
 void choose_player();
 void xiuxi();
-void result();
+void result(int historyMatch);
 void shop();
 #endif

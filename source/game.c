@@ -27,10 +27,10 @@
 */
 
 /*???????*/
-void game(int position1,int position2,int color1,int color2)
+void game(int position1,int position2,int color1,int color2,int match)
 {
-	int i,match;
-	FILE *fp,*fpGame;
+	int i;
+	FILE *fp;
 	_ball ball;
 	_judge judge;
 	_team myteam;
@@ -52,9 +52,7 @@ void game(int position1,int position2,int color1,int color2)
 	init_team(&opteam,&ball);
 	init_judge(&judge);
 	// draw_stop();
-	fpGame=fopen("c:\\mycode\\name\\game.txt","r");
-	fscanf(fpGame,"%d",&match);
-	fclose(fpGame);
+	printf("%d",match);
 	for(i=0;i<4;i++)
 	{
 		draw_player((int)(myteam.player[i].now_pos.x),(int)(myteam.player[i].now_pos.y),myteam.player[i].dir,0,0,myteam.player[i].ID,myteam.color,myteam.name);
@@ -83,27 +81,34 @@ void game(int position1,int position2,int color1,int color2)
 	else
 	{
 		ball.time=150;
-		switch(match%20){
-			case 1:fp=fopen("c:\\mycode\\name\\result1.txt","w");
-			case 2:fp=fopen("c:\\mycode\\name\\result2.txt","w");
-			case 3:fp=fopen("c:\\mycode\\name\\result3.txt","w");
-			case 4:fp=fopen("c:\\mycode\\name\\result4.txt","w");
-			case 5:fp=fopen("c:\\mycode\\name\\result5.txt","w");
-			case 6:fp=fopen("c:\\mycode\\name\\result6.txt","w");
-			case 7:fp=fopen("c:\\mycode\\name\\result7.txt","w");
-			case 8:fp=fopen("c:\\mycode\\name\\result8.txt","w");
-			case 9:fp=fopen("c:\\mycode\\name\\result9.txt","w");
-			case 10:fp=fopen("c:\\mycode\\name\\result10.txt","w");
-			case 11:fp=fopen("c:\\mycode\\name\\result11.txt","w");
-			case 12:fp=fopen("c:\\mycode\\name\\result12.txt","w");
-			case 13:fp=fopen("c:\\mycode\\name\\result13.tx3t","w");
-			case 14:fp=fopen("c:\\mycode\\name\\result14.txt","w");
-			case 15:fp=fopen("c:\\mycode\\name\\result15.txt","w");
-			case 16:fp=fopen("c:\\mycode\\name\\result16.txt","w");
-			case 17:fp=fopen("c:\\mycode\\name\\result17.txt","w");
-			case 18:fp=fopen("c:\\mycode\\name\\result18.txt","w");
-			case 19:fp=fopen("c:\\mycode\\name\\result19.txt","w");
-			case 20:fp=fopen("c:\\mycode\\name\\result20.txt","w");
+		switch(match%20)
+		{
+			case 1:fp=fopen("c:\\mycode\\name\\result1.txt","r");
+			case 2:fp=fopen("c:\\mycode\\name\\result2.txt","r");
+			case 3:fp=fopen("c:\\mycode\\name\\result3.txt","r");
+			case 4:fp=fopen("c:\\mycode\\name\\result4.txt","r");
+			case 5:fp=fopen("c:\\mycode\\name\\result5.txt","r");
+			case 6:fp=fopen("c:\\mycode\\name\\result6.txt","r");
+			case 7:fp=fopen("c:\\mycode\\name\\result7.txt","r");
+			case 8:fp=fopen("c:\\mycode\\name\\result8.txt","r");
+			case 9:fp=fopen("c:\\mycode\\name\\result9.txt","r");
+			case 10:fp=fopen("c:\\mycode\\name\\result10.txt","r");
+			case 11:fp=fopen("c:\\mycode\\name\\result11.txt","r");
+			case 12:fp=fopen("c:\\mycode\\name\\result12.txt","r");
+			case 13:fp=fopen("c:\\mycode\\name\\result13.txt","r");
+			case 14:fp=fopen("c:\\mycode\\name\\result14.txt","r");
+			case 15:fp=fopen("c:\\mycode\\name\\result15.txt","r");
+			case 16:fp=fopen("c:\\mycode\\name\\result16.txt","r");
+			case 17:fp=fopen("c:\\mycode\\name\\result17.txt","r");
+			case 18:fp=fopen("c:\\mycode\\name\\result18.txt","r");
+			case 19:fp=fopen("c:\\mycode\\name\\result19.txt","r");
+			case 0:fp=fopen("c:\\mycode\\name\\result20.txt","r");
+		}
+		if(fp==NULL)
+		{
+			printf("cant not open");
+			getch();
+			exit(1);
 		}
 		// fp=fopen("c:\\mycode\\name\\result.txt","r");
 		// fp=fopen("c:\\mycode\\name\\result2.txt","w");
@@ -166,7 +171,8 @@ void game(int position1,int position2,int color1,int color2)
 		if(opteam.passman!=-1&&ball.time%10==0)
 			printf("%d\n",opteam.passman);
 	}
-	switch(match%20){
+	switch(match%20)
+	{
 		case 1:fp=fopen("c:\\mycode\\name\\result1.txt","w");
 		case 2:fp=fopen("c:\\mycode\\name\\result2.txt","w");
 		case 3:fp=fopen("c:\\mycode\\name\\result3.txt","w");
@@ -179,14 +185,20 @@ void game(int position1,int position2,int color1,int color2)
 		case 10:fp=fopen("c:\\mycode\\name\\result10.txt","w");
 		case 11:fp=fopen("c:\\mycode\\name\\result11.txt","w");
 		case 12:fp=fopen("c:\\mycode\\name\\result12.txt","w");
-		case 13:fp=fopen("c:\\mycode\\name\\result13.tx3t","w");
+		case 13:fp=fopen("c:\\mycode\\name\\result13.txt","w");
 		case 14:fp=fopen("c:\\mycode\\name\\result14.txt","w");
 		case 15:fp=fopen("c:\\mycode\\name\\result15.txt","w");
 		case 16:fp=fopen("c:\\mycode\\name\\result16.txt","w");
 		case 17:fp=fopen("c:\\mycode\\name\\result17.txt","w");
 		case 18:fp=fopen("c:\\mycode\\name\\result18.txt","w");
 		case 19:fp=fopen("c:\\mycode\\name\\result19.txt","w");
-		case 20:fp=fopen("c:\\mycode\\name\\result20.txt","w");
+		case 0:fp=fopen("c:\\mycode\\name\\result20.txt","w");
+	}
+	if(fp==NULL)
+	{
+		printf("cant not open");
+		getch();
+		exit(1);
 	}
 	// fp=fopen("c:\\mycode\\name\\result.txt","w");
 	fprintf(fp,"%d\n%d\n",ball.score_my,ball.score_op);
@@ -207,13 +219,6 @@ void game(int position1,int position2,int color1,int color2)
 		fprintf(fp,"%d\n",opteam.player[i].help);
 	}
 	fclose(fp);
-	if(position1==Right)
-	{
-		match+=1;
-		fpGame=fopen("c:\\mycode\\name\\game.txt","w");
-		fprintf(fpGame,"%d",match);
-		fclose(fpGame);
-	}
 }
 
 void TeamChangestate(_team *pmyteam,_team *popteam,_ball *pball,team_state *pnewstate_my,team_state *pnewstate_op)
@@ -323,22 +328,22 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 	}
 	if(popteam->pnowstate==&popteam->Attack)
 	{
-		// setfillstyle(1,BLACK);
-		// circle(10,10,10);
-		if(nearDist(pmyteam,popteam,pball,&popteam->player[popteam->controlplayer])<60.0)
-		{
-			int receivingman=findPass(pmyteam,popteam,pball);
-			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
-			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
-			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
-			popteam->passman=popteam->control;
-			popteam->player[popteam->controlplayer].control=0;
-			popteam->control=-1;
-			popteam->controlplayer=receivingman;
-			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
-			// printf("%d\n",receivingman);
-		}
+		setfillstyle(1,BLACK);
+		circle(10,10,10);
+		// if(nearDist(pmyteam,popteam,pball,&popteam->player[popteam->controlplayer])<60.0)
+		// {
+		// 	int receivingman=findPass(pmyteam,popteam,pball);
+		// 	pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+		// 	pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+		// 	BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+		// 	PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
+		// 	popteam->passman=popteam->control;
+		// 	popteam->player[popteam->controlplayer].control=0;
+		// 	popteam->control=-1;
+		// 	popteam->controlplayer=receivingman;
+		// 	PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+		// 	// printf("%d\n",receivingman);
+		// }
 		if(popteam->control==0&&pball->timecount%5==0)
 		{
 			pball->end_pos.x=popteam->player[1].now_pos.x+6;
@@ -348,8 +353,8 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			popteam->passman=popteam->control;
 			popteam->player[0].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=1;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].ChasingBall);
+			popteam->controlplayer=1;
 		}
 		if(popteam->control==1&&popteam->player[3].pnowstate==&popteam->player[3].Actioning&&pball->timecount%5==0)
 		{
@@ -360,28 +365,86 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			popteam->passman=popteam->control;
 			popteam->player[1].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=3;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].ChasingBall);
+			popteam->controlplayer=3;
 		}
 		if(popteam->control==3&&distance(popteam->player[3].now_pos.x,popteam->player[3].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
 		{
 			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
-			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+			if(pball->timecount%3==0)
+			{
+				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+			}
+			else
+			{
+				pball->control=-1;
+				if(popteam->control!=-1)
+					popteam->control=-1;
+				else
+					pmyteam->control=-1;
+				pball->start_pos=pball->now_pos;
+				pball->end_pos.x=40.0;
+				if(pball->now_pos.y>340.0)
+				{
+					pball->end_pos.y=340.0;
+				}
+				else if(pball->now_pos.y<220.0)
+				{
+					pball->end_pos.y=220.0;
+				}
+				else
+				{
+					pball->end_pos.y=280.0;
+				}
+				popteam->player[popteam->controlplayer].control=0;
+				KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
+				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
+				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
+			}
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Wait);
 			popteam->passman=popteam->control;
 			popteam->player[3].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=-1;
+			popteam->controlplayer=2;
 		}
 		if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
 		{
 			KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
-			BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+			if(pball->timecount%3==0)
+			{
+				BallChangestate(popteam,pmyteam,pball,&pball->Short_shoot);
+			}
+			else
+			{
+				pball->control=-1;
+				if(popteam->control!=-1)
+					popteam->control=-1;
+				else
+					pmyteam->control=-1;
+				pball->start_pos=pball->now_pos;
+				pball->end_pos.x=40.0;
+				if(pball->now_pos.y>340.0)
+				{
+					pball->end_pos.y=340.0;
+				}
+				else if(pball->now_pos.y<220.0)
+				{
+					pball->end_pos.y=220.0;
+				}
+				else
+				{
+					pball->end_pos.y=280.0;
+				}
+				popteam->player[popteam->controlplayer].control=0;
+				KeeperChangestate(pmyteam,popteam,&pmyteam->goalkeeper,pball,&pmyteam->goalkeeper.Pounce);
+				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
+				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
+			}
 			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
 			popteam->passman=popteam->control;
 			popteam->player[2].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=-1;
+			popteam->controlplayer=3;
 		}
 	}
 }
@@ -504,6 +567,7 @@ void DribbleEnter(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	}
 	if(pplayer->name==Computer)
 	{
+		popteam->controlplayer=pplayer->ID;
 		switch(pplayer->ID)
 		{
 				case(0):arrive(pplayer,x[0],y[0]);
@@ -548,8 +612,20 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	}
 	else
 	{
-		// setfillstyle(1,BLACK);
-		// circle(10,10,10);
+		if(nearDist(pmyteam,popteam,pball,&popteam->player[popteam->controlplayer])<45.0)
+		{
+			int receivingman=findPass(pmyteam,popteam,pball);
+			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
+			popteam->passman=popteam->control;
+			popteam->player[popteam->controlplayer].control=0;
+			popteam->control=-1;
+			popteam->controlplayer=receivingman;
+			PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+			// printf("%d\n",receivingman);
+		}
 		switch(pplayer->ID)
 		{
 				case(0):
@@ -565,6 +641,20 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	popteam->control=-1;
 						// 	PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
 						// 	printf("%d\n",receivingman);
+						// }
+						// if(nearDist(pmyteam,popteam,pball,&popteam->player[popteam->controlplayer])<60.0)
+						// {
+						// 	int receivingman=findPass(pmyteam,popteam,pball);
+						// 	pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
+						// 	pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
+						// 	BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
+						// 	PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
+						// 	popteam->passman=popteam->control;
+						// 	popteam->player[popteam->controlplayer].control=0;
+						// 	popteam->control=-1;
+						// 	popteam->controlplayer=receivingman;
+						// 	PlayerChangestate(pmyteam,popteam,&popteam->player[receivingman],pball,&popteam->player[receivingman].ChasingBall);
+						// 	// printf("%d\n",receivingman);
 						// }
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x[0],290.0)<5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Actioning);
@@ -1318,11 +1408,11 @@ void PounceEnter(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *p
 {
 	if(pgoalkeeper->now_pos.y>263.0)
                 {
-                            pgoalkeeper->velocity.y=-3.0;
+                            pgoalkeeper->velocity.y=-1.0;
                 }
     else
                 {
-                            pgoalkeeper->velocity.y=3.0;  
+                            pgoalkeeper->velocity.y=1.0;  
                 }
 }
 void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
@@ -1544,27 +1634,105 @@ void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
 	// 	circle(30,30,10);
 }
 
-void Long_passExecute(_team *popteam,_team *pmyteam,_ball *pball)
+void Long_shootExecute(_team *popteam,_team *pmyteam,_ball *pball)
 {
 	// Pos2d pass_dir;
 	// printf("%d\n",pball->control);
-	double finalX,finalY,a,x,y;
+	double finalX,finalY,x,y;
+	double a=0;
 	finalX=pball->end_pos.x-pball->start_pos.x;
 	finalY=pball->end_pos.y-pball->start_pos.y;
 	x=pball->now_pos.x-pball->start_pos.x;
 	y=pball->now_pos.y-pball->start_pos.y;
-	pball->velocity.x=10.0;
-	// pball->velocity.y=4.0;
-	if(finalX>1e-5&&finalY>1e-5)
+	// printf("%d",finalX);
+	if(popteam->pnowstate==&popteam->Attack)
 	{
-		a=finalX*finalX/finalY;
+		if(finalY>1e-5)
+		{
+			pball->velocity.y=24.0;
+		}
+		else
+		{
+			pball->velocity.y=-16.0;
+		}
+		if(abs(finalY)>1e-5)
+		{
+			a=2*finalX/finalY/finalY;
+		}
+		pball->velocity.x=30*a*abs(y)/10.0;
 	}
-	pball->velocity.y=2*100.0*a*x;
+	else
+	{
+		if(finalX>1e-5)
+		{
+			pball->velocity.x=15.0;
+		}
+		else
+		{
+			pball->velocity.x=-15.0;
+		}
+		// pball->velocity.y=4.0;
+		if(abs(finalX)>1e-5)
+		{
+			a=2*finalY/finalX/finalX;
+		}
+		pball->velocity.y=800*a*abs(x)/10.0;
+	}
 }
 
-void Long_shootExecute(_team *popteam,_team *pmyteam,_ball *pball)
+void Long_passExecute(_team *popteam,_team *pmyteam,_ball *pball)
 {
-	int i=0;
+	// Pos2d pass_dir;
+	// printf("%d\n",pball->control);
+	double finalX,finalY,x,y;
+	double a=0;
+	finalX=pball->end_pos.x-pball->start_pos.x;
+	finalY=pball->end_pos.y-pball->start_pos.y;
+	x=pball->now_pos.x-pball->start_pos.x;
+	y=pball->now_pos.y-pball->start_pos.y;
+	// printf("%d",finalX);
+	if(abs(finalX)>=abs(finalY))
+	{
+		if(finalX>1e-5)
+		{
+			pball->velocity.x=15.0;
+		}
+		else
+		{
+			pball->velocity.x=-15.0;
+		}
+		// pball->velocity.y=4.0;
+		if(abs(finalX)>1e-5)
+		{
+			a=2*finalY/finalX/finalX;
+		// printf("%d",a);
+
+		}
+		// printf("%d",a);
+		pball->velocity.y=40*a*abs(x)/10.0;
+		// printf("%d",pball->velocity.x);
+	}
+	else
+	{
+		if(finalY>1e-5)
+		{
+			pball->velocity.y=15.0;
+		}
+		else
+		{
+			pball->velocity.y=-15.0;
+		}
+		// pball->velocity.y=4.0;
+		if(abs(finalY)>1e-5)
+		{
+			a=2*finalX/finalY/finalY;
+		// printf("%d",a);
+
+		}
+		// printf("%d",a);
+		pball->velocity.x=40*a*abs(y)/10.0;
+		// printf("%d",pball->velocity.x);
+	}
 }
 
 void ControlExecute(_team *popteam,_team *pmyteam,_ball *pball)
@@ -1644,7 +1812,6 @@ void init_team(_team *team,_ball *pball)
 	team->Defend.Enter=NULL;
 	team->Defend.Execute=DefendExecute;
 	team->control=-1;
-	team->controlplayer=-1;
 	team->controlplayer=3;
 	team->passman=-1;
 	setfillstyle(1,GREEN);
@@ -1788,7 +1955,6 @@ void init_goalkeeper(_goalkeeper *pgoalkeeper,int position,int name)
 //?????????????
 void init_ball(_team *popteam,_team *pmyteam,_ball *pball)
 {
-
 	pball->downtime=0;
 	pball->now_pos.x=322;
 	pball->now_pos.y=280;
@@ -1899,11 +2065,11 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	if(pball->timecount%3==0)
 		draw_score(pball->score_my,pball->score_op);
-	if(pball->time>=30&&pmyteam->position==Left)
+	if(pball->time>=1&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=155&&pmyteam->position==Right)
+	if(pball->time>=151&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}
