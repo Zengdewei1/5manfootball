@@ -67,6 +67,7 @@ typedef struct _GOALKEEPER
     int name;
     int dir;
     int control;     //守门员是否控球
+    int rate;
     keeper_state *pnowstate;
     keeper_state TendGoal,Pounce,ControlBall;
 }_goalkeeper;

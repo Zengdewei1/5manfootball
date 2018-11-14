@@ -556,8 +556,8 @@ void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pb
 	else
 	{
 		near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-				pplayer->velocity.x=5*near_dir.x;
-				pplayer->velocity.y=5*near_dir.y;
+				pplayer->velocity.x=pplayer->rate*near_dir.x;
+				pplayer->velocity.y=pplayer->rate*near_dir.y;
 				if(distance(popteam->player[popteam->controlplayer].now_pos.x+6,popteam->player[popteam->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<20.0)
 				{
 					if(pmyteam->control!=-1)
@@ -972,8 +972,8 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 				if(pplayer->ID==3)
 				{
 					near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-					pplayer->velocity.x=3*near_dir.x;
-					pplayer->velocity.y=3*near_dir.y;
+					pplayer->velocity.x=pplayer->rate*near_dir.x;
+					pplayer->velocity.y=pplayer->rate*near_dir.y;
 					if(distance(popteam->player[popteam->controlplayer].now_pos.x+6,popteam->player[popteam->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<20.0)
 					{
 						if(pmyteam->control!=-1)
@@ -1076,8 +1076,8 @@ void WaitExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 				if(pplayer->ID==3)
 				{
 					near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-					pplayer->velocity.x=3*near_dir.x;
-					pplayer->velocity.y=3*near_dir.y;
+					pplayer->velocity.x=pplayer->rate*near_dir.x;
+					pplayer->velocity.y=pplayer->rate*near_dir.y;
 					if(distance(popteam->player[popteam->controlplayer].now_pos.x+6,popteam->player[popteam->controlplayer].now_pos.y+17,pball->now_pos.x+4,pball->now_pos.y+4)<20.0)
 					{
 						if(pmyteam->control!=-1)
@@ -1120,14 +1120,14 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);
 						if(dy>=20.0)
 						{
-							pplayer->velocity.y=4.0*(pball->now_pos.y-pplayer->now_pos.y)/dy;
+							pplayer->velocity.y=pplayer->rate*(pball->now_pos.y-pplayer->now_pos.y)/dy;
 						}
 						break;
 				case(1):
 						if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)>70)
-							pplayer->velocity.x=4.0;
+							pplayer->velocity.x=pplayer->rate;
 						else if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)<-70)
-							pplayer->velocity.x=-4.0;
+							pplayer->velocity.x=-pplayer->rate;
 						else
 							pplayer->velocity.x=0;
 						// if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//??¦Ë??????????
@@ -1144,15 +1144,15 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						// }
 						break;
 				case(2):if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)>70)
-							pplayer->velocity.x=4.0;
+							pplayer->velocity.x=pplayer->rate;
 						else if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)<-70)
-							pplayer->velocity.x=-4.0;
+							pplayer->velocity.x=-pplayer->rate;
 						else
 							pplayer->velocity.x=0;
 				case(3):if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)>70)
-							pplayer->velocity.x=4.0;
+							pplayer->velocity.x=pplayer->rate;
 						else if((pball->now_pos.x-pplayer->now_pos.x-pplayer->velocity.x)<-70)
-							pplayer->velocity.x=-4.0;
+							pplayer->velocity.x=-pplayer->rate;
 						else
 							pplayer->velocity.x=0;
 						break;
@@ -1208,8 +1208,8 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						if(distance(x,160.0,pball->now_pos.x,pball->now_pos.y)<100.0)
 						{
 							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-							pplayer->velocity.x=3*near_dir.x;
-							pplayer->velocity.y=3*near_dir.y;
+							pplayer->velocity.x=pplayer->rate*near_dir.x;
+							pplayer->velocity.y=pplayer->rate*near_dir.y;
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x,160.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
@@ -1243,8 +1243,8 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						if(distance(x,400.0,pball->now_pos.x,pball->now_pos.y)<100.0)
 						{
 							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-							pplayer->velocity.x=3*near_dir.x;
-							pplayer->velocity.y=3*near_dir.y;
+							pplayer->velocity.x=pplayer->rate*near_dir.x;
+							pplayer->velocity.y=pplayer->rate*near_dir.y;
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x,400.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
@@ -1277,8 +1277,8 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						if(distance(x,280.0,pball->now_pos.x,pball->now_pos.y)<100.0)
 						{
 							near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-							pplayer->velocity.x=3*near_dir.x;
-							pplayer->velocity.y=3*near_dir.y;
+							pplayer->velocity.x=pplayer->rate*near_dir.x;
+							pplayer->velocity.y=pplayer->rate*near_dir.y;
 						}
 						else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,x,280.0)>5.0)
 							PlayerChangestate(pmyteam,popteam,pplayer,pball,&pplayer->Wait);
@@ -1305,8 +1305,8 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 						}
 						break;
 				case(3):near_dir=get_dir(pplayer->now_pos,pball->now_pos);
-						pplayer->velocity.x=3*near_dir.x;
-						pplayer->velocity.y=3*near_dir.y;
+						pplayer->velocity.x=pplayer->rate*near_dir.x;
+						pplayer->velocity.y=pplayer->rate*near_dir.y;
 						if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<20.0)
 						{
 						
@@ -1409,9 +1409,9 @@ void TendGoalExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_bal
 {
 	// double dy;
 	if(pgoalkeeper->now_pos.y>=276.0)
-		pgoalkeeper->velocity.y*=(-1.0);
+		pgoalkeeper->velocity.y*=-pgoalkeeper->rate;
 	if(pgoalkeeper->now_pos.y<=250.0)
-		pgoalkeeper->velocity.y*=(-1.0);
+		pgoalkeeper->velocity.y*=-pgoalkeeper->rate;
 	// if(pgoalkeeper->name==Player)
 	// {
 	// 	if(pball->now_pos.x<190&&pball->now_pos.y>220&&pball->now_pos.y<328&&pball->timecount%5==0)
@@ -1444,11 +1444,11 @@ void PounceEnter(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *p
 {
 	if(pgoalkeeper->now_pos.y>263.0)
                 {
-                            pgoalkeeper->velocity.y=-1.0;
+                            pgoalkeeper->velocity.y=-pgoalkeeper->rate;
                 }
     else
                 {
-                            pgoalkeeper->velocity.y=1.0;  
+                            pgoalkeeper->velocity.y=pgoalkeeper->rate;
                 }
 }
 void PounceExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_ball *pball)
@@ -1573,7 +1573,7 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 		setfillstyle(1,GREEN);
 		bar((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),(int)(pgoalkeeper->now_pos.x)+12,(int)(pgoalkeeper->now_pos.y)+34);
 		pgoalkeeper->control=0;
-		pgoalkeeper->velocity.y=1.2;
+		pgoalkeeper->velocity.y=pgoalkeeper->rate;
 		pgoalkeeper->now_pos.y=263.0;
 		KeeperChangestate(pmyteam,popteam,pgoalkeeper,pball,&pgoalkeeper->TendGoal);
 	}
@@ -1589,7 +1589,7 @@ void ControlBallExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_
 		setfillstyle(1,GREEN);
 		bar((int)(pgoalkeeper->now_pos.x),(int)(pgoalkeeper->now_pos.y),(int)(pgoalkeeper->now_pos.x)+12,(int)(pgoalkeeper->now_pos.y)+34);
 		pgoalkeeper->control=0;
-		pgoalkeeper->velocity.y=1.2;
+		pgoalkeeper->velocity.y=pgoalkeeper->rate;
 		pgoalkeeper->now_pos.y=263.0;
 		KeeperChangestate(pmyteam,popteam,pgoalkeeper,pball,&pgoalkeeper->TendGoal);
 	}
@@ -1627,8 +1627,16 @@ void Short_passEnter(_team *popteam,_team *pmyteam,_ball *pball)//popteam???????
 	Pos2d pass_dir;
 	pball->control=-1;
 	pass_dir=get_dir(pball->now_pos,pball->end_pos);
-    pball->velocity.x=16.0*pass_dir.x;
-    pball->velocity.y=16.0*pass_dir.y;
+	if(pmyteam->pnowstate==&pmyteam->Attack)
+	{
+		pball->velocity.x=pmyteam->player[pmyteam->controlplayer].power*pass_dir.x;
+    	pball->velocity.y=pmyteam->player[pmyteam->controlplayer].power*pass_dir.y;
+	}
+	else
+	{
+		pball->velocity.x=popteam->player[popteam->controlplayer].power*pass_dir.x;
+    	pball->velocity.y=popteam->player[popteam->controlplayer].power*pass_dir.y;
+	}
 }
 
 void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
@@ -1664,8 +1672,16 @@ void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
 			gate.y=220.0;
 	}
 	shoot_dir=get_dir(pball->now_pos,gate);
-    pball->velocity.x=18.0*shoot_dir.x;
-    pball->velocity.y=18.0*shoot_dir.y;
+    if(pmyteam->pnowstate==&pmyteam->Attack)
+	{
+		pball->velocity.x=pmyteam->player[pmyteam->controlplayer].power*pass_dir.x;
+    	pball->velocity.y=pmyteam->player[pmyteam->controlplayer].power*pass_dir.y;
+	}
+	else
+	{
+		pball->velocity.x=popteam->player[popteam->controlplayer].power*pass_dir.x;
+    	pball->velocity.y=popteam->player[popteam->controlplayer].power*pass_dir.y;
+	}
 	// setfillstyle(1,BLACK);
 	// 	circle(30,30,10);
 }

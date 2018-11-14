@@ -150,26 +150,26 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï
 {
 		if(KeyPress(KEY_A))
 		{
-			pmyteam->player[pmyteam->controlplayer].velocity.x=-8.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=-pmyteam->player[pmyteam->controlplayer].rate;
 			pmyteam->player[pmyteam->controlplayer].velocity.y=0;
 			pmyteam->player[pmyteam->controlplayer].dir=Left;
 		}
 		if(KeyPress(KEY_D))
 		{
-			pmyteam->player[pmyteam->controlplayer].velocity.x=8.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.x=pmyteam->player[pmyteam->controlplayer].rate;
 			pmyteam->player[pmyteam->controlplayer].velocity.y=0;	
 			pmyteam->player[pmyteam->controlplayer].dir=Right;
 		}
 		if(KeyPress(KEY_S))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
-			pmyteam->player[pmyteam->controlplayer].velocity.y=8.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=pmyteam->player[pmyteam->controlplayer].rate;
 
 		}
 		if(KeyPress(KEY_W))
 		{
 			pmyteam->player[pmyteam->controlplayer].velocity.x=0;
-			pmyteam->player[pmyteam->controlplayer].velocity.y=-8.0;
+			pmyteam->player[pmyteam->controlplayer].velocity.y=-pmyteam->player[pmyteam->controlplayer].rate;
 
 		}
         if(pmyteam->player[pmyteam->controlplayer].pnowstate==&pmyteam->player[pmyteam->controlplayer].Dribble)
@@ -334,8 +334,8 @@ void arrive(_player *pplayer,double _x,double _y)
 	destination.x=_x;
 	destination.y=_y;
 	dir=get_dir(pplayer->now_pos,destination);
-	pplayer->velocity.x=6.0*dir.x;
-	pplayer->velocity.y=6.0*dir.y;
+	pplayer->velocity.x=pplayer->rate*dir.x;
+	pplayer->velocity.y=pplayer->rate*dir.y;
 }
 
 void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
@@ -609,8 +609,8 @@ void move_dir(_player *pplayer,_ball *pball)
 {
 	Pos2d dir;
 	dir=get_dir(pplayer->now_pos,pball->now_pos);
-	pplayer->velocity.x=5.0*dir.x;
-	pplayer->velocity.y=5.0*dir.y;
+	pplayer->velocity.x=pplayer->power*dir.x;
+	pplayer->velocity.y=pplayer->power*dir.y;
 }
 double distance(double x1,double y1,double x2,double y2)
 {

@@ -16,8 +16,9 @@ void main()
 		getch();
 		exit(1);
 	}
-	match=fgetc(fpGame);
-	match-=48;
+	// match=fgetc(fpGame);
+	fscanf(fpGame,"%d",&match);
+	// match-=48;
 	printf("%d",match);
 	fclose(fpGame);
 	game(Left,Right,Red,Blue,match);
