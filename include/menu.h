@@ -1,15 +1,17 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-void menu_page();
 void menu();
+void result(int historyMatch);
+void record(int x,int y,int dx,int row,int length,int slider_dy,int game_amount);
+void menu_page();
+void history();
 void changci();
 void jiaoxue();
 void choose_team();
-void choose_player();
-void vsteam();
-void xiuxi();
-// void result(int historyMatch);
-void result();
-void shop();
+void choose_player(char (*s)[10],int path);
+void Vs(int path);
+// void vsteam();
+void shop(int path_);
+
 #endif

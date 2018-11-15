@@ -1,7 +1,7 @@
 #include "main.h"
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)
 {
     int flag=0;
 	pball->control=-1;
@@ -11,7 +11,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï
         {
 			if(pmyteam->controlplayer!=0)
 			{
-				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?/ï¿½ï¿½
+				pmyteam->passman=pmyteam->control;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=0;
@@ -26,7 +26,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï
         {
             if(pmyteam->controlplayer!=1)
 			{
-				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?/ï¿½ï¿½
+				pmyteam->passman=pmyteam->control;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=1;
@@ -41,7 +41,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï
         {
             if(pmyteam->controlplayer!=2)
 			{
-				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?/ï¿½ï¿½
+				pmyteam->passman=pmyteam->control;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=2;
@@ -56,7 +56,7 @@ void pass(_team *pmyteam,_team *popteam,_ball *pball,int type)//pmyteamÎªï¿½ï¿½ï
         {
             if(pmyteam->controlplayer!=3)
 			{
-				pmyteam->passman=pmyteam->control;//ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½Óµï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?/ï¿½ï¿½
+				pmyteam->passman=pmyteam->control;
 				pmyteam->player[pmyteam->controlplayer].control=0;
 				PlayerChangestate(pmyteam,popteam,&pmyteam->player[pmyteam->controlplayer],pball,&pmyteam->player[pmyteam->controlplayer].Wait);
 				pmyteam->controlplayer=3;
@@ -145,8 +145,8 @@ float nearDist(_team *pmyteam,_team *popteam,_ball *pball,_player *pplayer)
 	return nearDistance;
 }
 
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½
-void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+void action(_team *pmyteam,_team *popteam,_ball *pball)
 {
 		if(KeyPress(KEY_A))
 		{
@@ -197,7 +197,14 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï
 				else
 					pmyteam->control=-1;
 				pball->start_pos=pball->now_pos;
-				pball->end_pos.x=600.0;
+				if(pmyteam->position==Left)
+				{
+					pball->end_pos.x=600.0;
+				}
+				else
+				{
+					pball->end_pos.x=40.0;
+				}
 				if(pball->now_pos.y>340.0)
 				{
 					pball->end_pos.y=340.0;
@@ -218,116 +225,6 @@ void action(_team *pmyteam,_team *popteam,_ball *pball)//pmyteamï¿½ï¿½ï¿½ï¿½ï¿½ï
         }
 	
 }
-//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Ä»î¶¯ï¿½ï¿½Î§ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,type1-6ï¿½ï¿½Ê¾6ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ä»î¶¯ï¿½ï¿½Î§
-// void move_renctangle(_player *pplayer,int type)
-// {
-// 	switch(type)
-// 	{
-// 		case(1):if(pplayer->now_pos.x<=240.0)//ï¿½Ð³ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=240.0;
-// 				}
-// 				if(pplayer->now_pos.x>=400.0)
-// 				{
-// 					pplayer->now_pos.x=400.0;
-// 				}
-// 				if(pplayer->now_pos.y>=280)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				if(pplayer->now_pos.y<=80.0)
-// 				{
-// 					pplayer->now_pos.y=80.0;
-// 				}
-// 				break;
-// 		case(2):if(pplayer->now_pos.x<=240.0)//ï¿½Ð³ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=240.0;
-// 				}
-// 				if(pplayer->now_pos.x>=400.0)
-// 				{
-// 					pplayer->now_pos.x=400.0;
-// 				}
-// 				if(pplayer->now_pos.y>=480.0)
-// 				{
-// 					pplayer->now_pos.y=480.0;
-// 				}
-// 				if(pplayer->now_pos.y<=280.0)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				break;
-// 		case(3):if(pplayer->now_pos.x<=400.0)//ï¿½Ò³ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=400.0;
-// 				}
-// 				if(pplayer->now_pos.x>=480.0)
-// 				{
-// 					pplayer->now_pos.x=400.0;
-// 				}
-// 				if(pplayer->now_pos.y>=280)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				if(pplayer->now_pos.y<=80.0)
-// 				{
-// 					pplayer->now_pos.y=80.0;
-// 				}
-// 				break;
-// 		case(4):if(pplayer->now_pos.x<=400.0)//ï¿½Ò³ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=400.0;
-// 				}
-// 				if(pplayer->now_pos.x>=480.0)
-// 				{
-// 					pplayer->now_pos.x=480.0;
-// 				}
-// 				if(pplayer->now_pos.y>=480.0)
-// 				{
-// 					pplayer->now_pos.y=480.0;
-// 				}
-// 				if(pplayer->now_pos.y<=280.0)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				break;
-// 		case(5):if(pplayer->now_pos.x<=160.0)//ï¿½ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=160.0;
-// 				}
-// 				if(pplayer->now_pos.x>=240.0)
-// 				{
-// 					pplayer->now_pos.x=240.0;
-// 				}
-// 				if(pplayer->now_pos.y>=280)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				if(pplayer->now_pos.y<=80.0)
-// 				{
-// 					pplayer->now_pos.y=80.0;
-// 				}
-// 				break;
-// 		case(6):if(pplayer->now_pos.x<=160.0)//ï¿½ï¿½ï¿½ï¿½
-// 				{
-// 					pplayer->now_pos.x=160.0;
-// 				}
-// 				if(pplayer->now_pos.x>=240.0)
-// 				{
-// 					pplayer->now_pos.x=240.0;
-// 				}
-// 				if(pplayer->now_pos.y>=480.0)
-// 				{
-// 					pplayer->now_pos.y=480.0;
-// 				}
-// 				if(pplayer->now_pos.y<=280.0)
-// 				{
-// 					pplayer->now_pos.y=280.0;
-// 				}
-// 				break;
-// 	}
-// }
-//ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Î»
 void arrive(_player *pplayer,double _x,double _y)
 {
 	Pos2d destination,dir;
@@ -344,11 +241,11 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 	double dy;
 	if(pmyteam->name==Player)
 	{
-		if(pmyteam->pnowstate=&pmyteam->Attack)//ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
+		if(pmyteam->pnowstate=&pmyteam->Attack)
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿?
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);
 						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0)
 						{
 							arrive(pplayer,160.0,pball->now_pos.y);
@@ -433,11 +330,11 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						break;
 			}
 		}
-		else//ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½Ê±
+		else
 		{
 			switch(pplayer->ID)
 			{
-				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿?
+				case(0):dy=abs(pplayer->now_pos.y-pball->now_pos.y);
 						if(pplayer->now_pos.x<=120.0||pplayer->now_pos.x>=200.0||pplayer->now_pos.y<=80.0||pplayer->now_pos.y>=280.0)//ï¿½ï¿½ï¿½ï¿½ï¿?
 						{
 							arrive(pplayer,160.0,200.0);
@@ -457,13 +354,13 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 							arrive(pplayer,120.0,360.0);
 						}
-						else if(popteam->controlplayer==3)//ï¿½ï¿½ï¿½ï¿½Ô·ï¿?2Ç°ï¿½ï¿½
+						else if(popteam->controlplayer==3)
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[2].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
 							pplayer->velocity.y=4.0*near_dir.y;
 						}
-						else if(popteam->controlplayer==2)//ï¿½ï¿½ï¿½ï¿½Ô·ï¿?3Ç°ï¿½ï¿½
+						else if(popteam->controlplayer==2)
 						{
 							near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 							pplayer->velocity.x=4.0*near_dir.x;
@@ -475,7 +372,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿?
+				case(2):dy=abs(pplayer->now_pos.y-pball->now_pos.y);
 						if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
 							arrive(pplayer,240.0,pball->now_pos.y);
@@ -490,7 +387,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 						// 	move_dir(pplayer,pball);
 						// }
 						break;
-				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)//ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿?
+				case(3):if(pplayer->now_pos.x<=200.0||pplayer->now_pos.x>=280.0)
 						{
 							arrive(pplayer,240.0,380.0);
 						}
@@ -510,7 +407,7 @@ void auto_act(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 
 	else
 	{
-		if(popteam->pnowstate=&popteam->Attack)//ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½Ê±
+		if(popteam->pnowstate=&popteam->Attack)
 		{
 			switch(pplayer->ID)
 			{
@@ -897,19 +794,288 @@ void draw_control(_team *pmyteam,_team *popteam)
 	}
 }
 
-void draw_stop()
+// void draw_stop()
+// {
+// 	// setfillstyle(1,GREEN);
+// 	// bar(620,0,640,20);
+// 	puthz(620,20,"°´¼üPÔÝÍ£",32,32,RED);
+// }
+
+// void draw_start()
+// {
+// 	setfillstyle(1,GREEN);
+// 	bar(620,0,640,20);
+// 	puthz(620,0,"°´¼üY¼ÌÐø",32,32,RED);
+// }
+
+void playerID(int path)
 {
-	// setfillstyle(1,GREEN);
-	// bar(620,0,640,20);
-	puthz(620,20,"°´¼üPÔÝÍ£",32,32,RED);
+	int *ID;
+	int i=0;
+	int myteam=0,opteam=0;
+	FILE *fpplayer,*fpmyteam,*fpopteam;
+	ID=(int*)malloc(sizeof(int)*10);
+	if(ID==NULL)
+	{
+		printf("id error");
+		exit(0);
+	}
+	while(1)
+	{
+		Newxy();
+		if(Mouse_press(130,100,226,130))
+		{
+			ID[0]=1;
+			ID[1]=0;
+		}
+		else if(Mouse_press(238,100,334,130))
+		{
+			ID[1]=1;
+			ID[0]=0;
+		}
+		if(Mouse_press(346,100,442,130))
+		{
+			ID[2]=1;
+			ID[3]=0;
+		}
+		else if(Mouse_press(454,100,550,130))
+		{
+			ID[3]=1;
+			ID[2]=0;
+		}
+		if(Mouse_press(130,200,226,230))
+		{
+			ID[4]=1;
+			ID[5]=0;
+		}
+		else if(Mouse_press(238,200,334,230))
+		{
+			ID[5]=1;
+			ID[4]=0;
+		}
+			if(Mouse_press(346,200,442,230))
+		{
+			ID[6]=1;
+			ID[7]=0;
+		}
+			else if(Mouse_press(454,200,550,230))
+		{
+			ID[7]=1;
+			ID[6]=0;
+		}
+		if(Mouse_press(238,300,334,330))
+		{
+			ID[8]=1;
+			ID[9]=0;
+		}
+			else if(Mouse_press(346,300,442,330))
+		{
+			ID[9]=1;
+			ID[8]=0;
+		}
+		if(ID[0]==1)
+		{
+			setcolor(RED);
+			rectangle(130,100,226,130);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(130,100,226,130);
+		}
+		if(ID[1]==1)
+		{
+			setcolor(RED);
+			rectangle(238,100,334,130);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(238,100,334,130);
+		}
+		if(ID[2]==1)
+		{
+			setcolor(RED);
+			rectangle(346,100,442,130);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(346,100,442,130);
+		}
+		if(ID[3]==1)
+		{
+			setcolor(RED);
+			rectangle(454,100,550,130);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(454,100,550,130);
+		}
+		if(ID[4]==1)
+		{
+			setcolor(RED);
+			rectangle(130,200,226,230);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(130,200,226,230);
+		}
+		if(ID[5]==1)
+		{
+			setcolor(RED);
+			rectangle(238,200,334,230);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(238,200,334,230);
+		}
+		if(ID[6]==1)
+		{
+			setcolor(RED);
+			rectangle(346,200,442,230);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(346,200,442,230);
+		}
+		if(ID[7]==1)
+		{
+			setcolor(RED);
+			rectangle(454,200,550,230);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(454,200,550,230);
+		}
+		if(ID[8]==1)
+		{
+			setcolor(RED);
+			rectangle(238,300,334,330);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(238,300,334,330);
+		}
+		if(ID[9]==1)
+		{
+			setcolor(RED);
+			rectangle(346,300,442,330);
+		}
+		else
+		{
+			setcolor(WHITE);
+			rectangle(346,300,442,330);
+		}
+		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10???5??????????????
+		{
+			NewBK();
+			if((fpplayer=fopen("c:\\mycode\\shop\\player.txt","w"))==NULL)
+			{
+				printf("can not open");
+				getch();
+				exit(1);
+			}
+			for(i=0;i<9;i++)
+			{
+				if(ID[i])
+				{
+					fprintf(fpplayer,"%d\n",i+1);
+				}
+			}
+			fclose(fpplayer);
+			free(ID);
+			// if((fpmyteam=fopen("c:\\mycode\\shop\\myteam.txt","r"))==NULL)
+			// {
+			// 	printf("can not open");
+			// 	getch();
+			// 	exit(1);
+			// }
+			// fscanf(fpmyteam,"%d",&myteam);
+			// fclose(fpmyteam);
+			myteam=path;
+			srand((unsigned)time(NULL));
+			opteam=rand()%5;
+			opteam++;
+			if(opteam==myteam)
+			{
+				opteam++;
+			}
+			opteam%=5;
+			if(opteam==0)
+			{
+				opteam++;
+			}
+			if((fpopteam=fopen("c:\\mycode\\shop\\opteam.txt","w"))==NULL)
+			{
+				setlinestyle(0,0,1);
+				outtextxy(300,300,"cannot open the file");
+				getch();
+				exit(1);
+			}
+			fprintf(fpopteam,"%d",opteam);
+			fclose(fpopteam);
+			// getch();
+			Vs(myteam);
+			printf("%d",myteam);
+			printf("%d",opteam);
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Left,Right,Red,Blue,0);
+			xiuxi();
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+				{
+					break;
+				}
+			}
+			game(Right,Left,Red,Blue,0);
+			// result();
+			while(1)
+			{
+				if(KeyPress(KEY_ENTER))
+				{
+					menu();
+				}
+			}
+		}
+			if(KeyPress(KEY_ESC))
+			{
+				NewBK();
+				choose_team();
+			}
+			if(Mouse_press(50,300,180,400))
+			{
+				NewBK();
+				shop(path);
+			}
+	}
 }
 
-void draw_start()
+void xiuxi()
 {
+	cleardevice();
 	setfillstyle(1,GREEN);
-	bar(620,0,640,20);
-	puthz(620,0,"°´¼üY¼ÌÐø",32,32,RED);
+	bar(0,0,640,480);
+	puthz(240,50,"ÖÐ³¡ÐÝÏ¢",32,32,BLUE);
+	puthz(120,120,"Á½Ö»Çò¶Ó½»»»×óÓÒ³¡µØ",32,32,BLUE);
+	puthz(160,200,"°´¼ü",32,32,BLUE);
+	outtextxy(240,200,"Enter");
+	puthz(320,200,"½øÈëÏÂ°ë³¡",32,32,BLUE);
 }
+
 
 void player_border(_player *pplayer)
 {
@@ -1035,34 +1201,3 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 		// }
 	// }
 }
-
- //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÇµÄ±ï¿½ï¿½ï¿½,2ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ã·¨
-// void reback(int x,int y,int x_size,int y_size)
-// {
-// 	int mark=0;
-// 	int i,j;
-// 	for(i=x;i<=x+x_size;i++)
-// 	{
-// 		for(j=y;j<=y+y_size;j++)
-// 		{
-// 			if(((i>=40&&i<=41)||(i>=320&&i<=321)||(i>=600&&i<=601))&&(j>=80&&y<=480))//ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// 				mark=1;
-// 			else if(((i>=0&&i<=1)||(i>=639&&i<=640))&&(j>=220&&j<=340))
-// 				mark=1;
-// 			else if(((j>=80&&j<=81)||(j>=479&&j<=480))&&(i>=44&&i<=599))
-// 				mark=1;
-// 			else if(((j>=220&&j<=221)||(j>=340&&j<=341))&&((i>=4&&i<=39)||(i>=601&&i<=640)))
-// 				mark=1;
-// 			else if(((long int)(i-320)*(i-320)+(long int)(j-280)*(j-280)<=61*61)&&((long int)(long int)(i-320)*(i-320)+(long int)(j-280)*(j-280)>=60*60))
-// 				mark=1;
-// 			else if((((long int)(i-40)*(i-40)+(long int)(j-280)*(j-280)<=121*121)&&((long int)(long int)(i-40)*(i-40)+(long int)(j-280)*(j-280)>=120*120))&&(i>=40&&i<=161))
-// 				mark=1;
-// 			else if((((long int)(i-600)*(i-600)+(long int)(j-280)*(j-280)<=121*121)&&((long int)(long int)(i-600)*(i-600)+(long int)(j-280)*(j-280)>=120*120))&&(i>=479&&i<=600))
-// 				mark=1;
-            
-//             if(mark==1)
-//                 putpixel(i,j,WHITE);
-//             mark=0;
-// 		}
-// 	}
-// }

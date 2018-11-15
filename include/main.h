@@ -6,6 +6,7 @@
 #include<ctype.h>
 #include<time.h>
 #include<MATH.H>
+#include<string.h>
 #include"mouse.h"
 #include"hanzi.h"
 #include"multikey.h"
