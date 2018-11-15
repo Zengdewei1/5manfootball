@@ -68,6 +68,7 @@ typedef struct _GOALKEEPER
     int dir;
     int control;     //守门员是否控球
     int rate;
+    int power;
     keeper_state *pnowstate;
     keeper_state TendGoal,Pounce,ControlBall;
 }_goalkeeper;
@@ -132,10 +133,11 @@ void draw_num(int x,int y,int num,int size);
 void draw_time(int time);
 void draw_score(int score_my,int score_op);
 void draw_control(_team *pmyteam,_team *popteam);
-void draw_stop();
-void draw_start();
+// void draw_stop();
+// void draw_start();
+void playerID(int path);
+void xiuxi();
 
 void player_border(_player *pplayer);
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball);
-// void reback(int x,int y,int x_size,int y_size);
 #endif

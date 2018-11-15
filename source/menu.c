@@ -1,80 +1,398 @@
-#include<graphics.h>
-#include<process.h>
-#include<stdlib.h>
-#include<dos.h>
-#include<ctype.h>
-#include<time.h>
-#include<STDIO.H>
-#include"mouse.h"
-#include"hanzi.h"
-#include"multikey.h"
-#include"menu.h"
-#include"tool.h"
-#include"game.h"
+#include"main.h"
 
 void menu()
 {
 	setlinestyle(0,0,1);
+	cleardevice();
 	menu_page();
-	Initmouse(0,639,0,479);
-	InstallKeyboard();
 	while(1)
 	{
 		Newxy();
-		if(Mouse_press(320,250,600,310))
-		{
-			choose_team();
-		}
 		if (Mouse_press(320,170,600,230))
 		{
+			NewBK();
 			changci();
 		}
 		if(Mouse_press(320,90,600,150))
 		{
+			 NewBK();
 			jiaoxue();
+		}
+		if(Mouse_press(320,250,600,310))
+		{
+			NewBK();
+			choose_team();
 		}
 		if(Mouse_press(50,150,200,250))
 		{
-			NewBK();
-			shop();
+		   NewBK();
+		   history();
 		}
-		if(KeyPress(KEY_ESC))
-			exit(0);
+		if(Mouse_press(50,300,200,350))
+		{
+			NewBK();
+                                                result(1);
+		}
+		// if(KeyPress(KEY_ESC))
+		// 	exit(0);
 	}
 }
+void result(int historyMatch)//historyMatch表示倒数第几场比赛
+{
+  FILE *fp,*fpGame;
+  int i,match;
+  int bool=0;
+  int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*popHelp;
+  pmyScore=(int *)malloc(sizeof(int)*4);
+  pmyHelp=(int *)malloc(sizeof(int)*4);
+  popScore=(int *)malloc(sizeof(int)*4);
+  popHelp=(int *)malloc(sizeof(int)*4);
+  if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||popHelp==NULL)
+	{
+		printf("malloc wrong");
+		getch();
+		exit(0);
+	}
 
+  setfillstyle(1,GREEN);
+  bar(1,1,639,479);
+  setcolor(BLUE);
+  rectangle(100,20,228,52);
+  rectangle(390,20,518,52);
+  rectangle(150,300,278,332);
+  rectangle(340,300,468,332);
+  rectangle(280,20,296,52);
+  rectangle(310,20,326,52);
+
+  circle(303,30,1);
+  circle(303,40,1);
+  draw_num(40,100,0,8);
+  draw_num(40,150,1,8);
+  draw_num(40,200,2,8);
+  draw_num(40,250,3,8);
+  draw_num(567,100,0,8);
+  draw_num(567,150,1,8);
+  draw_num(567,200,2,8);
+  draw_num(567,250,3,8);
+
+  puthz(15,55,"球员",32,32,BLUE);
+  puthz(90,55,"进球",32,32,BLUE);
+  puthz(180,55,"助攻",32,32,BLUE);
+  puthz(100,20,"我方球队",32,32,BLUE);
+  puthz(380,55,"进球",32,32,BLUE);
+  puthz(470,55,"助攻",32,32,BLUE);
+  puthz(545,55,"球员",32,32,BLUE);
+  puthz(390,20,"我方球队",32,32,BLUE);
+  puthz(150,300,"查看奖励",32,32,BLUE);
+  puthz(340,300,"返回菜单",32,32,BLUE);
+
+  fpGame=fopen("c:\\mycode\\result\\game.txt","r");
+  fscanf(fpGame,"%d",&match);
+  fclose(fpGame);
+
+  match-=historyMatch;
+  switch(match%20){
+		case 1:fp=fopen("c:\\mycode\\result\\result1.txt","r");
+                                          break;
+		case 2:fp=fopen("c:\\mycode\\result\\result2.txt","r");
+                                          break;
+		case 3:fp=fopen("c:\\mycode\\result\\result3.txt","r"); 
+                                          break;
+		case 4:fp=fopen("c:\\mycode\\result\\result4.txt","r");
+                                          break;
+		case 5:fp=fopen("c:\\mycode\\result\\result5.txt","r");
+                                          break;
+		case 6:fp=fopen("c:\\mycode\\result\\result6.txt","r");
+                                          break;
+		case 7:fp=fopen("c:\\mycode\\result\\result7.txt","r");
+                                          break;
+		case 8:fp=fopen("c:\\mycode\\result\\result8.txt","r");
+                                          break;
+		case 9:fp=fopen("c:\\mycode\\result\\result9.txt","r");
+                                          break;
+		case 10:fp=fopen("c:\\mycode\\result\\result10.txt","r");
+                                          break;
+		case 11:fp=fopen("c:\\mycode\\result\\result11.txt","r");
+                                          break;
+		case 12:fp=fopen("c:\\mycode\\result\\result12.txt","r");
+                                          break;
+		case 13:fp=fopen("c:\\mycode\\result\\result13.txt","r");
+                                          break;
+		case 14:fp=fopen("c:\\mycode\\result\\result14.txt","r");
+                                          break;
+		case 15:fp=fopen("c:\\mycode\\result\\result15.txt","r");
+                                          break;
+		case 16:fp=fopen("c:\\mycode\\result\\result16.txt","r");
+                                          break;
+		case 17:fp=fopen("c:\\mycode\\result\\result17.txt","r");
+                                          break;
+		case 18:fp=fopen("c:\\mycode\\result\\result18.txt","r");
+                                          break;
+		case 19:fp=fopen("c:\\mycode\\result\\result19.txt","r");
+                                          break;
+		case 20:fp=fopen("c:\\mycode\\result\\result20.txt","r");
+                                          break;
+	}
+  fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",pmyScore+i);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",popScore+i);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",pmyHelp+i);
+	}
+	for(i=0;i<4;i++)
+	{
+		fscanf(fp,"%d\n",popHelp+i);
+	}
+	fclose(fp);
+   draw_num(284,28,myGoal,8);
+   draw_num(314,28,opGoal,8);
+   for(i=0;i<4;i++)
+        {
+	 draw_num(120,100+i*50,*(pmyScore+i),8);
+        }
+   for(i=0;i<4;i++)
+        {
+	 draw_num(210,100+i*50,*(pmyHelp+i),8);
+        }
+   for(i=0;i<4;i++)
+        {
+             draw_num(410,100+i*50,*(popScore+i),8);             
+        }
+  for(i=0;i<4;i++)
+      {
+             draw_num(500,100+i*50,*(popHelp+i),8);
+      }
+  while(1)
+  {
+	Newxy();
+	if(Mouse_press(150,300,278,332))
+		{
+                                 delay(100);
+		 switch(bool)
+                                                {
+                                                 case 0:   setcolor(BLUE);
+			              rectangle(140,340,300,460);
+		                              puthz(140,360,"获胜奖励",32,32,BLUE);
+			              puthz(140,400,"进球奖励",32,32,BLUE);
+			              outtextxy(270,370,":");
+		                              outtextxy(270,410,":");
+                                                              bool=1;
+                                                              break;
+			 case 1:  setfillstyle(1,GREEN);
+	                                             bar(140,340,300,460);
+			             bool=0;
+			             break;
+										   }
+		          }
+	if(Mouse_press(340,300,468,332))
+		{
+		 NewBK();
+		 history();
+		}
+  }
+
+}
+void history()
+{
+  FILE *fp;
+  int i,j,k;
+  int game_amount=10;
+  int game_realamount;  //game_realamount代表总的游戏场数
+  int slider_dy=0;
+  int mouse_oldy;
+  int mouse_newy;
+  fp=fopen("c:\\mycode\\result\\game.txt","r");
+  if(fp==NULL)
+	{
+		printf("can not open the file");
+	}
+  i=fgetc(fp);
+  j=fgetc(fp);
+  fclose(fp);
+ 	game_amount=(i-48)*10+(j-48)-1;
+  game_realamount=game_amount;
+  setfillstyle(1,GREEN);
+  bar(1,1,639,479);
+  setcolor(BLUE);
+  rectangle(120,90,500,390);
+  rectangle(500,90,520,390);
+ // record(120,90,380,5,300,225);
+  if(game_amount>=0&&game_amount<5)
+    {
+      game_amount=5;
+    }
+  rectangle(500,90+slider_dy,520,90+75+15*(20-game_amount)+slider_dy);
+  setfillstyle(1,LIGHTBLUE);
+  floodfill(510,100+slider_dy,BLUE);
+  if(game_realamount==0)
+    {
+    }
+  if(game_realamount>0)
+   {
+    for(i=0;i<game_realamount;i++)
+		  {
+			 rectangle(120,90+60*i,120+380,90+60*(i+1));												                                                                            			 
+                                                 draw_num(120+30,90+60*i+20,i+1,10);				 			
+			 puthz(120+250,90+60*i+14,"查看",32,32,BLUE);
+		  }
+     setfillstyle(1,GREEN);	
+     bar(120,390,500,640);
+     rectangle(120,90,500,390);
+
+    }
+
+while(1)
+	   {
+		 Newxy();
+		 mouse_newy=Getmouse_y();
+		  if(Mouse_press(500,90+slider_dy,520,90+75+15*(20-game_amount)+slider_dy))
+		   {
+			 mouse_oldy=mouse_newy;
+			 Newxy();
+			 mouse_newy=Getmouse_y();
+			 if(mouse_newy!=mouse_oldy)
+			   {
+				  setcolor(BLUE);
+				  setfillstyle(1,GREEN);
+				  bar(500,90+slider_dy,520,90+75+15*(20-game_amount)+slider_dy);
+				  rectangle(120,90,500,390);
+				  rectangle(500,90,520,390);
+				  if(mouse_newy-mouse_oldy>0)
+				  slider_dy+=mouse_newy-mouse_oldy+5;
+				  if(mouse_newy-mouse_oldy<0)
+				  slider_dy+=mouse_newy-mouse_oldy-5;
+				  if(slider_dy<0)
+					{
+					  slider_dy=0;
+					}
+				  if(slider_dy>225-(20-game_amount)*15)
+					{
+					  slider_dy=225-(20-game_amount)*15;
+					}
+				  rectangle(500,90+slider_dy,520,90+75+15*(20-game_amount)+slider_dy);
+				  setfillstyle(1,LIGHTBLUE);
+				  floodfill(510,100+slider_dy,BLUE);
+
+				  setfillstyle(1,GREEN);
+				  bar(120,90,500,390);
+				  rectangle(120,90,500,390);
+				  record(120,90,380,5,300,slider_dy,game_realamount);
+
+
+			   }
+                                           
+					}
+				for(j=0;j<15;j++)                                                                           				  
+				if(15*j<=slider_dy&&slider_dy<15*(j+1))
+					{
+							k=j+1;
+					}
+				for(i=0;i<5;i++)
+				if(Mouse_press(120+250,90-(slider_dy%15)*4+14+60*i,120+250+32*3,90+32+14-(slider_dy%15)*4+60*i))                                              
+					{
+									NewBK();
+									result(k+i);
+					}
+		 if(KeyPress(KEY_ESC))
+		{
+			menu();
+		}
+
+	 }
+}
+
+void record(int x,int y,int dx,int row,int length,int slider_dy,int game_amount)
+{
+	 int i,j;
+	 int dy;
+	 dy=length/row;
+	 y-=(slider_dy%15)*4;
+	 setcolor(BLUE);
+        if(game_amount==0)
+          {
+             return ;
+          }
+        if(game_amount>0&&game_amount<=5)
+          {
+                for(i=0;i<game_amount;i++)
+		  {
+			 rectangle(x,y+dy*i,x+dx,y+dy*(i+1));												                                                                            			 
+                                                 draw_num(x+30,y+dy*i+20,i+1,10);				 			
+			 puthz(x+250,y+dy*i+14,"查看",32,32,BLUE);
+		  }	
+          }
+         if(game_amount>5)
+           {
+	 for(i=0;i<=row;i++)
+		  {
+			 rectangle(x,y+dy*i,x+dx,y+dy*(i+1));
+			 setfillstyle(1,GREEN);
+			 setcolor(BLUE);
+			 bar(120,30,500,90);    //消除上面超过的部分
+			 rectangle(120,90,500,390);
+
+			 for(j=0;j<(game_amount-5);j++)
+				  {
+                                                                               
+					     if(15*j<=slider_dy&&slider_dy<15*(j+1))
+						 {
+						   draw_num(x+30,y+dy*i+20,i+j+1,10);
+						   bar(120,390,500,460);
+						   rectangle(120,90,500,390);
+						 }
+                                                                                   
+
+				  }
+			 if(slider_dy==225-(20-game_amount)*15)  draw_num(x+30,y+dy*i+20,i+j+1,10);
+			 puthz(x+250,y+dy*i+14,"查看",32,32,BLUE);
+			 bar(120,390,500,460);
+			 rectangle(120,90,500,390);
+		  }
+                 }
+}
 void menu_page()
 {
 	setcolor(BLACK);
 	setfillstyle(1,GREEN);
-	bar(0,0,639,479);
+	bar(0,0,640,480);
 	setfillstyle(1,YELLOW);
 	fillellipse(210,40,30,30);
 	fillellipse(270,40,30,30);
 	fillellipse(330,40,30,30);
 	fillellipse(390,40,30,30);
-	settextstyle(1,HORIZ_DIR,2);
+
+
 	setfillstyle(1,BLUE);
 	bar(320,90,600,150);
 	bar(320,170,600,230);
 	bar(320,250,600,310);
-	bar(50,150,200,250);
-	settextstyle(1,HORIZ_DIR,5);
 
-	puthz(75,175,"商城",48,48,BLACK);
+	bar(50,150,200,250);
+	bar(50,300,200,350);
+	puthz(75,175,"历史",48,48,BLACK);
+	puthz(195,25,"梦想足球",32,59,BLACK);
 	puthz(355,100,"键盘教学",32,60,BLACK);
 	puthz(355,180,"快速游戏",32,60,BLACK);
 	puthz(355,260,"创建球队",32,60,BLACK);
-	puthz(195,25,"梦想足球",32,60,BLACK);
+	puthz(75,306,"结果",32,60,BLACK);
+
 }
 
+
+//主界面
 
 
 //主客场界面
 void changci()
 {
 	cleardevice();
-	setlinestyle(0,0,1);
 	setfillstyle(1,GREEN);
 	bar(0,0,639,479);
 	setfillstyle(1,RED);
@@ -89,14 +407,11 @@ void changci()
 	puthz(270,300,"球衣",48,60,BLACK);
 	puthz(65,300,"红色",48,60,RED);
 	puthz(465,300,"蓝色",48,60,BLUE);
-	Initmouse(0,639,0,479);
-	InstallKeyboard();
+
 	while(1)
 	{
 		Newxy();
-		if(KeyPress(KEY_ESC))
-			menu();
-		if(Mouse_press(20,100,220,260))
+		if(Mouse_press(20,160,220,320)||Mouse_press(420,160,620,320))
 		{
 			game(Left,Right,Red,Blue,0);
 			xiuxi();
@@ -108,7 +423,7 @@ void changci()
 				}
 			}
 			game(Right,Left,Red,Blue,0);
-			result();
+			// result();
 			while(1)
 			{
 				if(KeyPress(KEY_ENTER))
@@ -117,27 +432,11 @@ void changci()
 				}
 			}
 		}
-		if(Mouse_press(420,100,620,260))
-		{
-			game(Left,Right,Blue,Red,0);
-			xiuxi();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					break;
-				}
-			}
-			game(Right,Left,Blue,Red,0);
-			result();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					menu();
-				}
-			}
-		}
+		if(KeyPress(KEY_ESC))
+								   {
+												NewBK();
+			menu();
+								   }
 	}
 }
 
@@ -146,9 +445,8 @@ void changci()
 void jiaoxue()
 {
 	 cleardevice();
-	 setlinestyle(0,0,1);
 	 setfillstyle(1,YELLOW);
-	 bar(0,0,640,480);
+                 bar(1,1,640,480);
 	 setcolor(1);
 	 rectangle(250,0,378,32);
 	 setfillstyle(1,GREEN);
@@ -188,28 +486,33 @@ void jiaoxue()
 	 outtextxy(85,392,"J");
 	 line(103,412,123,412);
 	 puthz(120,398,"铲球",32,40,BLUE);
-	 Initmouse(0,639,0,479);
-	 InstallKeyboard();
 	while(1)
 	{
 		Newxy();
 		if(KeyPress(KEY_ESC))
+                                  {               
+												NewBK();
 			menu();
+                                  }
 	}
 }
 
 //选择球队界面
 void choose_team()
-{
+{  
+                int path;
 	int x=240;
-	int i=0;
-	int j=0;
+	 int i=0;
+	 int j=0;
+                 char number;
+	 char s[10][10];
+	 char ch='\0';
+	 FILE *fp;
 	int y=100;
 	cleardevice();
-	setlinestyle(0,0,1);
 	setfillstyle(1,GREEN);
 	bar(1,1,640,480);
-	InstallKeyboard();
+
 
 	 setcolor(MAGENTA);
 	 x=250;
@@ -247,96 +550,146 @@ void choose_team()
 		if(Mouse_press(x,y,x+128,y+40))
 		  {
 			NewBK();
-			choose_player(1);
-		  }
-
-		if(Mouse_press(x-128,y+100,x,y+100+40))
-		  {
-			NewBK();
-			choose_player(2);
-		  }
-
-		if(Mouse_press(x+128,y+100,x+128+128,y+100+40))
-		  {
-			NewBK();
-			choose_player(3);
-		  }
-
-		if(Mouse_press(x-95,y+100*2,x-95+128,y+100*2+40))
-		  {
-			NewBK();
-			choose_player(4);
-		  }
-
-		if(Mouse_press(x+95,y+100*2,x+95+128,y+100*2+40))
-		  {
-			NewBK();
-			choose_player(5);
-		  }
-	}
-}
-
-
-
-void choose_player(int team)
-{
-	 int i=0,j=0,x,y=100;
-	 int *ID;
-	 char **name;
-	 char ch='\0';
-	 FILE *fp;
-	 name=(char**)malloc(sizeof(char*)*10);
-	 for(i=0;i<10;i++)
-	 {
-		name[i]=(char*)malloc(sizeof(int)*10);
-	 }
-	 switch(team)
-	 {
-		case(1):fp=fopen("c:\\mycode\\name\\1.txt","r");
-		 		break;
-		case(2):fp=fopen("c:\\mycode\\name\\2.txt","r");
-		 		break;
-		case(3):fp=fopen("c:\\mycode\\name\\3.txt","r");
-		 		break;
-		case(4):fp=fopen("c:\\mycode\\name\\4.txt","r");
-		 		break;
-		case(5):fp=fopen("c:\\mycode\\name\\5.txt","r");
-		 		break;
-	 }
-	 i=0;
-	 if(fp==NULL)
+			if((fp=fopen("c:\\mycode\\shop\\1.txt","r"))==NULL)
 			  {
 				settextstyle(1,0,3);
 				outtextxy(200,200,"cannot open the file");
 				exit(1);
 			  }
-			while(!feof(fp))
-				 {
-					if((ch=fgetc(fp))!='\n')
-					  {
-						name[i][j]=ch;
-						j++;
-					  }
-					if(ch=='\n')
-					  {
-						name[i][j]='\0';
-						i++;
-						j=0;
-					  }
+                                           for(i=0;i<10;i++)
+			{
+                                                     fseek(fp,13+37*i,0);
+                                                     number=fgetc(fp);
+                                                     for(j=0;j<10;j++)
+                                                          {
+                                                                ch=fgetc(fp);
+                                                                 s[i][j]=ch;  
+                                                           }
+                                                     s[i][2*(number-48)]='\0';
+                                                 }
+                                           
+		            fclose(fp);
+                                            path=1;
+		            choose_player(s,path);
+		  }
 
-				 }
-				 name[i][j-1]='\0';
+		if(Mouse_press(x-128,y+100,x,y+100+40))
+		  {
+			NewBK();
+			if((fp=fopen("c:\\mycode\\shop\\2.txt","r"))==NULL)
+			  {
+				settextstyle(1,0,3);
+				outtextxy(200,200,"cannot open the file");
+				exit(1);
+			  }
+	                            for(i=0;i<10;i++)
+			{
+                                                     fseek(fp,13+37*i,0);
+                                                     number=fgetc(fp);
+                                                     for(j=0;j<10;j++)
+                                                          {
+                                                                ch=fgetc(fp);
+                                                                 s[i][j]=ch;  
+                                                           }
+                                                     s[i][2*(number-48)]='\0';
+                                                 }
+                                             
+			 fclose(fp);
+                                                  path=2;
+			 choose_player(s,path);
+		  }
+
+		if(Mouse_press(x+128,y+100,x+128+128,y+100+40))
+		  {
+			NewBK();
+			if((fp=fopen("c:\\mycode\\shop\\5.txt","r"))==NULL)
+			  {
+				settextstyle(1,0,3);
+				outtextxy(200,200,"cannot open the file");
+				exit(1);
+			  }
+	                           for(i=0;i<10;i++)
+			{
+                                                     fseek(fp,13+37*i,0);
+                                                     number=fgetc(fp);
+                                                     for(j=0;j<10;j++)
+                                                          {
+                                                                ch=fgetc(fp);
+                                                                 s[i][j]=ch;  
+                                                           }
+                                                     s[i][2*(number-48)]='\0';
+                                                 }
+                                             
+			 fclose(fp);
+                                                 path=5;
+			 choose_player(s,path);
+		  }
+
+		if(Mouse_press(x-95,y+100*2,x-95+128,y+100*2+40))
+		  {
+			NewBK();
+			if((fp=fopen("c:\\mycode\\shop\\3.txt","r"))==NULL)
+			  {
+				settextstyle(1,0,3);
+				outtextxy(200,200,"cannot open the file");
+				exit(1);
+			  }
+		           for(i=0;i<10;i++)
+			{
+                                                     fseek(fp,13+37*i,0);
+                                                     number=fgetc(fp);
+                                                     for(j=0;j<10;j++)
+                                                          {
+                                                                ch=fgetc(fp);
+                                                                 s[i][j]=ch;  
+                                                           }
+                                                     s[i][2*(number-48)]='\0';
+                                                 }
+                                             
 				 fclose(fp);
-	ID=(int*)malloc(sizeof(int)*10);
-	if(ID==NULL)
-	{
-		exit(0);
+                                                                 path=3;
+				 choose_player(s,path);
+		  }
+
+		if(Mouse_press(x+95,y+100*2,x+95+128,y+100*2+40))
+		  {
+			NewBK();
+			if((fp=fopen("c:\\mycode\\shop\\4.txt","r"))==NULL)
+			  {
+				settextstyle(1,0,3);
+				outtextxy(200,200,"cannot open the file");
+				exit(1);
+			  }
+	                           for(i=0;i<10;i++)
+			{
+                                                     fseek(fp,13+37*i,0);
+                                                     number=fgetc(fp);
+                                                     for(j=0;j<10;j++)
+                                                          {
+                                                                ch=fgetc(fp);
+                                                                 s[i][j]=ch;  
+                                                           }
+                                                     s[i][2*(number-48)]='\0';
+                                                 }
+                                             
+				 fclose(fp);
+                                                                 path=4;
+				 choose_player(s,path);
+		  }
+			// if(KeyPress(KEY_ESC))
+			// {
+			// 	menu();
+			// }
 	}
+}
+
+//选择球员界面
+void choose_player(char (*s)[10],int path)
+{
+	 int i,j,x,y=100;
 	 cleardevice();
-	 InstallKeyboard();
-	 setlinestyle(0,0,1);
 	 setfillstyle(1,GREEN);
-                 bar(1,1,640,480);
+	 bar(1,1,640,480);
 
 	 setcolor(WHITE);
 	 rectangle(260,0,388,32);
@@ -365,16 +718,19 @@ void choose_player(int team)
 			}
 		 y+=100;
 		}
-                  rectangle(250,375,400,425);
+	 rectangle(250,375,400,425);
 	 setfillstyle(1,CYAN);
 	 floodfill(300,401,WHITE);
-
-                 setfillstyle(1,GREEN);
+	 setfillstyle(1,GREEN);
 	 floodfill(131,301,WHITE);
 	 floodfill(463,301,WHITE);
-				 setcolor(GREEN);
+	 setcolor(GREEN);
 	 rectangle(130,300,130+96,300+30);
 	 rectangle(130+108*3,300,130+108*3+96,300+30);
+
+	 setfillstyle(1,LIGHTGREEN);
+	 bar(50,300,180,400);
+	 puthz(65,325,"商城",48,48,LIGHTBLUE);
 
 	 setcolor(BLUE);
 	 puthz(210,40,"左前锋",32,32,BLUE);
@@ -399,632 +755,174 @@ void choose_player(int team)
 
 	 puthz(260,385,"确认选择",32,32,BLUE);
 
-	 puthz(130,100,name[0],32,32,BLUE);
-	 puthz(238,100,name[1],32,32,BLUE);
-	 puthz(346,100,name[2],32,32,BLUE);
-	 puthz(454,100,name[3],32,32,BLUE);
-	 puthz(130,200,name[4],32,32,BLUE);
-	 puthz(238,200,name[5],32,32,BLUE);
-	 puthz(346,200,name[6],32,32,BLUE);
-	 puthz(454,200,name[7],32,32,BLUE);
-	 puthz(238,300,name[8],32,32,BLUE);
-	 puthz(346,300,name[9],32,32,BLUE);
-	free(name);
-	 while(1)
-	 {
-		 Newxy();
-		 if(KeyPress(KEY_ESC))
-								   {
-												NewBK();
-			choose_team();
-									}
-		if(Mouse_press(130,100,226,130))
-	 	{
-		 	ID[0]=1;
-		 	ID[1]=0;
-	 	}
-		else if(Mouse_press(238,100,334,130))
-	 	{
-		 	ID[1]=1;
-		 	ID[0]=0;
-	 	}
-		if(Mouse_press(346,100,442,130))
-	 	{
-		 	ID[2]=1;
-		 	ID[3]=0;
-	 	}
-		else if(Mouse_press(454,100,550,130))
-	 	{
-		 	ID[3]=1;
-		 	ID[2]=0;
-	 	}
-		if(Mouse_press(130,200,226,230))
-	 	{
-		 	ID[4]=1;
-		 	ID[5]=0;
-	 	}
-	 	else if(Mouse_press(238,200,334,230))
-	 	{
-			ID[5]=1;
-			ID[4]=0;
-	 	}
-		 if(Mouse_press(346,200,442,230))
-	 	{
-		 	ID[6]=1;
-		 	ID[7]=0;
-	 	}
-		 else if(Mouse_press(454,200,550,230))
-	 	{
-		 	ID[7]=1;
-		 	ID[6]=0;
-	 	}
-		if(Mouse_press(238,300,334,330))
-	 	{
-		 	ID[8]=1;
-		 	ID[9]=0;
-	 	}
-		 else if(Mouse_press(346,300,442,330))
-	 	{
-		 	ID[9]=1;
-		 	ID[8]=0;
-	 	}
-		if(ID[0]==1)
-		{
-			setcolor(RED);
-			rectangle(130,100,226,130);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(130,100,226,130);
-		}
-		if(ID[1]==1)
-		{
-			setcolor(RED);
-			rectangle(238,100,334,130);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(238,100,334,130);
-		}
-		if(ID[2]==1)
-		{
-			setcolor(RED);
-			rectangle(346,100,442,130);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(346,100,442,130);
-		}
-		if(ID[3]==1)
-		{
-			setcolor(RED);
-			rectangle(454,100,550,130);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(454,100,550,130);
-		}
-		if(ID[4]==1)
-		{
-			setcolor(RED);
-			rectangle(130,200,226,230);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(130,200,226,230);
-		}
-		if(ID[5]==1)
-		{
-			setcolor(RED);
-			rectangle(238,200,334,230);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(238,200,334,230);
-		}
-		if(ID[6]==1)
-		{
-			setcolor(RED);
-			rectangle(346,200,442,230);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(346,200,442,230);
-		}
-		if(ID[7]==1)
-		{
-			setcolor(RED);
-			rectangle(454,200,550,230);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(454,200,550,230);
-		}
-		if(ID[8]==1)
-		{
-			setcolor(RED);
-			rectangle(238,300,334,330);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(238,300,334,330);
-		}
-		if(ID[9]==1)
-		{
-			setcolor(RED);
-			rectangle(346,300,442,330);
-		}
-		else
-		{
-			setcolor(WHITE);
-			rectangle(346,300,442,330);
-		}
-		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-		{
-			NewBK();
-			free(ID);
-			game(Left,Right,Red,Blue,0);
-			xiuxi();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					break;
-				}
-			}
-			game(Right,Left,Red,Blue,0);
-			result();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					menu();
-				}
-			}
-		}
-	 }
+	 puthz(130,100,s[0],32,32,BLUE);
+	 puthz(238,100,s[1],32,32,BLUE);
+	 puthz(346,100,s[2],32,32,BLUE);
+	 puthz(454,100,s[3],32,32,BLUE);
+
+	 puthz(130,200,s[4],32,32,BLUE);
+	 puthz(238,200,s[5],32,32,BLUE);
+	 puthz(346,200,s[6],32,32,BLUE);
+	 puthz(454,200,s[7],32,32,BLUE);
+
+	 puthz(238,300,s[8],32,32,BLUE);
+	 puthz(346,300,s[9],32,32,BLUE);
+
+	 playerID(path);//记录选择球员的球员ID
 }
 
-//显示对战双方球队
-
-void vsteam()
+void Vs(int path)
 {
-	int myteam=0;
-	int opteam=0;
-	FILE *fpmyteam,*fpopteam;
-	if((fpmyteam=fopen("c:\\mycode\\shop\\path.txt","r"))==NULL)
-	{
-		setlinestyle(0,0,1);
-		outtextxy(300,300,"cannot open the file");
-		getch();
-		exit(1);
-	}
-	myteam=fgetc(fpmyteam);
-	fclose(fpmyteam);
-	//读取队伍名字
-	srand((unsigned)time(NULL));
-	opteam=rand()%5;
-	if(opteam==myteam)
-	{
-		opteam++;
-	}
-	if((fpopteam=fopen("c:\\mycode\\shop\\path.txt","r"))==NULL)
-	{
-		setlinestyle(0,0,1);
-		outtextxy(300,300,"cannot open the file");
-		getch();
-		exit(1);
-	}
-	fprintf(fpopteam,"%d",opteam);
-	fclose(fpopteam);
-}
-
-void xiuxi()
-{
-	cleardevice();
-	setfillstyle(1,GREEN);
-	bar(0,0,640,480);
-	puthz(240,100,"中场休息",32,32,BLUE);
-	puthz(160,200,"按",32,32,BLUE);
-	outtextxy(200,200,"Enter");
-	puthz(320,200,"进入比赛下半场",32,32,BLUE);
-}
-
-// void result()
-// {
-// 	FILE *fp;
-// 	int i;
-// 	int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*popHelp;
-// 	cleardevice();
-// 	setfillstyle(1,GREEN);
-// 	bar(0,0,640,480);
-// 	pmyScore=(int *)malloc(sizeof(int)*4);
-// 	pmyHelp=(int *)malloc(sizeof(int)*4);
-// 	popScore=(int *)malloc(sizeof(int)*4);
-// 	popHelp=(int *)malloc(sizeof(int)*4);
-// 	if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||popHelp==NULL)
-// 		exit(0);
-// 	fp=fopen("c:\\mycode\\name\\result.txt","r");
-// 	fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
-// 	for(i=0;i<4;i++)
-// 	{
-// 		fscanf(fp,"%d\n",&pmyScore);
-// 	}
-// 	for(i=0;i<4;i++)
-// 	{
-// 		fscanf(fp,"%d\n",&popScore);
-// 	}
-// 	for(i=0;i<4;i++)
-// 	{
-// 		fscanf(fp,"%d\n",&pmyHelp);
-// 	}
-// 	for(i=0;i<4;i++)
-// 	{
-// 		fscanf(fp,"%d\n",&popHelp);
-// 	}
-// 	fclose(fp);
-// }
-
-// //选择球员界面
-// void choose_player()
-// {
-//     int i,j,x,y=100;
-// 	int ID[10];
-// 	_result result_first,result_init,result_final;
-// 	result_init.score_my=0;
-// 	result_init.score_op=0;
-// 	for(i=0;i<10;i++)
-// 		ID[i]=0;
-// 	 cleardevice();
-// 	 setfillstyle(1,GREEN);
-// 	 bar(0,0,640,480);
-// 	 setcolor(WHITE);
-// 	 rectangle(260,0,388,32);
-// 	 setfillstyle(1,YELLOW);
-// 	 floodfill(261,1,WHITE);
-// 	 puthz(260,0,"选择球员",32,32,BLUE);
-// 	 setcolor(WHITE);
-// 	 for(j=0;j<3;j++)
-// 		{
-// 		 x=130;
-// 		 for(i=0;i<4;i++)
-// 			{
-// 			 rectangle(x,y,x+96,y+30);
-// 			 x+=108;
-// 			}
-// 		 y+=100;
-// 		}
-
-// 	 y=101;
-// 	 for(j=0;j<3;j++)
-// 		{x=131;
-// 		 for(i=0;i<4;i++)
-// 			{
-// 			 floodfill(x,y,WHITE);
-// 			 x+=108;
-// 			}
-// 		 y+=100;
-// 		}
-// 	 rectangle(250,375,400,425);
-// 	 setfillstyle(1,CYAN);
-// 	 floodfill(300,401,WHITE);
-// 	 x=260;
-// 	 puthz(210,40,"左前锋",32,32,BLUE);
-// 	 line(242,72,200,92);
-// 	 line(242,72,284,92);
-// 	 puthz(430,40,"右前锋",32,32,BLUE);
-// 	 line(462,72,420,92);
-// 	 line(462,72,504,92);
-// 	 puthz(210,140,"左后卫",32,32,BLUE);
-// 	 line(242,172,200,192);
-// 				 line(242,172,284,192);
-
-// 	 puthz(430,140,"右后卫",32,32,BLUE);
-// 	 line(462,172,420,192);
-// 	 line(462,172,504,192);
-
-// 	 puthz(300,250,"守门员",32,32,BLUE);
-// 	 line(340,282,300,295);
-// 	 line(340,282,380,295);
-
-// 	 setfillstyle(0,1);
-// 	 floodfill(131,301,WHITE);
-// 	 floodfill(463,301,WHITE);
-// 	 setcolor(GREEN);
-// 	 rectangle(130,300,130+96,300+30);
-// 	 rectangle(130+108*3,300,130+108*3+96,300+30);
-// 	 puthz(260,385,"确认选择",32,32,BLUE);
-
-// 	 puthz(130,100,"孔卡",32,32,BLUE);
-// 	 puthz(238,100,"金周荣",32,32,BLUE);
-// 	 puthz(346,100,"杨世元",32,32,BLUE);
-// 	 puthz(454,100,"埃弗拉",32,32,BLUE);
-
-// 	 puthz(130,200,"杨博宇",32,32,BLUE);
-// 	 puthz(238,200,"胡靖航",32,32,BLUE);
-// 	 puthz(346,200,"朱征宇",32,32,BLUE);
-// 	 puthz(454,200,"吴海天",32,32,BLUE);
-
-// 	 puthz(238,300,"吴航",32,32,BLUE);
-// 	 puthz(346,300,"贾天子",32,32,BLUE);
-// 	 Initmouse(0,639,0,479);
-// 	 InstallKeyboard();
-// 	 NewBK();
-// 	 while(1)
-// 	 {
-// 		 Newxy();
-// 		 if(KeyPress(KEY_ESC))
-// 			choose_team();
-// 		if(Mouse_press(130,100,226,130))
-// 	 	{
-// 		 	ID[0]=1;
-// 		 	ID[1]=0;
-// 	 	}
-// 		else if(Mouse_press(238,100,334,130))
-// 	 	{
-// 		 	ID[1]=1;
-// 		 	ID[0]=0;
-// 	 	}
-// 		if(Mouse_press(346,100,442,130))
-// 	 	{
-// 		 	ID[2]=1;
-// 		 	ID[3]=0;
-// 	 	}
-// 		else if(Mouse_press(454,100,550,130))
-// 	 	{
-// 		 	ID[3]=1;
-// 		 	ID[2]=0;
-// 	 	}
-// 		if(Mouse_press(130,200,226,230))
-// 	 	{
-// 		 	ID[4]=1;
-// 		 	ID[5]=0;
-// 	 	}
-// 	 	else if(Mouse_press(238,200,334,230))
-// 	 	{
-// 			ID[5]=1;
-// 			ID[4]=0;
-// 	 	}
-// 		 if(Mouse_press(346,200,442,230))
-// 	 	{
-// 		 	ID[6]=1;
-// 		 	ID[7]=0;
-// 	 	}
-// 		 else if(Mouse_press(454,200,550,230))
-// 	 	{
-// 		 	ID[7]=1;
-// 		 	ID[6]=0;
-// 	 	}
-// 		if(Mouse_press(238,300,334,330))
-// 	 	{
-// 		 	ID[8]=1;
-// 		 	ID[9]=0;
-// 	 	}
-// 		 else if(Mouse_press(346,300,442,330))
-// 	 	{
-// 		 	ID[9]=1;
-// 		 	ID[8]=0;
-// 	 	}
-// 		if(ID[0]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(130,100,226,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(130,100,226,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[1]==1)
-// 		{
-// 			setcolor(RED);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		else
-// 		{
-// 			setcolor(WHITE);
-// 			rectangle(238,100,334,130);
-// 		}
-// 		if(ID[2])
-// 		 	rectangle(346,100,442,130);
-// 		if(ID[3])
-// 		 	rectangle(454,100,550,130);
-// 		if(ID[4])
-// 		 	rectangle(130,200,226,230);
-// 		if(ID[5])
-// 		 	rectangle(238,200,334,230);
-// 		if(ID[6])
-// 		 	rectangle(346,200,442,230);
-// 		if(ID[7])
-// 		 	rectangle(454,200,550,230);
-// 		if(ID[8])
-// 		 	rectangle(238,300,334,330);
-// 		if(ID[9])
-// 		 	rectangle(346,300,442,330);
-// 		if((ID[0]+ID[1]+ID[2]+ID[3]+ID[4]+ID[5]+ID[6]+ID[7]+ID[8]+ID[9])==5&&Mouse_press(250,375,400,425))//10个中有5个被选择时点击确定，进入游戏
-// 		{
-// 			result_first=game(Left,Right,Red,Blue,result_init);
-// 			while(1)
-// 			{
-// 				if(KeyPress(KEY_ENTER))
-// 					break;
-// 			}
-// 			result_final=game(Right,Left,Red,Blue,result_first);
-// 		}
-// 	 }
-// }
-
-void result()
-{
-  FILE *fp;
   int i;
-  int bool=0;
-  int myGoal,opGoal,*pmyScore,*popScore,*pmyHelp,*popHelp;
-  pmyScore=(int *)malloc(sizeof(int)*4);
-  pmyHelp=(int *)malloc(sizeof(int)*4);
-  popScore=(int *)malloc(sizeof(int)*4);
-  popHelp=(int *)malloc(sizeof(int)*4);
-  if(pmyScore==NULL||pmyHelp==NULL||popScore==NULL||popHelp==NULL)
-  exit(0);
-
+  char ch;
+  FILE *fp;
+  int op_path;
+  int length;
+  char s1[10];
+  char s2[10];
   setfillstyle(1,GREEN);
   bar(1,1,639,479);
   setcolor(BLUE);
-  rectangle(100,20,228,52);
-  rectangle(390,20,518,52);
-  rectangle(150,300,278,332);
-  rectangle(340,300,468,332);
-  rectangle(280,20,296,52);
-  rectangle(310,20,326,52);
+  rectangle(50,100,242,164);
+  rectangle(390,100,582,164);
+  setlinestyle(0,0,3);
+  line(260,100,290,164);
+  line(290,164,320,100);
+  line(330,100,370,100);
+  line(330,100,330,132);
+  line(330,132,370,132);
+  line(370,132,370,164);
+  line(370,164,330,164);
+  setlinestyle(0,0,1);
 
-  circle(303,30,1);
-  circle(303,40,1);
-  draw_num(40,100,0,8);
-  draw_num(40,150,1,8);
-  draw_num(40,200,2,8);
-  draw_num(40,250,3,8);
-  draw_num(567,100,0,8);
-  draw_num(567,150,1,8);
-  draw_num(567,200,2,8);
-  draw_num(567,250,3,8);
-
-  puthz(15,55,"球员",32,32,BLUE);
-  puthz(90,55,"进球",32,32,BLUE);
-  puthz(180,55,"助攻",32,32,BLUE);
-  puthz(100,20,"我方球队",32,32,BLUE);
-  puthz(380,55,"进球",32,32,BLUE);
-  puthz(470,55,"助攻",32,32,BLUE);
-  puthz(545,55,"球员",32,32,BLUE);
-  puthz(390,20,"我方球队",32,32,BLUE);
-  puthz(150,300,"查看奖励",32,32,BLUE);
-  puthz(340,300,"返回菜单",32,32,BLUE);
-
-  fp=fopen("c:\\mycode\\result\\result1.txt","r");
-  fscanf(fp,"%d\n%d\n",&myGoal,&opGoal);
-	for(i=0;i<4;i++)
-	{
-		fscanf(fp,"%d\n",pmyScore+i);
-	}
-	for(i=0;i<4;i++)
-	{
-		fscanf(fp,"%d\n",popScore+i);
-	}
-	for(i=0;i<4;i++)
-	{
-		fscanf(fp,"%d\n",pmyHelp+i);
-	}
-	for(i=0;i<4;i++)
-	{
-		fscanf(fp,"%d\n",popHelp+i);
-	}
-	fclose(fp);
-   draw_num(284,28,myGoal,8);
-   draw_num(314,28,opGoal,8);
-   for(i=0;i<4;i++)
+  setfillstyle(1,CYAN);
+  circle(310,300,80);
+  floodfill(310,300,BLUE);
+	puthz(280,230,"按键",32,32,BLUE);
+	outtextxy(290,280,"Enter");
+  puthz(280,310,"确定",32,32,BLUE);
+  switch(path)
+            {
+               case 1:   if((fp=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+               case 2:   if((fp=fopen("c:\\mycode\\shop\\2.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+               case 3:   if((fp=fopen("c:\\mycode\\shop\\3.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+              case 4:   if((fp=fopen("c:\\mycode\\shop\\4.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+              case 5:   if((fp=fopen("c:\\mycode\\shop\\5.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+            } 
+   length=fgetc(fp);
+   for(i=0;i<10;i++)
         {
-			 draw_num(120,100+i*50,*(pmyScore+i),8);
+          ch=fgetc(fp);
+          s1[i]=ch;
         }
-   for(i=0;i<4;i++)
-        {
-             draw_num(210,100+i*50,*(pmyHelp+i),8);             
-        }
-   for(i=0;i<4;i++)
-        {
-             draw_num(410,100+i*50,*(popScore+i),8);             
-		}
-	for(i=0;i<4;i++)
-        {
-             draw_num(500,100+i*50,*(popHelp+i),8);             
-        }
-  while(1)
-  {
-	Newxy();
-	if(Mouse_press(150,300,278,332))
-		{
-                                 switch(bool)
-                                           {
-                                                 case 0:   setcolor(BLUE);
-		                              rectangle(140,340,300,460);                 
-		                              puthz(140,360,"获胜奖励",32,32,BLUE);
-		                              puthz(140,400,"进球奖励",32,32,BLUE);
-		                              outtextxy(270,370,":");
-		                              outtextxy(270,410,":");
-                                                              bool=1;
-                                                              break;
-                                                 case 1:  setfillstyle(1,GREEN);
-                                                             bar(140,340,300,460);     
-                                                             bool=0;
-                                                             break;       
-                                           } 
-		}
-	if(Mouse_press(340,300,468,332))
-		{
-		 NewBK();
-		  menu();
-		}
-  }
+   fclose(fp);
+   s1[2*(length-48)]='\0';
+   puthz(50,108,s1,48,48,BLUE);
 
+   if((fp=fopen("c:\\mycode\\shop\\opteam.txt","r+"))==NULL)
+     {
+	 settextstyle(1,0,3);
+	 outtextxy(200,200,"cannot open the file");
+	 exit(1);
+     } 
+   op_path=fgetc(fp);       
+   fclose(fp);
+   switch(op_path-48)    
+             {
+                 case 1:   if((fp=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+               case 2:   if((fp=fopen("c:\\mycode\\shop\\2.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+               case 3:   if((fp=fopen("c:\\mycode\\shop\\3.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+              case 4:   if((fp=fopen("c:\\mycode\\shop\\4.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+              case 5:   if((fp=fopen("c:\\mycode\\shop\\5.txt","r+"))==NULL)
+                              {
+	                 settextstyle(1,0,3);
+	                 outtextxy(200,200,"cannot open the file");
+	                 exit(1);
+                               } 
+                             break;
+             }
+   length=fgetc(fp);
+   for(i=0;i<10;i++)
+        {
+          ch=fgetc(fp);
+          s2[i]=ch;
+        }
+   fclose(fp);
+   s2[2*(length-48)]='\0';
+   puthz(390,108,s2,48,48,BLUE);
+
+  if(KeyPress(KEY_ESC))
+    {
+         exit(0);
+    } 
 }
 
-void shop()
+void shop(int path_)
 {
-
    int i,j,k,choose=1,ability;
    int color1=0,color2=0,color3=0,color4=0;
    int change1=0,change2=0,change3=0,change4=0;
    int bool;
+   long amount,amount1,amount2,damount;
    char ch,length,path;
    char *c1,*c2,*c3,*c4,*c5,*c6;
+   char money[4],money1[10][4],money2[10][4];
    char a1[36],a2[36];
+   char s[10][10];
    char s1[11][10];
    char s2[11][10];
    char ability1[5][4];
@@ -1044,33 +942,70 @@ void shop()
    rectangle(30,300,126,332);
    rectangle(180,50,340,82);
    rectangle(420,50,580,82);
-   rectangle(400,50,410,82);
-   rectangle(590,50,600,82);
    setlinestyle(0,0,1);
    line(410,50,400,66);
    line(400,66,410,82);
+   line(410,50,410,82);
    line(590,50,600,66);
    line(600,66,590,82);
+   line(590,50,590,82);
    circle(330,116,10);
    circle(330,316,10);
    circle(430,116,10);
    circle(430,316,10);
+   line(1,116,11,132);
+   line(11,132,21,100);
 
    puthz(30,100,"左前锋",32,32,BLUE);
    puthz(30,150,"右前锋",32,32,BLUE);
    puthz(30,200,"左后卫",32,32,BLUE);
    puthz(30,250,"右后卫",32,32,BLUE);
    puthz(30,300,"守门员",32,32,BLUE);
+   puthz(1,50,"金额",32,32,BLUE);
+   outtextxy(70,66,":");
    rectangle(212,100,308,132);
    rectangle(212,300,308,332);
    rectangle(452,100,548,132);
    rectangle(452,300,548,332);
-   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
-	 {
-		setlinestyle(0,0,1);
-		outtextxy(300,300,"cannot open the file");
-		exit(1);
-	 }
+   switch(path_)
+		 {
+		   case 1:   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
+					   {
+						
+						  setlinestyle(0,0,1);
+						  outtextxy(300,300,"cannot open the file");
+						  exit(1);
+					   }
+					 break;
+		   case 2:   if((fp1=fopen("c:\\mycode\\shop\\2.txt","r+"))==NULL)
+					   {
+						  setlinestyle(0,0,1);
+						  outtextxy(300,300,"cannot open the file");
+						  exit(1);
+					   }
+					 break;
+		   case 3:   if((fp1=fopen("c:\\mycode\\shop\\3.txt","r+"))==NULL)
+					   {
+						  setlinestyle(0,0,1);
+						  outtextxy(300,300,"cannot open the file");
+						  exit(1);
+					   }
+					 break;
+		   case 4:   if((fp1=fopen("c:\\mycode\\shop\\4.txt","r+"))==NULL)
+					   {
+						  setlinestyle(0,0,1);
+						  outtextxy(300,300,"cannot open the file");
+						  exit(1);
+					   }
+					 break;
+		   case 5:   if((fp1=fopen("c:\\mycode\\shop\\5.txt","r+"))==NULL)
+					   {
+						  setlinestyle(0,0,1);
+						  outtextxy(300,300,"cannot open the file");
+						  exit(1);
+					   }
+					 break;
+		 }
    length=fgetc(fp1);
 	for(i=0;i<10;i++)
 	  {
@@ -1093,15 +1028,54 @@ void shop()
 		 fseek(fp1,26,1);
 
 	  }
+	for(i=1;i<11;i++)
+	   {
+		 fseek(fp1,13+37*(i-1)+26,0);
+		 ch=fgetc(fp1);
+		 money1[i-1][0]=ch;
+		 ch=fgetc(fp1);
+		 money1[i-1][1]=ch;
+		 ch=fgetc(fp1);
+		 money1[i-1][2]=ch;
+		 ch=fgetc(fp1);
+		 money1[i-1][3]=ch;
+	   }
 	fclose(fp1);
 
 	if((fp=fopen("c:\\mycode\\shop\\path.txt","r+"))==NULL)
 	 {
+		
 		setlinestyle(0,0,1);
 		outtextxy(300,300,"cannot open the file");
 		exit(1);
 	 }
 	 path=fgetc(fp);
+	 if(path_==path-48)
+	  {
+		if(1<=path_<5)
+		  {
+			path+=1;
+		  }
+		if(path_==5)
+		  {
+			path=49;
+		  }
+		rewind(fp);
+		fputc(path,fp);
+	  }
+	 fclose(fp);
+
+	 if((fp=fopen("c:\\mycode\\shop\\money.txt","r+"))==NULL)
+	 {
+		setlinestyle(0,0,1);
+		outtextxy(300,300,"cannot open the file");
+		exit(1);
+	 }
+	 for(i=0;i<4;i++)
+		{
+		  ch=fgetc(fp);
+		  money[i]=ch;
+		}
 	 fclose(fp);
 
 	switch(path-48)
@@ -1165,6 +1139,18 @@ void shop()
 		 fseek(fp2,26,1);
 
 	  }
+   for(i=1;i<11;i++)
+	   {
+		 fseek(fp2,13+37*(i-1)+26,0);
+		 ch=fgetc(fp2);
+		 money2[i-1][0]=ch;
+		 ch=fgetc(fp2);
+		 money2[i-1][1]=ch;
+		 ch=fgetc(fp2);
+		 money2[i-1][2]=ch;
+		 ch=fgetc(fp2);
+		 money2[i-1][3]=ch;
+	   }
    fclose(fp2);
 
    c1=s1[0];
@@ -1179,7 +1165,26 @@ void shop()
    puthz(435,50,c4,32,32,BLUE);
    puthz(452,100,c5,32,32,BLUE);
    puthz(452,300,c6,32,32,BLUE);
-
+   for(i=0;i<4;i++)
+	  {
+		draw_num(90+i*12,60,money[i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[0][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[1][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[0][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[1][i]-48,6);
+	  }
    while(1)
 		{
 			  Newxy();
@@ -1328,7 +1333,20 @@ void shop()
 											s2[j][k]=ch;
 										  }
 									   s2[j][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp2,13+37*(k-1)+26,0);
+											ch=fgetc(fp2);
+											money2[k-1][0]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][1]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][2]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][3]=ch;
+										  }
 									   fclose(fp2);
+
 									   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
 										 {
 										   setlinestyle(0,0,1);
@@ -1349,9 +1367,72 @@ void shop()
 											s1[i][k]=ch;
 										  }
 									   s1[i][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp1,13+37*(k-1)+26,0);
+											ch=fgetc(fp1);
+											money1[k-1][0]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][1]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][2]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][3]=ch;
+										  }
 									   fclose(fp1);
+
 									   c3=s1[i];
 									   c6=s2[j];
+									   amount1=(money2[(choose-1)*2+1][0]-48)*1000+(money2[(choose-1)*2+1][1]-48)*100+(money2[(choose-1)*2+1][2]-48)*10+(money2[(choose-1)*2+1][3]-48)*1;
+									   amount2=(money1[(choose-1)*2+1][0]-48)*1000+(money1[(choose-1)*2+1][1]-48)*100+(money1[(choose-1)*2+1][2]-48)*10+(money1[(choose-1)*2+1][3]-48)*1;
+									   damount=amount1-amount2;
+									   amount=(money[0]-48)*1000+(money[1]-48)*100+(money[2]-48)*10+(money[3]-48)*1;
+									   amount+=damount;
+									   for(i=0;i<4;i++)
+										  {
+											money[3-i]=amount%10+48;
+											amount=amount/10;
+										  }
+									   if((fp=fopen("c:\\mycode\\shop\\money.txt","r+"))==NULL)
+										  {
+											setlinestyle(0,0,1);
+											outtextxy(300,300,"cannot open the file");
+											exit(1);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											  ch=money[i];
+											  fputc(ch,fp);
+										   }
+									   fclose(fp);
+									   setfillstyle(1,GREEN);
+									   setcolor(BLUE);
+									   bar(150,113,198,125);
+									   bar(150,313,198,325);
+									   bar(565,113,613,125);
+									   bar(565,313,613,325);
+									   bar(90,60,138,72);
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(90+i*12,60,money[i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,113,money1[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,313,money1[(choose-1)*2+1][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(565+i*12,113,money2[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(565+i*12,313,money2[(choose-1)*2+1][i]-48,6);
+										  }
+
 									   setfillstyle(1,GREEN);
 									   bar(212,300,308,332);
 									   bar(452,300,548,332);
@@ -1514,6 +1595,18 @@ void shop()
 											s2[j][k]=ch;
 										  }
 									   s2[j][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp2,13+37*(k-1)+26,0);
+											ch=fgetc(fp2);
+											money2[k-1][0]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][1]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][2]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][3]=ch;
+										  }
 									   fclose(fp2);
 									   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
 										 {
@@ -1535,9 +1628,71 @@ void shop()
 											s1[i][k]=ch;
 										  }
 									   s1[i][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp1,13+37*(k-1)+26,0);
+											ch=fgetc(fp1);
+											money1[k-1][0]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][1]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][2]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][3]=ch;
+										  }
 									   fclose(fp1);
 									   c3=s1[i];
 									   c5=s2[j];
+									   amount1=(money2[(choose-1)*2][0]-48)*1000+(money2[(choose-1)*2][1]-48)*100+(money2[(choose-1)*2][2]-48)*10+(money2[(choose-1)*2][3]-48)*1;
+									   amount2=(money1[(choose-1)*2+1][0]-48)*1000+(money1[(choose-1)*2+1][1]-48)*100+(money1[(choose-1)*2+1][2]-48)*10+(money1[(choose-1)*2+1][3]-48)*1;
+									   damount=amount1-amount2;
+									   amount=(money[0]-48)*1000+(money[1]-48)*100+(money[2]-48)*10+(money[3]-48)*1;
+									   amount+=damount;
+									   for(i=0;i<4;i++)
+										  {
+											money[3-i]=amount%10+48;
+											amount=amount/10;
+										  }
+									   if((fp=fopen("c:\\mycode\\shop\\money.txt","r+"))==NULL)
+										  {
+											setlinestyle(0,0,1);
+											outtextxy(300,300,"cannot open the file");
+											exit(1);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											  ch=money[i];
+											  fputc(ch,fp);
+										   }
+									   fclose(fp);
+									   setfillstyle(1,GREEN);
+									   setcolor(BLUE);
+									   bar(150,113,198,125);
+									   bar(150,313,198,325);
+									   bar(565,113,613,125);
+									   bar(565,313,613,325);
+									   bar(90,60,138,72);
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(90+i*12,60,money[i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,113,money1[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,313,money1[(choose-1)*2+1][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(565+i*12,113,money2[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(565+i*12,313,money2[(choose-1)*2+1][i]-48,6);
+										  }
+
 									   setfillstyle(1,GREEN);
 									   bar(212,300,308,332);
 									   bar(452,100,548,132);
@@ -1700,6 +1855,18 @@ void shop()
 											s2[j][k]=ch;
 										  }
 									   s2[j][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp2,13+37*(k-1)+26,0);
+											ch=fgetc(fp2);
+											money2[k-1][0]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][1]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][2]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][3]=ch;
+										  }
 									   fclose(fp2);
 									   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
 										 {
@@ -1721,9 +1888,71 @@ void shop()
 											s1[i][k]=ch;
 										  }
 									   s1[i][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp1,13+37*(k-1)+26,0);
+											ch=fgetc(fp1);
+											money1[k-1][0]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][1]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][2]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][3]=ch;
+										  }
 									   fclose(fp1);
 									   c2=s1[i];
 									   c6=s2[j];
+									   amount1=(money2[(choose-1)*2+1][0]-48)*1000+(money2[(choose-1)*2+1][1]-48)*100+(money2[(choose-1)*2+1][2]-48)*10+(money2[(choose-1)*2+1][3]-48)*1;
+									   amount2=(money1[(choose-1)*2][0]-48)*1000+(money1[(choose-1)*2][1]-48)*100+(money1[(choose-1)*2][2]-48)*10+(money1[(choose-1)*2][3]-48)*1;
+									   damount=amount1-amount2;
+									   amount=(money[0]-48)*1000+(money[1]-48)*100+(money[2]-48)*10+(money[3]-48)*1;
+									   amount+=damount;
+									   for(i=0;i<4;i++)
+										  {
+											money[3-i]=amount%10+48;
+											amount=amount/10;
+										  }
+									   if((fp=fopen("c:\\mycode\\shop\\money.txt","r+"))==NULL)
+										  {
+											setlinestyle(0,0,1);
+											outtextxy(300,300,"cannot open the file");
+											exit(1);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											  ch=money[i];
+											  fputc(ch,fp);
+										   }
+									   fclose(fp);
+									   setfillstyle(1,GREEN);
+									   setcolor(BLUE);
+									   bar(150,113,198,125);
+									   bar(150,313,198,325);
+									   bar(565,113,613,125);
+									   bar(565,313,613,325);
+									   bar(90,60,138,72);
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(90+i*12,60,money[i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,113,money1[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,313,money1[(choose-1)*2+1][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(565+i*12,113,money2[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(565+i*12,313,money2[(choose-1)*2+1][i]-48,6);
+										  }
+
 									   setfillstyle(1,GREEN);
 									   bar(212,100,308,132);
 									   bar(452,300,548,332);
@@ -1886,6 +2115,18 @@ void shop()
 											s2[j][k]=ch;
 										  }
 									   s2[j][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp2,13+37*(k-1)+26,0);
+											ch=fgetc(fp2);
+											money2[k-1][0]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][1]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][2]=ch;
+											ch=fgetc(fp2);
+											money2[k-1][3]=ch;
+										  }
 									   fclose(fp2);
 									   if((fp1=fopen("c:\\mycode\\shop\\1.txt","r+"))==NULL)
 										 {
@@ -1907,9 +2148,71 @@ void shop()
 											s1[i][k]=ch;
 										  }
 									   s1[i][2*(length-48)]='\0';
+									   for(k=1;k<11;k++)
+										  {
+											fseek(fp1,13+37*(k-1)+26,0);
+											ch=fgetc(fp1);
+											money1[k-1][0]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][1]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][2]=ch;
+											ch=fgetc(fp1);
+											money1[k-1][3]=ch;
+										  }
 									   fclose(fp1);
 									   c2=s1[i];
 									   c5=s2[j];
+									   amount1=(money2[(choose-1)*2][0]-48)*1000+(money2[(choose-1)*2][1]-48)*100+(money2[(choose-1)*2][2]-48)*10+(money2[(choose-1)*2][3]-48)*1;
+									   amount2=(money1[(choose-1)*2][0]-48)*1000+(money1[(choose-1)*2][1]-48)*100+(money1[(choose-1)*2][2]-48)*10+(money1[(choose-1)*2][3]-48)*1;
+									   damount=amount1-amount2;
+									   amount=(money[0]-48)*1000+(money[1]-48)*100+(money[2]-48)*10+(money[3]-48)*1;
+									   amount+=damount;
+									   for(i=0;i<4;i++)
+										  {
+											money[3-i]=amount%10+48;
+											amount=amount/10;
+										  }
+									   if((fp=fopen("c:\\mycode\\shop\\money.txt","r+"))==NULL)
+										  {
+											setlinestyle(0,0,1);
+											outtextxy(300,300,"cannot open the file");
+											exit(1);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											  ch=money[i];
+											  fputc(ch,fp);
+										   }
+									   fclose(fp);
+									   setfillstyle(1,GREEN);
+									   setcolor(BLUE);
+									   bar(150,113,198,125);
+									   bar(150,313,198,325);
+									   bar(565,113,613,125);
+									   bar(565,313,613,325);
+									   bar(90,60,138,72);
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(90+i*12,60,money[i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,113,money1[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(150+i*12,313,money1[(choose-1)*2+1][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											draw_num(565+i*12,113,money2[(choose-1)*2][i]-48,6);
+										  }
+									   for(i=0;i<4;i++)
+										  {
+											 draw_num(565+i*12,313,money2[(choose-1)*2+1][i]-48,6);
+										  }
+
 									   setfillstyle(1,GREEN);
 									   bar(212,100,308,132);
 									   bar(452,100,548,132);
@@ -2409,16 +2712,58 @@ void shop()
 			   color2=0;
 			   color3=0;
 			   color4=0;
+
 			   setfillstyle(1,GREEN);
 			   bar(136,140,365,290);
 			   bar(136,340,365,490);
 			   bar(380,140,609,290);
 			   bar(380,340,609,490);
-			   if(path==50||path==49)
-				 {
-				   path=53;
-				 }
-			   else path=path-1;
+
+			   switch(path_)
+					 {
+
+					   case 1: path-=1;
+							   if(path-48==1)
+								 {
+									path=53;
+								 }
+							   break;
+					   case 2: path-=1;
+							   switch(path-48)
+									 {
+									   case 2:  path=49;
+												break;
+									   case 0:  path=53;
+												break;
+									 }
+							   break;
+					   case 3: path-=1;
+							   switch(path-48)
+									 {
+									   case 3: path=50;
+											   break;
+									   case 0: path=53;
+											   break;
+									 }
+							   break;
+					   case 4: path-=1;
+							   switch(path-48)
+									 {
+									   case 4: path=51;
+											   break;
+									   case 0: path=53;
+											   break;
+									 }
+							   break;
+						case 5: path-=1;
+							   switch(path-48)
+									 {
+									   case 0: path=52;
+											   break;
+									 }
+							   break;
+
+					 }
 
 			   switch(path-48)
 					 {
@@ -2632,11 +2977,53 @@ void shop()
 			   bar(380,140,609,290);
 			   bar(380,340,609,490);
 
-			   if(path==53)
-				 {
-				   path=50;
-				 }
-			   else path=path+1;
+			   switch(path_)
+					 {
+
+					   case 1: path+=1;
+							   switch(path-48)
+									 {
+									   case 6: path=50;
+											   break;
+									 }
+							   break;
+					   case 2: path+=1;
+							   switch(path-48)
+									 {
+									   case 2: path=51;
+											   break;
+									   case 6: path=49;
+											   break;
+									 }
+							   break;
+					   case 3:  path+=1;
+							   switch(path-48)
+									 {
+									   case 3: path=52;
+											   break;
+									   case 6: path=49;
+											   break;
+									 }
+							   break;
+					   case 4:  path+=1;
+							   switch(path-48)
+									 {
+									   case 4: path=53;
+											   break;
+									   case 6: path=49;
+											   break;
+									 }
+							   break;
+						case 5:  path+=1;
+							   switch(path-48)
+									 {
+									   case 5: path=49;
+											   break;
+
+									 }
+							   break;
+
+					 }
 
 			   switch(path-48)
 					 {
@@ -2850,6 +3237,35 @@ void shop()
 				 c6=s2[2];
 				 setfillstyle(1,GREEN);
 				 setcolor(BLUE);
+				 bar(150,113,198,125);
+				 bar(150,313,198,325);
+				 bar(565,113,613,125);
+				 bar(565,313,613,325);
+				 for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[0][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[1][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[0][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[1][i]-48,6);
+	  }
+
+				 bar(1,100,21,132);
+				 bar(1,150,21,182);
+				 bar(1,200,21,232);
+				 bar(1,250,21,282);
+				 bar(1,300,21,332);
+				 line(1,116,11,132);
+				 line(11,132,21,100);
+
 				 bar(136,140,365,290);
 				 bar(136,340,365,490);
 				 bar(380,140,609,290);
@@ -2888,6 +3304,34 @@ void shop()
 				 c6=s2[4];
 				 setfillstyle(1,GREEN);
 				 setcolor(BLUE);
+				 bar(150,113,198,125);
+				 bar(150,313,198,325);
+				 bar(565,113,613,125);
+				 bar(565,313,613,325);
+				 for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[2][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[3][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[2][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[3][i]-48,6);
+	  }
+
+				 bar(1,100,21,132);
+				 bar(1,150,21,182);
+				 bar(1,200,21,232);
+				 bar(1,250,21,282);
+				 bar(1,300,21,332);
+				 line(1,166,11,182);
+				 line(11,182,21,150);
 
 				 bar(136,140,365,290);
 				 bar(136,340,365,490);
@@ -2926,6 +3370,35 @@ void shop()
 				 c6=s2[6];
 				 setfillstyle(1,GREEN);
 				 setcolor(BLUE);
+				 bar(150,113,198,125);
+				 bar(150,313,198,325);
+				 bar(565,113,613,125);
+				 bar(565,313,613,325);
+				 for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[4][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[5][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[4][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[5][i]-48,6);
+	  }
+
+				 bar(1,100,21,132);
+				 bar(1,150,21,182);
+				 bar(1,200,21,232);
+				 bar(1,250,21,282);
+				 bar(1,300,21,332);
+				 line(1,216,11,232);
+				 line(11,232,21,200);
+
 				 bar(136,140,365,290);
 				 bar(136,340,365,490);
 				 bar(380,140,609,290);
@@ -2963,6 +3436,35 @@ void shop()
 				 c6=s2[8];
 				 setfillstyle(1,GREEN);
 				 setcolor(BLUE);
+				 bar(150,113,198,125);
+				 bar(150,313,198,325);
+				 bar(565,113,613,125);
+				 bar(565,313,613,325);
+				 for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[6][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[7][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[6][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[7][i]-48,6);
+	  }
+
+				 bar(1,100,21,132);
+				 bar(1,150,21,182);
+				 bar(1,200,21,232);
+				 bar(1,250,21,282);
+				 bar(1,300,21,332);
+				 line(1,266,11,282);
+				 line(11,282,21,250);
+
 				 bar(136,140,365,290);
 				 bar(136,340,365,490);
 				 bar(380,140,609,290);
@@ -3001,6 +3503,35 @@ void shop()
 				 c6=s2[10];
 				 setfillstyle(1,GREEN);
 				 setcolor(BLUE);
+				 bar(150,113,198,125);
+				 bar(150,313,198,325);
+				 bar(565,113,613,125);
+				 bar(565,313,613,325);
+				 for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,113,money1[8][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(150+i*12,313,money1[9][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,113,money2[8][i]-48,6);
+	  }
+   for(i=0;i<4;i++)
+	  {
+		draw_num(565+i*12,313,money2[9][i]-48,6);
+	  }
+
+				 bar(1,100,21,132);
+				 bar(1,150,21,182);
+				 bar(1,200,21,232);
+				 bar(1,250,21,282);
+				 bar(1,300,21,332);
+				 line(1,316,11,332);
+				 line(11,332,21,300);
+
 				 bar(136,140,365,290);
 				 bar(136,340,365,490);
 				 bar(380,140,609,290);
@@ -3027,9 +3558,61 @@ void shop()
 				 puthz(452,300,c6,32,32,BLUE);
 			 }
 		   if(KeyPress(KEY_ESC))
-			 {
+			 {               
 				NewBK();
-				menu();
+				switch(path_)
+                                                                          {
+                                                                               case 1:    if((fp=fopen("c:\\mycode\\shop\\1.txt","r"))==NULL)
+			                                               {
+				                                   settextstyle(1,0,3);
+				                                   outtextxy(200,200,"cannot open the file");
+				                                   exit(1);
+			                                                }
+                                                                                              break;
+                                                                                case 2:    if((fp=fopen("c:\\mycode\\shop\\2.txt","r"))==NULL)
+			                                               {
+				                                   settextstyle(1,0,3);
+				                                   outtextxy(200,200,"cannot open the file");
+				                                   exit(1);
+			                                                }
+                                                                                              break;
+                                                                                 case 3:    if((fp=fopen("c:\\mycode\\shop\\3.txt","r"))==NULL)
+			                                               {
+				                                   settextstyle(1,0,3);
+				                                   outtextxy(200,200,"cannot open the file");
+				                                   exit(1);
+			                                                }
+                                                                                              break;
+                                                                                  case 4:    if((fp=fopen("c:\\mycode\\shop\\4.txt","r"))==NULL)
+			                                               {
+				                                   settextstyle(1,0,3);
+				                                   outtextxy(200,200,"cannot open the file");
+				                                   exit(1);
+			                                                }
+                                                                                              break;
+                                                                                   case 5:    if((fp=fopen("c:\\mycode\\shop\\5.txt","r"))==NULL)
+			                                               {
+				                                   settextstyle(1,0,3);
+				                                   outtextxy(200,200,"cannot open the file");
+				                                   exit(1);
+			                                                }
+                                                                                              break;
+                                                                          }
+                                                                 for(i=0;i<10;i++)
+			                     {   
+                                                                           fseek(fp,13+37*i,0);
+                                                                           length=fgetc(fp);
+                                                                           for(j=0;j<10;j++)
+                                                                                {
+                                                                                    ch=fgetc(fp);
+                                                                                    s[i][j]=ch;  
+                                                                                }
+                                                                           s[i][2*(length-48)]='\0';
+                                                                      }
+                                                                 choose_player(s,path_);
+                                                     
 			 }
+
 		}
+
 }

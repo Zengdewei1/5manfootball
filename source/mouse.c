@@ -34,6 +34,7 @@ union REGS regs;
 /*»­Êó±êº¯Êı*/
 void Cursor(int x,int y)
 {
+  setlinestyle(0,0,1);
   setcolor(WHITE);
   line(x,y,x,y+15);
   line(x,y+15,x+4,y+10);
@@ -146,5 +147,16 @@ int Mouse_above(int x1,int y1,int x2,int y2)
 
 void NewBK()
 {
-  default1=0;
+		default1=0;
+}
+
+int Getmouse_x()
+{
+
+     return mx;
+}
+int Getmouse_y()
+{
+
+      return my;
 }
