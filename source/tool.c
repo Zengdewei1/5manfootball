@@ -550,13 +550,14 @@ void draw_judge(int x,int y)
 void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int name)
 {
     setlinestyle(0,0,1);
-	if (color==Red)
+	// setcolor(RED);
+	if(color==Blue)
 	{
-		setcolor(RED);
+		setcolor(BLUE);
 	}
 	else
 	{
-		setcolor(BLUE);
+		setcolor(RED);
 	}
 	if(name==Player)
 		draw_num(x+4,y+2,ID,4);
@@ -586,9 +587,16 @@ void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int
     line(x+6,y+28,x+12,y+34);
 }
 
-void draw_ball(int x,int y)
+void draw_ball(int x,int y,_ball *pball)
 {
-	setcolor(BLACK);
+	if(pball->pnowstate==&pball->Long_pass||pball->pnowstate==&pball->Long_shoot)
+	{
+		setcolor(RED);
+	}
+	else
+	{
+		setcolor(BLACK);
+	}
 	setfillstyle(1,WHITE);
 	pieslice(x+6,y+6,0,360,6);
 	setfillstyle(1,BLACK);
@@ -599,8 +607,11 @@ void draw_ball(int x,int y)
 	pieslice(x+6,y+9,0,360,1);
 }
 
+//???
 void draw_num(int x,int y,int num,int size)
 {
+	// setcolor(BLUE);
+	// setlinestyle(0,0,1);
 	switch(num)
 	{
 		case(0):line(x,y,x+size,y);
@@ -608,6 +619,8 @@ void draw_num(int x,int y,int num,int size)
 				line(x+size,y+2*size,x,y+2*size);
 				line(x,y+2*size,x,y);
 				break;
+
+
 		case(1):line(x+size,y,x+size,y+2*size);
 				break;
 		case(2):line(x,y,x+size,y);
@@ -617,12 +630,12 @@ void draw_num(int x,int y,int num,int size)
 				line(x,y+2*size,x+size,y+2*size);
 				break;
 		case(3):line(x,y,x+size,y);
-				line(x,y+size,x+size,y+size);
-				line(x,y+2*size,x+size,y+2*size);
-				line(x+size,y,x+size,y+2*size);
+				line(x+size,y,x+size,y+size);
+				line(x+size,y+size,x,y+size);
+				line(x+size,y+size,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
 				break;
-		case(4):line(x,y,x,y+size);
-				line(x,y+size,x+size,y+size);
+		case(4):line(x+size,y,x,y+size);
 				line(x,y+size,x+size,y+size);
 				line(x+size,y,x+size,y+2*size);
 				break;
@@ -652,7 +665,86 @@ void draw_num(int x,int y,int num,int size)
 				line(x+size,y,x+size,y+2*size);
 				line(x,y,x,y+size);
 				line(x+size,y+size,x,y+size);
+				break;
+                                case(10):                  line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				line(x,y+2*size,x,y);
+				break;
+                                case(11):                   line(x,y,x,y+2*size);
+                                                                line(x+size,y,x+size,y+size*2);
+                                                                break;
+                                case(12):                   line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+size);
+				line(x+size,y+size,x,y+size);
+				line(x,y+size,x,y+2*size);
 				line(x,y+2*size,x+size,y+2*size);
+				break;
+                               case(13):                    line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+size);
+				line(x+size,y+size,x,y+size);
+				line(x+size,y+size,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				break;
+                               case(14):                    line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x+size,y,x,y+size);
+				line(x,y+size,x+size,y+size);
+				line(x+size,y,x+size,y+2*size);
+				break;
+                                case(15):                   line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x+size,y,x,y);
+				line(x,y,x,y+size);
+				line(x,y+size,x+size,y+size);
+				line(x+size,y+size,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				break;
+                                case(16):                   line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x+size,y,x,y);
+				line(x,y,x,y+size);
+				line(x,y+size,x+size,y+size);
+				line(x+size,y+size,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				line(x,y+2*size,x,y+size);
+				break;
+                                case(17):                   line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+2*size);
+				break;
+                                 case(18):                  line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				line(x,y+2*size,x,y);
+				line(x+size,y+size,x,y+size);
+				break;
+                                  case(19):                 line(x,y,x,y+2*size);
+                                                                x+=size;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+2*size);
+				line(x,y,x,y+size);
+				line(x+size,y+size,x,y+size);
+				break;
+                                  case(20):                 line(x,y,x+size,y);
+				line(x+size,y,x+size,y+size);
+				line(x+size,y+size,x,y+size);
+				line(x,y+size,x,y+2*size);
+				line(x,y+2*size,x+size,y+2*size);
+                                                                x=x+size+2;
+                                                                line(x,y,x+size,y);
+				line(x+size,y,x+size,y+2*size);
+				line(x+size,y+2*size,x,y+2*size);
+				line(x,y+2*size,x,y);
 				break;
 	}
 }
@@ -813,6 +905,8 @@ void playerID(int path)
 	int *ID;
 	int i=0;
 	int myteam=0,opteam=0;
+	FILE *fpGame;
+	int match;
 	FILE *fpplayer,*fpmyteam,*fpopteam;
 	ID=(int*)malloc(sizeof(int)*10);
 	if(ID==NULL)
@@ -991,14 +1085,6 @@ void playerID(int path)
 			}
 			fclose(fpplayer);
 			free(ID);
-			// if((fpmyteam=fopen("c:\\mycode\\shop\\myteam.txt","r"))==NULL)
-			// {
-			// 	printf("can not open");
-			// 	getch();
-			// 	exit(1);
-			// }
-			// fscanf(fpmyteam,"%d",&myteam);
-			// fclose(fpmyteam);
 			myteam=path;
 			srand((unsigned)time(NULL));
 			opteam=rand()%5;
@@ -1032,8 +1118,19 @@ void playerID(int path)
 					break;
 				}
 			}
-			game(Left,Right,Red,Blue,0);
-			xiuxi();
+			if((fpGame=fopen("c:\\mycode\\result\\game.txt","r"))==NULL)
+			{
+				printf("cant not open");
+				getch();
+				exit(1);
+			}
+			// match=fgetc(fpGame);
+			fscanf(fpGame,"%d",&match);
+			// match-=48;
+			printf("%d",match);
+			fclose(fpGame);
+			game(Left,Right,Red,Blue,match);
+			// xiuxi();
 			while(1)
 			{
 				if(KeyPress(KEY_ENTER))
@@ -1041,7 +1138,21 @@ void playerID(int path)
 					break;
 				}
 			}
-			game(Right,Left,Red,Blue,0);
+			game(Right,Left,Red,Blue,match);
+			match++;
+			printf("%d",match);
+			if((fpGame=fopen("c:\\mycode\\result\\game.txt","w"))==NULL)
+			{
+				printf("cant not open");
+				getch();
+				exit(1);
+			}
+			if(match<10)
+			{
+				fprintf(fpGame,"%d",i);
+			}
+			fprintf(fpGame,"%d",match);
+			fclose(fpGame);
 			// result();
 			while(1)
 			{
@@ -1051,16 +1162,16 @@ void playerID(int path)
 				}
 			}
 		}
-			if(KeyPress(KEY_ESC))
-			{
-				NewBK();
-				choose_team();
-			}
-			if(Mouse_press(50,300,180,400))
-			{
-				NewBK();
-				shop(path);
-			}
+		if(KeyPress(KEY_ESC))
+		{
+			NewBK();
+			choose_team();
+		}
+		if(Mouse_press(50,300,180,400))
+		{
+			NewBK();
+			shop(path);
+		}
 	}
 }
 
@@ -1102,7 +1213,7 @@ void player_border(_player *pplayer)
 
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 {
-		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Right))
 		{
 			pball->score_my++;
 			pmyteam->player[pmyteam->controlplayer].score++;			
@@ -1121,7 +1232,7 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 			popteam->controlplayer=3;
 			TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
 		}
-		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Left))
 		{
 			// printf("%d",popteam->controlplayer);
 			pball->score_op++;

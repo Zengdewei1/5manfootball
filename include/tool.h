@@ -15,7 +15,7 @@ typedef struct _POS2d
 {
     double x,y;
 }Pos2d;
-typedef struct PLAYER_STATE//pteamæ˜¯ç›¸å¯¹è€Œè¨€çš„
+typedef struct PLAYER_STATE
 {
     void (*Enter)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
     void (*Execute)(struct _TEAM *pmyteam,struct _TEAM *popteam,struct _PLAYER *pplayer,struct _BALL *pball);
@@ -48,13 +48,13 @@ typedef struct _PLAYER
     int dir;
     int control; 
     int score;
-    int help;                       //çƒå‘˜æ˜¯å¦æ§çƒ
-    int rate;                           //éåŠ é€ŸçŠ¶æ€çš„é€Ÿåº¦
-    // int accelerate;                 //åŠ é€Ÿé€Ÿåº¦ï¼Œç”¨äºæ‘†è„±å¯¹æ‰‹æ—¶çš„å‚æ•° 
-    int power;                         // åŠ›é‡ï¼Œå†³å®šä¼ çƒå’Œå°„é—¨æ—¶ç»™çƒçš„é€Ÿåº¦
-    // int capability_grabball;        // æŠ¢çƒèƒ½åŠ›ï¼Œè·ç¦»çƒåŒæ ·è·ç¦»æ—¶æ­¤å‚æ•°å¤§çš„åˆ¤å®šä¸ºæŠ¢åˆ°çƒ
-    // double accelerate_CD;         // åŠ é€Ÿé™åˆ¶ï¼Œæ¯æ¬¡åŠ é€Ÿå®Œåï¼Œåªæœ‰å½“æ‰€èµ°è·¯ç¨‹è¾¾åˆ°ä¸€å®šå€¼æ—¶æ‰å¯å†æ¬¡ä½¿ç”¨åŠ é€Ÿ
-    // double capability_breakball;    //æ–­çƒèƒ½åŠ›ï¼Œæ­¤å‚æ•°å†³å®šåœ¨å¤šå¤§èŒƒå›´å†…åˆ¤å®šä¸ºæŠ¢åˆ°çƒ
+    int help;                       //ÇòÔ±ÊÇ·ñ¿ØÇò
+    int rate;                           //·Ç¼ÓËÙ×´Ì¬µÄËÙ¶È
+    // int accelerate;                 //¼ÓËÙËÙ¶È£¬ÓÃÓÚ°ÚÍÑ¶ÔÊÖÊ±µÄ²ÎÊı 
+    int power;                         // Á¦Á¿£¬¾ö¶¨´«ÇòºÍÉäÃÅÊ±¸øÇòµÄËÙ¶È
+    // int capability_grabball;        // ÇÀÇòÄÜÁ¦£¬¾àÀëÇòÍ¬Ñù¾àÀëÊ±´Ë²ÎÊı´óµÄÅĞ¶¨ÎªÇÀµ½Çò
+    // double accelerate_CD;         // ¼ÓËÙÏŞÖÆ£¬Ã¿´Î¼ÓËÙÍêºó£¬Ö»ÓĞµ±Ëù×ßÂ·³Ì´ïµ½Ò»¶¨ÖµÊ±²Å¿ÉÔÙ´ÎÊ¹ÓÃ¼ÓËÙ
+    // double capability_breakball;    //¶ÏÇòÄÜÁ¦£¬´Ë²ÎÊı¾ö¶¨ÔÚ¶à´ó·¶Î§ÄÚÅĞ¶¨ÎªÇÀµ½Çò
     player_state *pnowstate;
     player_state ChasingBall,Dribble,Wait,Actioning,Down;
 }_player;
@@ -66,7 +66,7 @@ typedef struct _GOALKEEPER
     int ID;
     int name;
     int dir;
-    int control;     //å®ˆé—¨å‘˜æ˜¯å¦æ§çƒ
+    int control;     //ÊØÃÅÔ±ÊÇ·ñ¿ØÇò
     int rate;
     int power;
     keeper_state *pnowstate;
@@ -80,7 +80,7 @@ typedef struct _BALL
     Pos2d start_pos;
     Pos2d end_pos;
     int flag;
-    int control;//è¶³çƒæ§åˆ¶äººï¼Œ-1ä¸å—æ§åˆ¶
+    int control;//×ãÇò¿ØÖÆÈË£¬-1²»ÊÜ¿ØÖÆ
     int last_control;
     int score_my;
     int score_op;
@@ -98,14 +98,14 @@ typedef struct _JUDGE
 
 typedef struct _TEAM
 {
-    int controlplayer;//ç©å®¶æ§åˆ¶çš„çƒå‘˜ID
+    int controlplayer;//Íæ¼Ò¿ØÖÆµÄÇòÔ±ID
     int lastcontrol;
     int passman;
     int receivingman;
     int name;
     int color;
     int position;
-    int control;//çƒé˜Ÿæ§çƒäººï¼Œ-1ä¸æ§çƒ
+    int control;//Çò¶Ó¿ØÇòÈË£¬-1²»¿ØÇò
     _player player[4];
     _goalkeeper goalkeeper;
     team_state *pnowstate;
@@ -128,7 +128,7 @@ void arrive(_player *pplayer,double _x,double _y);
 void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int name);
 void draw_judge(int x,int y);
 void draw_ground();
-void draw_ball(int x,int y);
+void draw_ball(int x,int y,_ball *pball);
 void draw_num(int x,int y,int num,int size);
 void draw_time(int time);
 void draw_score(int score_my,int score_op);

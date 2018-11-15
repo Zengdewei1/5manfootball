@@ -1,22 +1,9 @@
 #include "main.h"
 
-/*????¦Ä?????
-??????????¡ã?????????????????????????????????????
-*/
-
-/*AI????¦È????
-?????????
-	??????????????????????????????????????????—¨????????????????????¡¤??????????¡¤??????????????????????????????????????????§Ô????????§Ù???—¥???????????
-	??????
-??????????
-	??????2???????????????????????????????????????—¥??????????????????2?????????????????????????§Ô????????????????????????????
-	??????
-*/
-
-/*???????*/
+//ÓÎÏ·Ö÷Ìå
 void game(int position1,int position2,int color1,int color2,int match)
 {
-	int i=0,award=0,money=0;
+	int i=0,award_goal=0,award_win=0,money=0;
 	FILE *fp,*fpmoney;
 	_ball ball;
 	_judge judge;
@@ -68,6 +55,7 @@ void game(int position1,int position2,int color1,int color2,int match)
 	else
 	{
 		ball.time=150;
+		printf("%d",match);
 		if(match!=0)
 		{
 			switch(match%20)
@@ -90,13 +78,13 @@ void game(int position1,int position2,int color1,int color2,int match)
 						break;
 				case 9:fp=fopen("c:\\mycode\\result\\result9.txt","r");
 						break;
-				case 10:fp=fopen("c:\\mycode\\result\\esult10.txt","r");
+				case 10:fp=fopen("c:\\mycode\\result\\result10.txt","r");
 						break;
 				case 11:fp=fopen("c:\\mycode\\result\\result11.txt","r");
 						break;
 				case 12:fp=fopen("c:\\mycode\\result\\result12.txt","r");
 						break;
-				case 13:fp=fopen("c:\\mycode\\result\\rresult13.txt","r");
+				case 13:fp=fopen("c:\\mycode\\result\\result13.txt","r");
 						break;
 				case 14:fp=fopen("c:\\mycode\\result\\result14.txt","r");
 						break;
@@ -115,7 +103,7 @@ void game(int position1,int position2,int color1,int color2,int match)
 			}
 			if(fp==NULL)
 			{
-				printf("can not open");
+				printf("can not open result20");
 				getch();
 				exit(1);
 			}
@@ -136,6 +124,8 @@ void game(int position1,int position2,int color1,int color2,int match)
 			{
 				fscanf(fp,"%d\n",&opteam.player[i].help);
 			}
+			fscanf(fp,"%d\n",&award_win);
+			fscanf(fp,"%d\n",&award_goal);
 			fclose(fp);
 		}
 		else
@@ -173,7 +163,7 @@ void game(int position1,int position2,int color1,int color2,int match)
 	draw_player((int)(opteam.goalkeeper.now_pos.x),(int)(opteam.goalkeeper.now_pos.y),opteam.goalkeeper.dir,0,0,4,opteam.color,opteam.name);
 	draw_ground();
 	draw_judge((int)(judge.pos.x),(int)(judge.pos.y));
-	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y));
+	draw_ball((int)(ball.now_pos.x),(int)(ball.now_pos.y),&ball);
 	draw_time(ball.time);
 	draw_score(ball.score_my,ball.score_op);
 	while(ball.flag==0)
@@ -280,6 +270,8 @@ void game(int position1,int position2,int color1,int color2,int match)
 		{
 			fprintf(fp,"%d\n",opteam.player[i].help);
 		}
+		fprintf(fp,"%d\n",award_win);
+		fprintf(fp,"%d\n",award_goal);
 		fclose(fp);
 	}
 	else
@@ -312,18 +304,26 @@ void game(int position1,int position2,int color1,int color2,int match)
 	}
 	if(position1==Right)
 	{
-		award=(ball.score_my-ball.score_op)*100;
+		award_goal=(ball.score_my-ball.score_op)*100;
+		if(award_goal>900)
+		{
+			award_goal=900;
+		}
+		if(award_goal<-900)
+		{
+			award_goal=-900;
+		}
 		if(ball.score_my>ball.score_op)
 		{
-			award+=100;
+			award_win=100;
 		}
 		else if(ball.score_my==ball.score_op)
 		{
-			award+=50;
+			award_win=50;
 		}
 		else
 		{
-			award-=50;
+			award_win=-50;
 		}
 		if((fpmoney=fopen("c:\\mycode\\shop\\money.txt","r"))==NULL)
 		{
@@ -334,7 +334,7 @@ void game(int position1,int position2,int color1,int color2,int match)
 		fscanf(fpmoney,"%d",&money);
 		// printf("%d",money);
 		fclose(fpmoney);
-		money=money+award;
+		money=money+award_win+award_goal;
 		// printf("%d",award);
 		// printf("%d",money);
 		if((fpmoney=fopen("c:\\mycode\\shop\\money.txt","w"))==NULL)
@@ -417,7 +417,6 @@ void BallChangestate(_team *popteam,_team *pmyteam,_ball *pball,ball_state *pnew
 	}
 }
 	
-//?????
 
 void AttackEnter(_team *pmyteam,_team *popteam,_ball *pball)
 {
@@ -491,8 +490,10 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 		{
 			pball->end_pos.x=popteam->player[1].now_pos.x+6;
 			pball->end_pos.y=popteam->player[1].now_pos.y+17;
+			pball->control=-1;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Wait);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Down);
+			popteam->player[popteam->controlplayer].control=0;
 			popteam->passman=popteam->control;
 			popteam->player[0].control=0;
 			popteam->control=-1;
@@ -503,8 +504,10 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 		{
 			pball->end_pos.x=popteam->player[3].now_pos.x+6;
 			pball->end_pos.y=popteam->player[3].now_pos.y+17;
+			pball->control=-1;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Wait);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Down);
+			popteam->player[popteam->controlplayer].control=0;
 			popteam->passman=popteam->control;
 			popteam->player[1].control=0;
 			popteam->control=-1;
@@ -551,7 +554,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
 				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
 			}
-			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Wait);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Down);
 			popteam->passman=popteam->control;
 			popteam->player[3].control=0;
 			popteam->control=-1;
@@ -597,7 +600,7 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
 				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
 			}
-			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Down);
 			popteam->passman=popteam->control;
 			popteam->player[2].control=0;
 			popteam->control=-1;
@@ -646,7 +649,6 @@ void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball)
 }
 
 
-//?????
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	Pos2d near_dir;
@@ -775,7 +777,7 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
 			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Down);
 			popteam->passman=popteam->control;
 			popteam->player[popteam->controlplayer].control=0;
 			popteam->control=-1;
@@ -1530,9 +1532,9 @@ void TendGoalExecute(_team *pmyteam,_team *popteam,_goalkeeper *pgoalkeeper,_bal
 {
 	// double dy;
 	if(pgoalkeeper->now_pos.y>=276.0)
-		pgoalkeeper->velocity.y*=-pgoalkeeper->rate;
+		pgoalkeeper->velocity.y*=-1;
 	if(pgoalkeeper->now_pos.y<=250.0)
-		pgoalkeeper->velocity.y*=-pgoalkeeper->rate;
+		pgoalkeeper->velocity.y*=-1;
 	// if(pgoalkeeper->name==Player)
 	// {
 	// 	if(pball->now_pos.x<190&&pball->now_pos.y>220&&pball->now_pos.y<328&&pball->timecount%5==0)
@@ -1795,13 +1797,13 @@ void Short_shootEnter(_team *popteam,_team *pmyteam,_ball *pball)
 	shoot_dir=get_dir(pball->now_pos,gate);
     if(pmyteam->pnowstate==&pmyteam->Attack)
 	{
-		pball->velocity.x=pmyteam->player[pmyteam->controlplayer].power*pass_dir.x;
-    	pball->velocity.y=pmyteam->player[pmyteam->controlplayer].power*pass_dir.y;
+		pball->velocity.x=pmyteam->player[pmyteam->controlplayer].power*shoot_dir.x;
+    	pball->velocity.y=pmyteam->player[pmyteam->controlplayer].power*shoot_dir.y;
 	}
 	else
 	{
-		pball->velocity.x=popteam->player[popteam->controlplayer].power*pass_dir.x;
-    	pball->velocity.y=popteam->player[popteam->controlplayer].power*pass_dir.y;
+		pball->velocity.x=popteam->player[popteam->controlplayer].power*shoot_dir.x;
+    	pball->velocity.y=popteam->player[popteam->controlplayer].power*shoot_dir.y;
 	}
 	// setfillstyle(1,BLACK);
 	// 	circle(30,30,10);
@@ -2447,7 +2449,7 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	setfillstyle(1,GREEN);	
 	bar((int)(pball->old_pos.x),(int)(pball->old_pos.y),(int)(pball->old_pos.x)+12,(int)(pball->old_pos.y)+12);
-	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y));
+	draw_ball((int)(pball->now_pos.x),(int)(pball->now_pos.y),pball);
 	pball->timecount++;
 	// draw_control(pmyteam,popteam);
 	if(pball->timecount%FPS==0)
