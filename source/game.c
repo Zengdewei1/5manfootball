@@ -1,6 +1,6 @@
 #include "main.h"
 
-//游戏主体
+//???·?÷??
 void game(int position1,int position2,int color1,int color2,int match)
 {
 	int i=0,award_goal=0,award_win=0,money=0;
@@ -1253,13 +1253,13 @@ void ActioningExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pbal
 							pplayer->velocity.x=-pplayer->rate;
 						else
 							pplayer->velocity.x=0;
-						// if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//??λ??????????
+						// if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)<=50.0)//??????????????
 						// {
 						// 	far_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 						// 	pplayer->velocity.x=-4.0*far_dir.x;
 						// 	pplayer->velocity.y=-4.0*far_dir.y;
 						// }
-						// else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)>=150.0)//??λ???????????
+						// else if(distance(pplayer->now_pos.x,pplayer->now_pos.y,pball->now_pos.x,pball->now_pos.y)>=150.0)//???????????????
 						// {
 						// 	near_dir=get_dir(pplayer->now_pos,popteam->player[3].now_pos);
 						// 	pplayer->velocity.x=4.0*near_dir.x;
@@ -2042,7 +2042,7 @@ void init_team(_team *team,_ball *pball)
 		team->player[3].pnowstate=&team->player[3].ChasingBall;
 }
 
-//????????λ?????
+//???????????????
 void init_player(_player *pplayer,int position,int ID,int name)
 {
 	pplayer->ID=ID;
@@ -2234,7 +2234,7 @@ void playerPower(_team *pteam)
 			exit(0);
 		}
 		fscanf(fpplayer,"%s\n",name);
-		for(i=1;i<12;i++)//i是行数
+		for(i=1;i<12;i++)//i??????
 		{
 			for(j=0;j<5;j++)
 			{
@@ -2313,7 +2313,7 @@ void playerPower(_team *pteam)
 			exit(0);
 		}
 		fscanf(fpplayer,"%s\n",name);
-		for(i=1;i<5;i++)//i是行数
+		for(i=1;i<5;i++)//i??????
 		{
 			fscanf(fpplayer,"%s%s\n",name,ability[k]);
 			k++;
@@ -2459,11 +2459,11 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	if(pball->timecount%3==0)
 		draw_score(pball->score_my,pball->score_op);
-	if(pball->time>=1&&pmyteam->position==Left)
+	if(pball->time>=60&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=151&&pmyteam->position==Right)
+	if(pball->time>=180&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}

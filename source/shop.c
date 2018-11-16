@@ -45,12 +45,12 @@ int shop(int path_)
 	line(1, 116, 11, 132);
 	line(11, 132, 21, 100);
 
-	puthz(30, 100, "Â∑¶ÂâçÈîã", 32, 32, BLUE);
-	puthz(30, 150, "Âè≥ÂâçÈîã", 32, 32, BLUE);
-	puthz(30, 200, "Â∑¶ÂêéÂç´", 32, 32, BLUE);
-	puthz(30, 250, "Âè≥ÂêéÂç´", 32, 32, BLUE);
-	puthz(30, 300, "ÂÆàÈó®Âëò", 32, 32, BLUE);
-	puthz(1, 50, "ÈáëÈ¢ù", 32, 32, BLUE);
+	puthz(30, 100, "◊Û«∞∑Ê", 32, 32, BLUE);
+	puthz(30, 150, "”“«∞∑Ê", 32, 32, BLUE);
+	puthz(30, 200, "◊Û∫ÛŒ¿", 32, 32, BLUE);
+	puthz(30, 250, "”“∫ÛŒ¿", 32, 32, BLUE);
+	puthz(30, 300, " ÿ√≈‘±", 32, 32, BLUE);
+	puthz(1, 50, "Ω∂Ó", 32, 32, BLUE);
 	outtextxy(70, 66, ":");
 	rectangle(212, 100, 308, 132);
 	rectangle(212, 300, 308, 332);
@@ -316,9 +316,9 @@ int shop(int path_)
 			setcolor(BLUE);
 			rectangle(340, 210, 372, 242);
 			rectangle(390, 210, 422, 242);
-			puthz(350, 160, "‰∫§Êç¢", 32, 32, BLUE);
-			puthz(340, 210, "ÊòØ", 32, 32, BLUE);
-			puthz(390, 210, "Âê¶", 32, 32, BLUE);
+			puthz(350, 160, "Ωªªª", 32, 32, BLUE);
+			puthz(340, 210, " «", 32, 32, BLUE);
+			puthz(390, 210, "∑Ò", 32, 32, BLUE);
 			while (bool)
 			{
 				Newxy();
@@ -581,9 +581,9 @@ int shop(int path_)
 			setcolor(BLUE);
 			rectangle(340, 210, 372, 242);
 			rectangle(390, 210, 422, 242);
-			puthz(350, 160, "‰∫§Êç¢", 32, 32, BLUE);
-			puthz(340, 210, "ÊòØ", 32, 32, BLUE);
-			puthz(390, 210, "Âê¶", 32, 32, BLUE);
+			puthz(350, 160, "Ωªªª", 32, 32, BLUE);
+			puthz(340, 210, " «", 32, 32, BLUE);
+			puthz(390, 210, "∑Ò", 32, 32, BLUE);
 			while (bool)
 			{
 				Newxy();
@@ -844,9 +844,9 @@ int shop(int path_)
 			setcolor(BLUE);
 			rectangle(340, 210, 372, 242);
 			rectangle(390, 210, 422, 242);
-			puthz(350, 160, "‰∫§Êç¢", 32, 32, BLUE);
-			puthz(340, 210, "ÊòØ", 32, 32, BLUE);
-			puthz(390, 210, "Âê¶", 32, 32, BLUE);
+			puthz(350, 160, "Ωªªª", 32, 32, BLUE);
+			puthz(340, 210, " «", 32, 32, BLUE);
+			puthz(390, 210, "∑Ò", 32, 32, BLUE);
 			while (bool)
 			{
 				Newxy();
@@ -1107,9 +1107,9 @@ int shop(int path_)
 			setcolor(BLUE);
 			rectangle(340, 210, 372, 242);
 			rectangle(390, 210, 422, 242);
-			puthz(350, 160, "‰∫§Êç¢", 32, 32, BLUE);
-			puthz(340, 210, "ÊòØ", 32, 32, BLUE);
-			puthz(390, 210, "Âê¶", 32, 32, BLUE);
+			puthz(350, 160, "Ωªªª", 32, 32, BLUE);
+			puthz(340, 210, " «", 32, 32, BLUE);
+			puthz(390, 210, "∑Ò", 32, 32, BLUE);
 			while (bool)
 			{
 				Newxy();
@@ -1477,10 +1477,10 @@ int shop(int path_)
 
 				bar(380, 340, 609, 490);
 				rectangle(380, 340, 609, 490);
-				puthz(414, 340, "ÈÄüÂ∫¶", 32, 32, BLUE);
-				puthz(414, 372, "ÂäõÈáè", 32, 32, BLUE);
-				puthz(414, 404, "Êñ≠ÁêÉ", 32, 32, BLUE);
-				puthz(414, 436, "Êä¢ÁêÉ", 32, 32, BLUE);
+				puthz(414, 340, "ÀŸ∂»", 32, 32, BLUE);
+				puthz(414, 372, "¡¶¡ø", 32, 32, BLUE);
+				puthz(414, 404, "∂œ«Ú", 32, 32, BLUE);
+				puthz(414, 436, "«¿«Ú", 32, 32, BLUE);
 				puthz(429, 468, "CD", 16, 16, BLUE);
 
 				for (i = 1; i < 11; i++)
@@ -1584,10 +1584,10 @@ int shop(int path_)
 
 				bar(380, 140, 609, 290);
 				rectangle(380, 140, 609, 290);
-				puthz(414, 140, "ÈÄüÂ∫¶", 32, 32, BLUE);
-				puthz(414, 172, "ÂäõÈáè", 32, 32, BLUE);
-				puthz(414, 204, "Êñ≠ÁêÉ", 32, 32, BLUE);
-				puthz(414, 236, "Êä¢ÁêÉ", 32, 32, BLUE);
+				puthz(414, 140, "ÀŸ∂»", 32, 32, BLUE);
+				puthz(414, 172, "¡¶¡ø", 32, 32, BLUE);
+				puthz(414, 204, "∂œ«Ú", 32, 32, BLUE);
+				puthz(414, 236, "«¿«Ú", 32, 32, BLUE);
 				puthz(429, 275, "CD", 16, 16, BLUE);
 
 				for (i = 1; i < 11; i++)
@@ -1690,10 +1690,10 @@ int shop(int path_)
 				puthz(212, 300, c3, 32, 32, BLUE);
 				bar(136, 340, 365, 479);
 				rectangle(136, 340, 365, 479);
-				puthz(170, 340, "ÈÄüÂ∫¶", 32, 32, BLUE);
-				puthz(170, 372, "ÂäõÈáè", 32, 32, BLUE);
-				puthz(170, 404, "Êñ≠ÁêÉ", 32, 32, BLUE);
-				puthz(170, 436, "Êä¢ÁêÉ", 32, 32, BLUE);
+				puthz(170, 340, "ÀŸ∂»", 32, 32, BLUE);
+				puthz(170, 372, "¡¶¡ø", 32, 32, BLUE);
+				puthz(170, 404, "∂œ«Ú", 32, 32, BLUE);
+				puthz(170, 436, "«¿«Ú", 32, 32, BLUE);
 				puthz(185, 468, "CD", 16, 16, BLUE);
 
 				for (i = 1; i < 11; i++)
@@ -1759,10 +1759,10 @@ int shop(int path_)
 
 				bar(136, 140, 365, 290);
 				rectangle(136, 140, 365, 290);
-				puthz(170, 140, "ÈÄüÂ∫¶", 32, 32, BLUE);
-				puthz(170, 172, "ÂäõÈáè", 32, 32, BLUE);
-				puthz(170, 204, "Êñ≠ÁêÉ", 32, 32, BLUE);
-				puthz(170, 236, "Êä¢ÁêÉ", 32, 32, BLUE);
+				puthz(170, 140, "ÀŸ∂»", 32, 32, BLUE);
+				puthz(170, 172, "¡¶¡ø", 32, 32, BLUE);
+				puthz(170, 204, "∂œ«Ú", 32, 32, BLUE);
+				puthz(170, 236, "«¿«Ú", 32, 32, BLUE);
 				puthz(185, 275, "CD", 16, 16, BLUE);
 
 				for (i = 1; i < 11; i++)

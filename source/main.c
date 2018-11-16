@@ -6,6 +6,7 @@ void main()
 	int page=0;
 	int matchType=0;
 	int path=0;
+	int resultID=0;
 	char s[10][10];
 	driver=VGA;
 	mode=VGAHI;
@@ -20,46 +21,46 @@ void main()
 			case 0://
 				page=menu();
 				break;
-			case 1://æ•™å­¦ç•Œé¢
+			case 1://½ÌÑ§½çÃæ
 				page=jiaoxue();
 				break;
 				
-			case 2://é€‰æ‹©åœºæ¬¡ç•Œé¢
+			case 2://Ñ¡Ôñ³¡´Î½çÃæ
 			    page=changci(&matchType);
 				break;
 				
-			case 3://ç®¡ç†å‘˜ç™»å½•ç•Œé¢
-				page = admlogin();
+			case 3://¹ÜÀíÔ±µÇÂ¼½çÃæ
+				// page = admlogin();
 				break;
 				
-			case 4://ä¸»ç•Œé¢
-				page = facet(&temp,s);
+			case 4://Ö÷½çÃæ
+				page =result(resultID);
 				break;
 				
-			case 5://é€‰çƒé˜Ÿç•Œé¢
+			case 5://Ñ¡Çò¶Ó½çÃæ
 			    page=choose_team(s,&path);
 				break;
 				
-			case 6://é€‰çƒå‘˜ç•Œé¢
+			case 6://Ñ¡ÇòÔ±½çÃæ
 				page=choose_player(s,path);
 				break;
 				
-			case 7://å•†åŸç•Œé¢
+			case 7://ÉÌ³Ç½çÃæ
 			    page=shop(path);
 				break;
 				
-            case 8://å†å²è®°å½•ç•Œé¢
-			    history();
+            case 8://ÀúÊ·¼ÇÂ¼½çÃæ
+			    page=history(&resultID);
 				break;
 				
-			case 9://æŸ¥è¯¢æ—¶é—´ç•Œé¢
+			case 9://²éÑ¯Ê±¼ä½çÃæ
 			    page=fastMatch(matchType);
 				break;
 			
-			case 10://å–œçˆ±çš„çƒé˜Ÿç•Œé¢
+			case 10://Ï²°®µÄÇò¶Ó½çÃæ
 			    page=teamMatch();
 				break;
-			case 11://å–œçˆ±çš„çƒé˜Ÿç•Œé¢
+			case 11://Ï²°®µÄÇò¶Ó½çÃæ
 			    page=playerID(path);
 				break;
 		}

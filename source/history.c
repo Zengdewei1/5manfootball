@@ -1,14 +1,15 @@
 #include "main.h"
 
-int history()
+int history(int *resultID)
 {
 	FILE *fp;
 	int i, j, k;
 	int game_amount = 10;
-	int game_realamount; //game_realamountä»£è¡¨æ€»çš„æ¸¸æˆåœºæ•°
+	int game_realamount; //game_realamount´ú±í×ÜµÄÓÎÏ·³¡Êı
 	int slider_dy = 0;
 	int mouse_oldy;
 	int mouse_newy;
+	int page;
 	fp = fopen("c:\\mycode\\result\\game.txt", "r");
 	if (fp == NULL)
 	{
@@ -45,13 +46,13 @@ int history()
 		{
 			rectangle(120, 90 + 60 * i, 120 + 380, 90 + 60 * (i + 1));
 			draw_num(120 + 30, 90 + 60 * i + 20, i + 1, 10);
-			puthz(120 + 250, 90 + 60 * i + 14, "æŸ¥çœ‹", 32, 32, BLUE);
+			puthz(120 + 250, 90 + 60 * i + 14, "²é¿´", 32, 32, BLUE);
 		}
 		setfillstyle(1, GREEN);
 		bar(120, 390, 500, 640);
 		rectangle(120, 90, 500, 390);
 	}
-
+	delay(100);
 	while (1)
 	{
 		Newxy();
@@ -99,10 +100,13 @@ int history()
 			if (Mouse_press(120 + 250, 90 - (slider_dy % 15) * 4 + 14 + 60 * i, 120 + 250 + 32 * 3, 90 + 32 + 14 - (slider_dy % 15) * 4 + 60 * i))
 			{
 				NewBK();
-				result(k + i);
+				*resultID=k+i;
+				// page=result(k + i);
+				return 4;
 			}
 		if (KeyPress(KEY_ESC))
 		{
+			NewBK();
 			return 0;
 		}
 	}
@@ -125,7 +129,7 @@ void record(int x, int y, int dx, int row, int length, int slider_dy, int game_a
 		{
 			rectangle(x, y + dy * i, x + dx, y + dy * (i + 1));
 			draw_num(x + 30, y + dy * i + 20, i + 1, 10);
-			puthz(x + 250, y + dy * i + 14, "æŸ¥çœ‹", 32, 32, BLUE);
+			puthz(x + 250, y + dy * i + 14, "²é¿´", 32, 32, BLUE);
 		}
 	}
 	if (game_amount > 5)
@@ -135,7 +139,7 @@ void record(int x, int y, int dx, int row, int length, int slider_dy, int game_a
 			rectangle(x, y + dy * i, x + dx, y + dy * (i + 1));
 			setfillstyle(1, GREEN);
 			setcolor(BLUE);
-			bar(120, 30, 500, 90); //æ¶ˆé™¤ä¸Šé¢è¶…è¿‡çš„éƒ¨åˆ†
+			bar(120, 30, 500, 90); //Ïû³ıÉÏÃæ³¬¹ıµÄ²¿·Ö
 			rectangle(120, 90, 500, 390);
 
 			for (j = 0; j < (game_amount - 5); j++)
@@ -150,14 +154,14 @@ void record(int x, int y, int dx, int row, int length, int slider_dy, int game_a
 			}
 			if (slider_dy == 225 - (20 - game_amount) * 15)
 				draw_num(x + 30, y + dy * i + 20, i + j + 1, 10);
-			puthz(x + 250, y + dy * i + 14, "æŸ¥çœ‹", 32, 32, BLUE);
+			puthz(x + 250, y + dy * i + 14, "²é¿´", 32, 32, BLUE);
 			bar(120, 390, 500, 460);
 			rectangle(120, 90, 500, 390);
 		}
 	}
 }
 
-void result(int historyMatch) //historyMatchè¡¨ç¤ºå€’æ•°ç¬¬å‡ åœºæ¯”èµ›
+int result(int historyMatch) //historyMatch±íÊ¾µ¹ÊıµÚ¼¸³¡±ÈÈü
 {
 	FILE *fp, *fpGame;
 	int i, match;
@@ -196,17 +200,19 @@ void result(int historyMatch) //historyMatchè¡¨ç¤ºå€’æ•°ç¬¬å‡ åœºæ¯”èµ›
 	draw_num(567, 200, 2, 8);
 	draw_num(567, 250, 3, 8);
 
-	puthz(15, 55, "çƒå‘˜", 32, 32, BLUE);
-	puthz(90, 55, "è¿›çƒ", 32, 32, BLUE);
-	puthz(180, 55, "åŠ©æ”»", 32, 32, BLUE);
-	puthz(100, 20, "æˆ‘æ–¹çƒé˜Ÿ", 32, 32, BLUE);
-	puthz(380, 55, "è¿›çƒ", 32, 32, BLUE);
-	puthz(470, 55, "åŠ©æ”»", 32, 32, BLUE);
-	puthz(545, 55, "çƒå‘˜", 32, 32, BLUE);
-	puthz(390, 20, "æˆ‘æ–¹çƒé˜Ÿ", 32, 32, BLUE);
-	puthz(150, 300, "æŸ¥çœ‹å¥–åŠ±", 32, 32, BLUE);
-	puthz(340, 300, "è¿”å›èœå•", 32, 32, BLUE);
-
+	puthz(15, 55, "ÇòÔ±", 32, 32, BLUE);
+	puthz(90, 55, "½øÇò", 32, 32, BLUE);
+	puthz(180, 55, "Öú¹¥", 32, 32, BLUE);
+	puthz(100, 20, "ÎÒ·½Çò¶Ó", 32, 32, BLUE);
+	puthz(380, 55, "½øÇò", 32, 32, BLUE);
+	puthz(470, 55, "Öú¹¥", 32, 32, BLUE);
+	puthz(545, 55, "ÇòÔ±", 32, 32, BLUE);
+	puthz(390, 20, "ÎÒ·½Çò¶Ó", 32, 32, BLUE);
+	puthz(150, 300, "²é¿´½±Àø", 32, 32, BLUE);
+	puthz(340, 300, "·µ»Ø²Ëµ¥", 32, 32, BLUE);
+	puthz(410,350,"°´¼ü",32,32,RED);
+	outtextxy(480,370,"Enter");
+;	puthz(400,400,"·µ»ØÖ÷²Ëµ¥",32,32,RED);
 	fpGame = fopen("c:\\mycode\\result\\game.txt", "r");
 	fscanf(fpGame, "%d", &match);
 	fclose(fpGame);
@@ -324,8 +330,8 @@ void result(int historyMatch) //historyMatchè¡¨ç¤ºå€’æ•°ç¬¬å‡ åœºæ¯”èµ›
 			case 0:
 				setcolor(BLUE);
 				rectangle(140, 340, 400, 460);
-				puthz(140, 360, "è·èƒœå¥–åŠ±", 32, 32, BLUE);
-				puthz(140, 400, "è¿›çƒå¥–åŠ±", 32, 32, BLUE);
+				puthz(140, 360, "»ñÊ¤½±Àø", 32, 32, BLUE);
+				puthz(140, 400, "½øÇò½±Àø", 32, 32, BLUE);
 				outtextxy(270, 370, ":");
 				outtextxy(270, 410, ":");
 				printf("%d",award_win);
@@ -348,7 +354,11 @@ void result(int historyMatch) //historyMatchè¡¨ç¤ºå€’æ•°ç¬¬å‡ åœºæ¯”èµ›
 		if (Mouse_press(340, 300, 468, 332))
 		{
 			NewBK();
-			history();
+			return 8;
 		}
+        if(KeyPress(KEY_ENTER))
+        {
+            return 0;
+        }
 	}
 }

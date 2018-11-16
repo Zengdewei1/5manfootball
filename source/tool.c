@@ -1,56 +1,5 @@
 #include "main.h"
 
-void match()
-{
-	FILE *fpGame;
-	int match = 0;
-	int i = 10;
-	if ((fpGame = fopen("c:\\mycode\\result\\game.txt", "r")) == NULL)
-	{
-		printf("cant not open");
-		getch();
-		exit(1);
-	}
-	// match=fgetc(fpGame);
-	fscanf(fpGame, "%d", &match);
-	// match-=48;
-	printf("%d", match);
-	fclose(fpGame);
-	game(Left, Right, Red, Blue, match);
-	// printf("yes");
-	// xiuxi();
-	while (1)
-	{
-		if (KeyPress(KEY_ENTER))
-		{
-			break;
-		}
-	}
-	game(Right, Left, Red, Blue, match);
-	match++;
-	printf("%d", match);
-	if ((fpGame = fopen("c:\\mycode\\result\\game.txt", "w")) == NULL)
-	{
-		printf("cant not open");
-		getch();
-		exit(1);
-	}
-	if (match < 10)
-	{
-		fprintf(fpGame, "%d", i);
-	}
-	fprintf(fpGame, "%d", match);
-	fclose(fpGame);
-	// result();
-	while (1)
-	{
-		if (KeyPress(KEY_ENTER))
-		{
-			menu();
-		}
-	}
-}
-
 void pass(_team *pmyteam, _team *popteam, _ball *pball, int type)
 {
 	int flag = 0;
@@ -305,7 +254,7 @@ void auto_act(_team *pmyteam, _team *popteam, _player *pplayer, _ball *pball)
 				{
 					arrive(pplayer, 320.0, pball->now_pos.y);
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[3].now_pos.x, popteam->player[3].now_pos.y) <= 100.0) //ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½Ô·ï¿½Ç°ï¿½ï¿?3
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[3].now_pos.x, popteam->player[3].now_pos.y) <= 100.0) //???????????????????????????????¡¤????¡ã??????3
 				{
 					far_dir = get_dir(pplayer->now_pos, popteam->player[3].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
@@ -322,19 +271,19 @@ void auto_act(_team *pmyteam, _team *popteam, _player *pplayer, _ball *pball)
 				{
 					arrive(pplayer, 480.0, pplayer->now_pos.y);
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, pmyteam->player[3].now_pos.x, pmyteam->player[3].now_pos.y) <= 100.0) //ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½ï¿½Ò·ï¿½Ç°ï¿½ï¿½
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, pmyteam->player[3].now_pos.x, pmyteam->player[3].now_pos.y) <= 100.0) //??????????????????????????????????¡¤????¡ã??????
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[3].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
 					pplayer->velocity.y = -4.0 * far_dir.y;
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[0].now_pos.x, popteam->player[0].now_pos.y) <= 50.0) //ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿?0
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[0].now_pos.x, popteam->player[0].now_pos.y) <= 50.0) //???????????????????????¡¤???????????????0
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[3].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
 					pplayer->velocity.y = -4.0 * far_dir.y;
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[1].now_pos.x, popteam->player[1].now_pos.y) <= 50.0) //ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿?1
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[1].now_pos.x, popteam->player[1].now_pos.y) <= 50.0) //???????????????????????¡¤???????????????1
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[3].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
@@ -351,19 +300,19 @@ void auto_act(_team *pmyteam, _team *popteam, _player *pplayer, _ball *pball)
 				{
 					arrive(pplayer, 480.0, pplayer->now_pos.y);
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, pmyteam->player[2].now_pos.x, pmyteam->player[2].now_pos.y) <= 100.0) //ï¿½ï¿½Î»ï¿½ï¿½ï¿½Êµï¿½Ô¶ï¿½ï¿½ï¿½Ò·ï¿½Ç°ï¿½ï¿½
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, pmyteam->player[2].now_pos.x, pmyteam->player[2].now_pos.y) <= 100.0) //??????????????????????????????????¡¤????¡ã??????
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[2].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
 					pplayer->velocity.y = -4.0 * far_dir.y;
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[0].now_pos.x, popteam->player[0].now_pos.y) <= 50.0) //ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿?0
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[0].now_pos.x, popteam->player[0].now_pos.y) <= 50.0) //???????????????????????¡¤???????????????0
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[2].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
 					pplayer->velocity.y = -4.0 * far_dir.y;
 				}
-				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[1].now_pos.x, popteam->player[1].now_pos.y) <= 50.0) //ï¿½ï¿½Î»ï¿½ï¿½Ô¶ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿?1
+				else if (distance(pplayer->now_pos.x, pplayer->now_pos.y, popteam->player[1].now_pos.x, popteam->player[1].now_pos.y) <= 50.0) //???????????????????????¡¤???????????????1
 				{
 					far_dir = get_dir(pplayer->now_pos, pmyteam->player[2].now_pos);
 					pplayer->velocity.x = -4.0 * far_dir.x;
@@ -383,7 +332,7 @@ void auto_act(_team *pmyteam, _team *popteam, _player *pplayer, _ball *pball)
 			{
 			case (0):
 				dy = abs(pplayer->now_pos.y - pball->now_pos.y);
-				if (pplayer->now_pos.x <= 120.0 || pplayer->now_pos.x >= 200.0 || pplayer->now_pos.y <= 80.0 || pplayer->now_pos.y >= 280.0) //ï¿½ï¿½ï¿½ï¿½ï¿?
+				if (pplayer->now_pos.x <= 120.0 || pplayer->now_pos.x >= 200.0 || pplayer->now_pos.y <= 80.0 || pplayer->now_pos.y >= 280.0) //???????????????
 				{
 					arrive(pplayer, 160.0, 200.0);
 				}
@@ -508,7 +457,7 @@ void auto_act(_team *pmyteam, _team *popteam, _player *pplayer, _ball *pball)
 				break;
 			}
 		}
-		else //ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½Ê±
+		else //??????????¡¤??????????¡À
 		{
 			switch (pplayer->ID)
 			{
@@ -605,14 +554,14 @@ Pos2d get_dir(Pos2d pos_from, Pos2d pos_to)
 // {
 // 	// setfillstyle(1,GREEN);
 // 	// bar(620,0,640,20);
-// 	puthz(620,20,"°´¼üPÔÝÍ£",32,32,RED);
+// 	puthz(620,20,"¡ã??¨¹P????",32,32,RED);
 // }
 
 // void draw_start()
 // {
 // 	setfillstyle(1,GREEN);
 // 	bar(620,0,640,20);
-// 	puthz(620,0,"°´¼üY¼ÌÐø",32,32,RED);
+// 	puthz(620,0,"¡ã??¨¹Y????",32,32,RED);
 // }
 
 int playerID(int path)
@@ -841,13 +790,13 @@ int playerID(int path)
 void xiuxi()
 {
 	cleardevice();
-	setfillstyle(1, GREEN);
-	bar(0, 0, 640, 480);
-	puthz(240, 50, "ÖÐ³¡ÐÝÏ¢", 32, 32, BLUE);
-	puthz(120, 120, "Á½Ö»Çò¶Ó½»»»×óÓÒ³¡µØ", 32, 32, BLUE);
-	puthz(160, 200, "°´¼ü", 32, 32, BLUE);
-	outtextxy(240, 200, "Enter");
-	puthz(320, 200, "½øÈëÏÂ°ë³¡", 32, 32, BLUE);
+	setfillstyle(1,GREEN);
+	bar(0,0,640,480);
+	puthz(240,50,"ÖÐ³¡ÐÝÏ¢",32,32,BLUE);
+	puthz(120,120,"Á½Ö»Çò¶Ó½»»»×óÓÒ³¡µØ",32,32,BLUE);
+	puthz(160,200,"°´¼ü",32,32,BLUE);
+	outtextxy(240,200,"Enter");
+	puthz(320,200,"½øÈëÏÂ°ë³¡",32,32,BLUE);
 }
 
 void player_border(_player *pplayer)
@@ -995,7 +944,7 @@ int fastMatch(int matchType)
 	}
 	else
 	{
-		game(Left, Right, Red, Blue, 0);
+		game(Left, Right,Blue, Red,0);
 		xiuxi();
 		while (1)
 		{
@@ -1004,12 +953,12 @@ int fastMatch(int matchType)
 				break;
 			}
 		}
-		game(Right, Left, Red, Blue, 0);
+		game(Right, Left,Blue,Red ,0);
 		while (1)
 		{
 			if (KeyPress(KEY_ENTER))
 			{
-				menu();
+				return 0;
 			}
 		}
 	}
@@ -1017,5 +966,46 @@ int fastMatch(int matchType)
 
 int teamMatch()
 {
-
+	FILE *fpGame;
+	int match = 0;
+	int i = 10;
+	int page;
+	if ((fpGame = fopen("c:\\mycode\\result\\game.txt", "r")) == NULL)
+	{
+		printf("cant not open");
+		getch();
+		exit(1);
+	}
+	// match=fgetc(fpGame);
+	fscanf(fpGame, "%d", &match);
+	// match-=48;
+	printf("%d", match);
+	fclose(fpGame);
+	game(Left, Right, Red, Blue, match);
+	// printf("yes");
+	xiuxi();
+	while (1)
+	{
+		if (KeyPress(KEY_ENTER))
+		{
+			break;
+		}
+	}
+	game(Right, Left, Red, Blue, match);
+	match++;
+	printf("%d", match);
+	if ((fpGame = fopen("c:\\mycode\\result\\game.txt", "w")) == NULL)
+	{
+		printf("cant not open");
+		getch();
+		exit(1);
+	}
+	if (match < 10)
+	{
+		fprintf(fpGame, "%d", i);
+	}
+	fprintf(fpGame, "%d", match);
+	fclose(fpGame);
+	page=result(1);
+	return page;
 }

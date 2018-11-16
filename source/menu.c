@@ -84,17 +84,19 @@ int changci(int *matchtype)
 	puthz(270, 300, "球衣", 48, 60, BLACK);
 	puthz(65, 300, "红色", 48, 60, RED);
 	puthz(465, 300, "蓝色", 48, 60, BLUE);
-
+	delay(100);
 	while (1)
 	{
 		Newxy();
 		if (Mouse_press(20, 160, 220, 320))
 		{
+			NewBK();
 			*matchtype=1;
 			return 9;
 		}
 		if (Mouse_press(420, 160, 620, 320))
 		{
+			NewBK();
 			*matchtype=2;
 			return 9;
 		}
@@ -107,7 +109,7 @@ int changci(int *matchtype)
 }
 
 //键盘教学界面
-void jiaoxue()
+int jiaoxue()
 {
 	cleardevice();
 	setfillstyle(1, YELLOW);
@@ -157,15 +159,14 @@ void jiaoxue()
 		if (KeyPress(KEY_ESC))
 		{
 			NewBK();
-			menu();
+			return 0;
 		}
 	}
 }
 
 //选择球队界面
-int choose_team(char (*s)[10],int path)
+int choose_team(char (*s)[10],int *path)
 {
-	int path;
 	int x = 240;
 	int i = 0;
 	int j = 0;
@@ -213,7 +214,7 @@ int choose_team(char (*s)[10],int path)
 	puthz(x + 128, y + 100, "上海申花", 32, 32, BLUE);
 	puthz(282, 195, "选择", 32, 32, BLUE);
 	puthz(282, 227, "球队", 32, 32, BLUE);
-
+	delay(100);
 	while (1)
 	{
 		Newxy();
@@ -243,7 +244,7 @@ int choose_team(char (*s)[10],int path)
 				s[i][2 * (number - 48)] = '\0';
 			}
 			fclose(fp);
-			path = 1;
+			*path = 1;
 			// choose_player(s, path);
 			return 6;
 		}
@@ -270,7 +271,7 @@ int choose_team(char (*s)[10],int path)
 			}
 
 			fclose(fp);
-			path = 2;
+			*path = 2;
 			// choose_player(s, path);
 			return 6;
 		}
@@ -297,7 +298,7 @@ int choose_team(char (*s)[10],int path)
 			}
 
 			fclose(fp);
-			path = 5;
+			*path = 5;
 			// choose_player(s, path);
 			return 6;
 		}
@@ -324,7 +325,7 @@ int choose_team(char (*s)[10],int path)
 			}
 
 			fclose(fp);
-			path = 3;
+			*path = 3;
 			// choose_player(s, path);
 			return 6;
 		}
@@ -351,7 +352,7 @@ int choose_team(char (*s)[10],int path)
 			}
 
 			fclose(fp);
-			path = 4;
+			*path = 4;
 			// choose_player(s, path);
 			return 6;
 		}
@@ -443,6 +444,7 @@ int choose_player(char (*s)[10], int path)
 	puthz(346, 300, s[9], 32, 32, BLUE);
 
 	// playerID(path); //记录选择球员的球员ID
+	delay(100);
 	return 11;
 }
 
