@@ -2459,11 +2459,11 @@ void BallUpdate(_team *popteam,_team *pmyteam,_ball *pball)//pteam1????????
 	}
 	if(pball->timecount%3==0)
 		draw_score(pball->score_my,pball->score_op);
-	if(pball->time>=30&&pmyteam->position==Left)
+	if(pball->time>=1&&pmyteam->position==Left)
 	{
 		pball->flag=1;
 	}
-	if(pball->time>=180&&pmyteam->position==Right)
+	if(pball->time>=151&&pmyteam->position==Right)
 	{
 		pball->flag=1;
 	}

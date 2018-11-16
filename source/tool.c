@@ -906,7 +906,6 @@ void playerID(int path)
 	int i=0;
 	int myteam=0,opteam=0;
 	FILE *fpGame;
-	int match;
 	FILE *fpplayer,*fpmyteam,*fpopteam;
 	ID=(int*)malloc(sizeof(int)*10);
 	if(ID==NULL)
@@ -1118,49 +1117,7 @@ void playerID(int path)
 					break;
 				}
 			}
-			if((fpGame=fopen("c:\\mycode\\result\\game.txt","r"))==NULL)
-			{
-				printf("cant not open");
-				getch();
-				exit(1);
-			}
-			// match=fgetc(fpGame);
-			fscanf(fpGame,"%d",&match);
-			// match-=48;
-			printf("%d",match);
-			fclose(fpGame);
-			game(Left,Right,Red,Blue,match);
-			// xiuxi();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					break;
-				}
-			}
-			game(Right,Left,Red,Blue,match);
-			match++;
-			printf("%d",match);
-			if((fpGame=fopen("c:\\mycode\\result\\game.txt","w"))==NULL)
-			{
-				printf("cant not open");
-				getch();
-				exit(1);
-			}
-			if(match<10)
-			{
-				fprintf(fpGame,"%d",i);
-			}
-			fprintf(fpGame,"%d",match);
-			fclose(fpGame);
-			// result();
-			while(1)
-			{
-				if(KeyPress(KEY_ENTER))
-				{
-					menu();
-				}
-			}
+			return;
 		}
 		if(KeyPress(KEY_ESC))
 		{

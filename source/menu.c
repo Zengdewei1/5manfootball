@@ -2,6 +2,9 @@
 
 void menu()
 {
+	FILE *fpGame;
+	int match=0;
+	int i=10;
 	setlinestyle(0, 0, 1);
 	cleardevice();
 	menu_page();
@@ -12,21 +15,25 @@ void menu()
 		{
 			NewBK();
 			changci();
+			break;
 		}
 		if (Mouse_press(320, 90, 600, 150))
 		{
 			NewBK();
 			jiaoxue();
+			break;
 		}
 		if (Mouse_press(320, 250, 600, 310))
 		{
 			NewBK();
 			choose_team();
+			break;
 		}
 		if (Mouse_press(50, 150, 200, 250))
 		{
 			NewBK();
 			history();
+			break;
 		}
 		// if(Mouse_press(50,300,200,350))
 		// {
@@ -35,6 +42,50 @@ void menu()
 		// }
 		// if(KeyPress(KEY_ESC))
 		// 	exit(0);
+	}
+	if((fpGame=fopen("c:\\mycode\\result\\game.txt","r"))==NULL)
+	{
+		printf("cant not open");
+		getch();
+		exit(1);
+	}
+	// match=fgetc(fpGame);
+	fscanf(fpGame,"%d",&match);
+	// match-=48;
+	printf("%d",match);
+	fclose(fpGame);
+	game(Left,Right,Red,Blue,match);
+	// printf("yes");
+	// xiuxi();
+	while(1)
+	{
+		if(KeyPress(KEY_ENTER))
+		{
+			break;
+		}
+	}
+	game(Right,Left,Red,Blue,match);
+	match++;
+	printf("%d",match);
+	if((fpGame=fopen("c:\\mycode\\result\\game.txt","w"))==NULL)
+	{
+		printf("cant not open");
+		getch();
+		exit(1);
+	}
+	if(match<10)
+	{
+		fprintf(fpGame,"%d",i);
+	}
+	fprintf(fpGame,"%d",match);
+	fclose(fpGame);
+	// result();
+	while(1)
+	{
+		if(KeyPress(KEY_ENTER))
+		{
+			menu();
+		}
 	}
 }
 void result(int historyMatch) //historyMatch表示倒数第几场比赛
@@ -532,9 +583,22 @@ void choose_team()
 	int j = 0;
 	char number;
 	char s[10][10];
+	// char **s;
 	char ch = '\0';
 	FILE *fp;
 	int y = 100;
+	// s=(char**)malloc(sizeof(char*)*10);
+	// for(i=0;i<10;i++)
+	// {
+	// 	s[i]=(char*)malloc(sizeof(char)*10);
+	// }
+	// i=0;
+	// if(s==NULL)
+	// {
+	// 	printf("malloc wrong");
+	// 	getch();
+	// 	exit(0);
+	// }
 	cleardevice();
 	setfillstyle(1, GREEN);
 	bar(1, 1, 640, 480);
@@ -705,12 +769,8 @@ void choose_team()
 			choose_player(s, path);
 			break;
 		}
-		// if(KeyPress(KEY_ESC))
-		// {
-		// 	menu();
-		// }
 	}
-	menu();
+	// free(s);
 }
 
 //选择球员界面
@@ -797,7 +857,7 @@ void choose_player(char (*s)[10], int path)
 	puthz(346, 300, s[9], 32, 32, BLUE);
 
 	playerID(path); //记录选择球员的球员ID
-	menu();
+	// menu();
 }
 
 void Vs(int path)
