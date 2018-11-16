@@ -79,14 +79,14 @@ typedef struct _BALL
     Pos2d old_pos;
     Pos2d start_pos;
     Pos2d end_pos;
-    int flag;
+    int flag;//控制while循环参数
     int control;//足球控制人，-1不受控制
-    int last_control;
-    int score_my;
-    int score_op;
-    int time;
-    int timecount;
-    int downtime;
+    int last_control;//玩家上一个控制的人
+    int score_my;//玩家球队得分
+    int score_op;//电脑求地得分
+    int time;//时间，s为单位
+    int timecount;//计时参数，每满10记1S
+    int downtime;//球员倒地时间
     ball_state *pnowstate;
     ball_state Long_pass,Long_shoot,Short_pass,Short_shoot,Control;
 }_ball;
@@ -135,9 +135,12 @@ void draw_score(int score_my,int score_op);
 void draw_control(_team *pmyteam,_team *popteam);
 // void draw_stop();
 // void draw_start();
-void playerID(int path);
+int playerID(int path);
 void xiuxi();
 
 void player_border(_player *pplayer);
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball);
+
+int fastMatch(int matchType);
+int teamMatch();
 #endif
