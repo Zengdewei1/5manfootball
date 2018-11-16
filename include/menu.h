@@ -9,9 +9,12 @@ void history();
 void changci();
 void jiaoxue();
 void choose_team();
+void choose_teampage();
 void choose_player(char (*s)[10],int path);
+void choose_playerpage();
 void Vs(int path);
 // void vsteam();
 void shop(int path_);
+
 
 #endif
