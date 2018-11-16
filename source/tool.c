@@ -589,17 +589,24 @@ void draw_player(int x,int y,int dir,int control,int action,int ID,int color,int
 
 void draw_ball(int x,int y,_ball *pball)
 {
-	if(pball->pnowstate==&pball->Long_pass||pball->pnowstate==&pball->Long_shoot)
-	{
-		setcolor(RED);
-	}
-	else
-	{
+	// if(pball->pnowstate==&pball->Long_pass||pball->pnowstate==&pball->Long_shoot)
+	// {
+	// 	setcolor(RED);
+	// }
+	// else
+	// {
 		setcolor(BLACK);
-	}
+	// }
 	setfillstyle(1,WHITE);
 	pieslice(x+6,y+6,0,360,6);
-	setfillstyle(1,BLACK);
+	// if(pball->pnowstate==&pball->Long_pass||pball->pnowstate==&pball->Long_shoot)
+	// {
+		// setfillstyle(1,RED);
+	// }
+	// else
+	// {
+		setfillstyle(1,BLACK);
+	// }
 	pieslice(x+6,y+6,0,360,1);
 	pieslice(x+6,y+3,0,360,1);
 	pieslice(x+3,y+6,0,360,1);
@@ -902,8 +909,13 @@ void draw_control(_team *pmyteam,_team *popteam)
 
 void playerID(int path)
 {
+                FILE *fp;
+                int length;
+                int j;
+                char ch;
 	int *ID;
 	int i=0;
+                char s[10][10];
 	int myteam=0,opteam=0;
 	FILE *fpGame;
 	int match;
@@ -1130,7 +1142,7 @@ void playerID(int path)
 			printf("%d",match);
 			fclose(fpGame);
 			game(Left,Right,Red,Blue,match);
-			// xiuxi();
+			xiuxi();
 			while(1)
 			{
 				if(KeyPress(KEY_ENTER))
@@ -1158,19 +1170,84 @@ void playerID(int path)
 			{
 				if(KeyPress(KEY_ENTER))
 				{
-					menu();
+					return;
 				}
 			}
 		}
 		if(KeyPress(KEY_ESC))
 		{
 			NewBK();
-			choose_team();
+			return;
 		}
 		if(Mouse_press(50,300,180,400))
 		{
 			NewBK();
 			shop(path);
+                                                choose_playerpage();
+                                                switch (path)
+			{
+			case 1:
+				if ((fp = fopen("c:\\mycode\\shop\\1.txt", "r")) == NULL)
+				{
+					settextstyle(1, 0, 3);
+					outtextxy(200, 200, "cannot open the file");
+					exit(1);
+				}
+				break;
+			case 2:
+				if ((fp = fopen("c:\\mycode\\shop\\2.txt", "r")) == NULL)
+				{
+					settextstyle(1, 0, 3);
+					outtextxy(200, 200, "cannot open the file");
+					exit(1);
+				}
+				break;
+			case 3:
+				if ((fp = fopen("c:\\mycode\\shop\\3.txt", "r")) == NULL)
+				{
+					settextstyle(1, 0, 3);
+					outtextxy(200, 200, "cannot open the file");
+					exit(1);
+				}
+				break;
+			case 4:
+				if ((fp = fopen("c:\\mycode\\shop\\4.txt", "r")) == NULL)
+				{
+					settextstyle(1, 0, 3);
+					outtextxy(200, 200, "cannot open the file");
+					exit(1);
+				}
+				break;
+			case 5:
+				if ((fp = fopen("c:\\mycode\\shop\\5.txt", "r")) == NULL)
+				{
+					settextstyle(1, 0, 3);
+					outtextxy(200, 200, "cannot open the file");
+					exit(1);
+				}
+				break;
+			}
+			for (i = 0; i < 10; i++)
+			{
+				fseek(fp, 13 + 37 * i, 0);
+				length = fgetc(fp);
+				for (j = 0; j < 10; j++)
+				{
+					ch = fgetc(fp);
+					s[i][j] = ch;
+				}
+				s[i][2 * (length - 48)] = '\0';
+			}
+                                                puthz(130, 100, s[0], 32, 32, BLUE);
+	                                puthz(238, 100, s[1], 32, 32, BLUE);
+	                                puthz(346, 100, s[2], 32, 32, BLUE);
+	                                puthz(454, 100, s[3], 32, 32, BLUE);
+	                                puthz(130, 200, s[4], 32, 32, BLUE);
+	                                puthz(238, 200, s[5], 32, 32, BLUE);
+	                                puthz(346, 200, s[6], 32, 32, BLUE);
+	                                puthz(454, 200, s[7], 32, 32, BLUE);
+	                                puthz(238, 300, s[8], 32, 32, BLUE);
+	                                puthz(346, 300, s[9], 32, 32, BLUE);
 		}
 	}
 }
@@ -1213,7 +1290,7 @@ void player_border(_player *pplayer)
 
 void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 {
-		if((pball->now_pos.x>588&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Right))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right))
 		{
 			pball->score_my++;
 			pmyteam->player[pmyteam->controlplayer].score++;			
@@ -1232,7 +1309,7 @@ void ball_border(_team *popteam,_team *pmyteam,_ball *pball)
 			popteam->controlplayer=3;
 			TeamChangestate(pmyteam,popteam,pball,&pmyteam->Defend,&popteam->Attack);
 		}
-		if((pball->now_pos.x>588&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=194&&pball->now_pos.y<=366&&pmyteam->position==Left))
+		if((pball->now_pos.x>588&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Right)||(pball->now_pos.x<30&&pball->now_pos.y>=200&&pball->now_pos.y<=348&&pmyteam->position==Left))
 		{
 			// printf("%d",popteam->controlplayer);
 			pball->score_op++;

@@ -2,8 +2,7 @@
 
 void menu()
 {
-	setlinestyle(0, 0, 1);
-	cleardevice();
+	
 	menu_page();
 	while (1)
 	{
@@ -12,29 +11,34 @@ void menu()
 		{
 			NewBK();
 			changci();
+                                                menu_page();
+                                               
 		}
 		if (Mouse_press(320, 90, 600, 150))
 		{
 			NewBK();
 			jiaoxue();
+                                                menu_page();
 		}
 		if (Mouse_press(320, 250, 600, 310))
 		{
 			NewBK();
 			choose_team();
+                                                menu_page();
 		}
 		if (Mouse_press(50, 150, 200, 250))
 		{
 			NewBK();
 			history();
+                                                menu_page();
 		}
 		// if(Mouse_press(50,300,200,350))
 		// {
 		// 	NewBK();
 		//                                             result(1);
 		// }
-		// if(KeyPress(KEY_ESC))
-		// 	exit(0);
+		if(KeyPress(KEY_ESC))
+			exit(0);
 	}
 }
 void result(int historyMatch) //historyMatch表示倒数第几场比赛
@@ -228,7 +232,7 @@ void result(int historyMatch) //historyMatch表示倒数第几场比赛
 		if (Mouse_press(340, 300, 468, 332))
 		{
 			NewBK();
-			history();
+			return;
 		}
 	}
 }
@@ -332,10 +336,22 @@ void history()
 			{
 				NewBK();
 				result(k + i);
+                                                                cleardevice();
+                                                                setfillstyle(1, GREEN);
+	                                                bar(1, 1, 639, 479);
+	                                                setcolor(BLUE);
+	                                                rectangle(120, 90, 500, 390);
+	                                                rectangle(500, 90, 520, 390);
+                                                                rectangle(500, 90 + slider_dy, 520, 90 + 75 + 15 * (20 - game_amount) + slider_dy);
+	                                                setfillstyle(1, LIGHTBLUE);
+	                                                floodfill(510, 100 + slider_dy, BLUE);
+                                                                record(120, 90, 380, 5, 300, slider_dy, game_realamount);
+                                                                
 			}
 		if (KeyPress(KEY_ESC))
 		{
-			menu();
+			NewBK();
+                                                return;
 		}
 	}
 }
@@ -390,6 +406,7 @@ void record(int x, int y, int dx, int row, int length, int slider_dy, int game_a
 }
 void menu_page()
 {
+                cleardevice();
 	setcolor(BLACK);
 	setfillstyle(1, GREEN);
 	bar(0, 0, 640, 480);
@@ -450,19 +467,19 @@ void changci()
 				}
 			}
 			game(Right, Left, Red, Blue, 0);
-			// result();
+			
 			while (1)
 			{
 				if (KeyPress(KEY_ENTER))
 				{
-					menu();
+					return;
 				}
 			}
 		}
 		if (KeyPress(KEY_ESC))
 		{
 			NewBK();
-			menu();
+			return;
 		}
 	}
 }
@@ -518,29 +535,20 @@ void jiaoxue()
 		if (KeyPress(KEY_ESC))
 		{
 			NewBK();
-			menu();
+			return;
 		}
 	}
 }
-
-//选择球队界面
-void choose_team()
+void choose_teampage()
 {
-	int path;
-	int x = 240;
-	int i = 0;
-	int j = 0;
-	char number;
-	char s[10][10];
-	char ch = '\0';
-	FILE *fp;
+               
+	int x =250;		
 	int y = 100;
 	cleardevice();
 	setfillstyle(1, GREEN);
+                setlinestyle(0,0,1);
 	bar(1, 1, 640, 480);
-
-	setcolor(MAGENTA);
-	x = 250;
+	setcolor(MAGENTA);	
 	rectangle(x, y, x + 128, y + 40);
 	rectangle(x - 128, y + 100, x, y + 100 + 40);
 	rectangle(x + 128, y + 100, x + 128 + 128, y + 100 + 40);
@@ -562,17 +570,29 @@ void choose_team()
 	puthz(x + 128, y + 100, "上海申花", 32, 32, BLUE);
 	puthz(282, 195, "选择", 32, 32, BLUE);
 	puthz(282, 227, "球队", 32, 32, BLUE);
+}
 
+//选择球队界面
+void choose_team()
+{
+                int path;
+                int i = 0;
+	int j = 0;
+                char number;
+	char s[10][10];
+	char ch = '\0';
+	FILE *fp;
+	choose_teampage();
 	while (1)
 	{
 		Newxy();
 		if (KeyPress(KEY_ESC))
 		{
 			NewBK();
-			menu();
+			return;
 		}
 
-		if (Mouse_press(x, y, x + 128, y + 40))
+		if (Mouse_press(250,100,250+128,100+40))
 		{
 			NewBK();
 			if ((fp = fopen("c:\\mycode\\shop\\1.txt", "r")) == NULL)
@@ -595,10 +615,10 @@ void choose_team()
 			fclose(fp);
 			path = 1;
 			choose_player(s, path);
-			break;
+			choose_teampage();
 		}
 
-		if (Mouse_press(x - 128, y + 100, x, y + 100 + 40))
+		if (Mouse_press(250-128,100+100,250,100+100 + 40))
 		{
 			NewBK();
 			if ((fp = fopen("c:\\mycode\\shop\\2.txt", "r")) == NULL)
@@ -622,10 +642,10 @@ void choose_team()
 			fclose(fp);
 			path = 2;
 			choose_player(s, path);
-			break;
+			choose_teampage();
 		}
 
-		if (Mouse_press(x + 128, y + 100, x + 128 + 128, y + 100 + 40))
+		if (Mouse_press(250+128,100+100,250+128+128, 100+100 + 40))
 		{
 			NewBK();
 			if ((fp = fopen("c:\\mycode\\shop\\5.txt", "r")) == NULL)
@@ -649,10 +669,10 @@ void choose_team()
 			fclose(fp);
 			path = 5;
 			choose_player(s, path);
-			break;
+			choose_teampage();
 		}
 
-		if (Mouse_press(x - 95, y + 100 * 2, x - 95 + 128, y + 100 * 2 + 40))
+		if (Mouse_press(250-95,100+100 * 2,250-95+128,100+100*2+40))
 		{
 			NewBK();
 			if ((fp = fopen("c:\\mycode\\shop\\3.txt", "r")) == NULL)
@@ -676,10 +696,10 @@ void choose_team()
 			fclose(fp);
 			path = 3;
 			choose_player(s, path);
-			break;
+			choose_teampage();
 		}
 
-		if (Mouse_press(x + 95, y + 100 * 2, x + 95 + 128, y + 100 * 2 + 40))
+		if (Mouse_press(250+95,100+100 * 2,250+95+128,100+100*2+40))
 		{
 			NewBK();
 			if ((fp = fopen("c:\\mycode\\shop\\4.txt", "r")) == NULL)
@@ -703,20 +723,16 @@ void choose_team()
 			fclose(fp);
 			path = 4;
 			choose_player(s, path);
-			break;
+			choose_teampage();
 		}
-		// if(KeyPress(KEY_ESC))
-		// {
-		// 	menu();
-		// }
+		
 	}
-	menu();
+	
 }
 
-//选择球员界面
-void choose_player(char (*s)[10], int path)
+void choose_playerpage()
 {
-	int i, j, x, y = 100;
+                int i, j, x, y = 100;
 	cleardevice();
 	setfillstyle(1, GREEN);
 	bar(1, 1, 640, 480);
@@ -782,7 +798,12 @@ void choose_player(char (*s)[10], int path)
 	line(340, 282, 380, 295);
 
 	puthz(260, 385, "确认选择", 32, 32, BLUE);
-
+}
+//选择球员界面
+void choose_player(char (*s)[10], int path)
+{
+	
+                choose_playerpage();
 	puthz(130, 100, s[0], 32, 32, BLUE);
 	puthz(238, 100, s[1], 32, 32, BLUE);
 	puthz(346, 100, s[2], 32, 32, BLUE);
@@ -797,7 +818,7 @@ void choose_player(char (*s)[10], int path)
 	puthz(346, 300, s[9], 32, 32, BLUE);
 
 	playerID(path); //记录选择球员的球员ID
-	menu();
+	
 }
 
 void Vs(int path)
@@ -944,10 +965,6 @@ void Vs(int path)
 	s2[2 * (length - 48)] = '\0';
 	puthz(390, 108, s2, 48, 48, BLUE);
 
-	if (KeyPress(KEY_ESC))
-	{
-		exit(0);
-	}
 }
 
 void shop(int path_)
@@ -3651,61 +3668,8 @@ void shop(int path_)
 		if (KeyPress(KEY_ESC))
 		{
 			NewBK();
-			switch (path_)
-			{
-			case 1:
-				if ((fp = fopen("c:\\mycode\\shop\\1.txt", "r")) == NULL)
-				{
-					settextstyle(1, 0, 3);
-					outtextxy(200, 200, "cannot open the file");
-					exit(1);
-				}
-				break;
-			case 2:
-				if ((fp = fopen("c:\\mycode\\shop\\2.txt", "r")) == NULL)
-				{
-					settextstyle(1, 0, 3);
-					outtextxy(200, 200, "cannot open the file");
-					exit(1);
-				}
-				break;
-			case 3:
-				if ((fp = fopen("c:\\mycode\\shop\\3.txt", "r")) == NULL)
-				{
-					settextstyle(1, 0, 3);
-					outtextxy(200, 200, "cannot open the file");
-					exit(1);
-				}
-				break;
-			case 4:
-				if ((fp = fopen("c:\\mycode\\shop\\4.txt", "r")) == NULL)
-				{
-					settextstyle(1, 0, 3);
-					outtextxy(200, 200, "cannot open the file");
-					exit(1);
-				}
-				break;
-			case 5:
-				if ((fp = fopen("c:\\mycode\\shop\\5.txt", "r")) == NULL)
-				{
-					settextstyle(1, 0, 3);
-					outtextxy(200, 200, "cannot open the file");
-					exit(1);
-				}
-				break;
-			}
-			for (i = 0; i < 10; i++)
-			{
-				fseek(fp, 13 + 37 * i, 0);
-				length = fgetc(fp);
-				for (j = 0; j < 10; j++)
-				{
-					ch = fgetc(fp);
-					s[i][j] = ch;
-				}
-				s[i][2 * (length - 48)] = '\0';
-			}
-			choose_player(s, path_);
+			return;
+			
 		}
 	}
 }

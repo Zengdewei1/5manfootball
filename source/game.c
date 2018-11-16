@@ -1,6 +1,19 @@
 #include "main.h"
 
-//ÓÎÏ·Ö÷Ìå
+/*????¦Ä?????
+??????????¡ã?????????????????????????????????????
+*/
+
+/*AI????¦È????
+?????????
+	??????????????????????????????????????????—¨????????????????????¡¤??????????¡¤??????????????????????????????????????????§Ô????????§Ù???—¥???????????
+	??????
+??????????
+	??????2???????????????????????????????????????—¥??????????????????2?????????????????????????§Ô????????????????????????????
+	??????
+*/
+
+/*???????*/
 void game(int position1,int position2,int color1,int color2,int match)
 {
 	int i=0,award_goal=0,award_win=0,money=0;
@@ -417,6 +430,7 @@ void BallChangestate(_team *popteam,_team *pmyteam,_ball *pball,ball_state *pnew
 	}
 }
 	
+//?????
 
 void AttackEnter(_team *pmyteam,_team *popteam,_ball *pball)
 {
@@ -492,13 +506,13 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			pball->end_pos.y=popteam->player[1].now_pos.y+17;
 			pball->control=-1;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Down);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[0],pball,&popteam->player[0].Wait);
 			popteam->player[popteam->controlplayer].control=0;
 			popteam->passman=popteam->control;
 			popteam->player[0].control=0;
 			popteam->control=-1;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].ChasingBall);
-			popteam->controlplayer=1;
+			// popteam->controlplayer=1;
 		}
 		if(popteam->control==1&&popteam->player[3].pnowstate==&popteam->player[3].Actioning&&pball->timecount%5==0)
 		{
@@ -506,13 +520,13 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 			pball->end_pos.y=popteam->player[3].now_pos.y+17;
 			pball->control=-1;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Down);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[1],pball,&popteam->player[1].Wait);
 			popteam->player[popteam->controlplayer].control=0;
 			popteam->passman=popteam->control;
 			popteam->player[1].control=0;
 			popteam->control=-1;
 			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].ChasingBall);
-			popteam->controlplayer=3;
+			// popteam->controlplayer=3;
 		}
 		if(popteam->control==3&&distance(popteam->player[3].now_pos.x,popteam->player[3].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
 		{
@@ -554,11 +568,11 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
 				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
 			}
-			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Down);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[3],pball,&popteam->player[3].Wait);
 			popteam->passman=popteam->control;
 			popteam->player[3].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=2;
+			// popteam->controlplayer=2;
 		}
 		if(popteam->control==2&&distance(popteam->player[2].now_pos.x,popteam->player[2].now_pos.y,x,y)<10.0&&pball->timecount%5==0)
 		{
@@ -600,11 +614,11 @@ void AttackExecute(_team *pmyteam,_team *popteam,_ball *pball)
 				BallChangestate(popteam,pmyteam,pball,&pball->Long_shoot);
 				PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].ChasingBall);
 			}
-			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Down);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[2],pball,&popteam->player[2].Wait);
 			popteam->passman=popteam->control;
 			popteam->player[2].control=0;
 			popteam->control=-1;
-			popteam->controlplayer=3;
+			// popteam->controlplayer=3;
 		}
 	}
 }
@@ -649,6 +663,7 @@ void DefendExecute(_team *pmyteam,_team *popteam,_ball *pball)
 }
 
 
+//?????
 void ChasingBallExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 {
 	Pos2d near_dir;
@@ -777,7 +792,7 @@ void DribbleExecute(_team *pmyteam,_team *popteam,_player *pplayer,_ball *pball)
 			pball->end_pos.x=popteam->player[receivingman].now_pos.x+6;
 			pball->end_pos.y=popteam->player[receivingman].now_pos.y+17;
 			BallChangestate(popteam,pmyteam,pball,&pball->Short_pass);
-			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Down);
+			PlayerChangestate(pmyteam,popteam,&popteam->player[popteam->controlplayer],pball,&popteam->player[popteam->controlplayer].Wait);
 			popteam->passman=popteam->control;
 			popteam->player[popteam->controlplayer].control=0;
 			popteam->control=-1;
